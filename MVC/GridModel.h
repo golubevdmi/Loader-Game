@@ -4,7 +4,7 @@
 #include <QAbstractTableModel>
 #include <QSharedPointer>
 
-#include <Grid/GridGenerator.h>
+#include <GridGenerator/GridGenerator.h>
 
 class GridModel : public QAbstractTableModel
 {

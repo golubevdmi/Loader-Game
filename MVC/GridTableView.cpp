@@ -1,6 +1,6 @@
 #include <MVC/GridTableView.h>
 
-#include <Grid/GridGenerator.h>
+#include <GridGenerator/GridGenerator.h>
 
 #include <QKeyEvent>
 #include <QModelIndex>

@@ -1,4 +1,4 @@
-#include <Grid/GridGenerator.h>
+#include <GridGenerator/GridGenerator.h>
 
 #include <random>
 
