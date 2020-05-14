@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/forms">
+        <file>resources/main.qml</file>
+        <file>resources/GridDelegate.qml</file>
+        <file>resources/GridModel.qml</file>
+        <file>resources/scripts.js</file>
+    </qresource>
+</RCC>
