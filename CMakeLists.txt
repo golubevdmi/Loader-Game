@@ -15,13 +15,6 @@ qt5_add_resources(QRC_WRAPPERS
 # MOC
 qt5_wrap_cpp(MOC_WRAPPERS
     MVC/GridModel.h
-    MVC/GridTableView.h
-    GridWindow.h
-    )
-
-# UIC
-qt5_wrap_ui(UIC_WRAPPERS
-    GridWindow.ui
     )
 
 set(GRID_FILES
@@ -31,23 +24,18 @@ set(GRID_FILES
     )
 
 set(MVC_FILES
-    MVC/GridTableView.cpp
-    MVC/GridTableView.h
     MVC/GridModel.cpp
     MVC/GridModel.h
-    MVC/GridDelegate.cpp
-    MVC/GridDelegate.h
+    MVC/JsonStorage.cpp
+    MVC/JsonStorage.h
     )
 
 add_executable(LoaderGame
     loadermain.cpp
-    GridWindow.cpp
-    GridWindow.h
     ${GRID_FILES}
     ${MVC_FILES}
     ${MOC_WRAPPERS}
     ${QRC_WRAPPERS}
-    ${UIC_WRAPPERS}
     )
 
 target_compile_definitions(LoaderGame PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

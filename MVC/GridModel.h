@@ -20,13 +20,16 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::EditRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
     Q_INVOKABLE void grid5x5();
     Q_INVOKABLE void grid10x10();
     Q_INVOKABLE void grid15x15();
 
-    Q_INVOKABLE int getWidth() const { return _width; }
-    Q_INVOKABLE int getHeight() const { return _height; }
+    Q_INVOKABLE bool moveUp();
+    Q_INVOKABLE bool moveDown();
+    Q_INVOKABLE bool moveLeft();
+    Q_INVOKABLE bool moveRight();
 
 signals:
     void grid_changed();
@@ -40,9 +43,17 @@ private:
     GridType _currentGrid;
     int _width;
     int _height;
+    int _nSteps;
 
+    bool moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
     void createGrid(int width, int height);
     size_t calcCargosLeft();
+
+    void setValue(const QModelIndex &index, QVariant value);
+
+    QModelIndex getLoaderPlayerIndex();
+    QVariant getValue(const QModelIndex &index) const;
+    QVariant getBeginValue(const QModelIndex &index) const;
 };
 
 #endif // !_GRIDMODEL_H_

@@ -2,3 +2,4 @@
 *.log
 x64/
 *.user
+*.autosave

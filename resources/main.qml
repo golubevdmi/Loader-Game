@@ -1,9 +1,8 @@
 import QtQuick 2.12
-import QtQuick.Window 2.0
+import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import GridWindow 1.0
-import "scripts.js" as Scripts
+import QtQuick.Controls 2.12
+import GridModel 1.0
 
 
 ApplicationWindow
@@ -11,35 +10,89 @@ ApplicationWindow
     id: root
     visible: true
     width: 640
-    height: width
+    height: 400
+    minimumWidth: 400
+    minimumHeight: 220
     color: "#09102B"
     title: qsTr("Loader Game")
 
-    GridWindow
+    GridModel
     {
+        id: gridModel
     }
-
-    header: ToolBar
+    Component
     {
-        height: 50
-        RowLayout
+        id: gridDelegate
+        Rectangle
         {
-            ToolButton
+            implicitWidth: 40
+            implicitHeight: implicitWidth
+            color:
             {
-                text: qsTr("5x5")
-                //onClicked: gridModel.grid5x5()
+                if (LoaderPlayer == true)
+                    "green";
+                else if (Cargo == true)
+                    "blue";
+                else if (CargoDestination == true)
+                    "purple";
+                else if (Barrier == true)
+                    "black";
+                else
+                    "white";
             }
-
-            ToolButton
+            Text
             {
-                text: qsTr("10x10")
-                //onClicked: gridModel.grid10x10()
-            }
-            ToolButton
-            {
-                text: qsTr("15x15")
-                //onClicked: gridModel.grid15x15()
+                text: display
+                font.pointSize: 12
+                anchors.centerIn: parent
             }
         }
     }
+
+    TableView
+    {
+        id: gridView
+        anchors.fill: parent
+        clip: true
+        model: gridModel
+        delegate: gridDelegate
+        contentX: (contentWidth - parent.width) / 2;
+        contentY: (contentHeight - parent.height) / 2;
+    }
+
+    Item
+    {
+        id: keysNavigation
+        anchors.fill: parent
+        focus: true
+        Keys.onUpPressed: gridModel.moveUp();
+        Keys.onDownPressed: gridModel.moveDown();
+        Keys.onRightPressed: gridModel.moveRight();
+        Keys.onLeftPressed: gridModel.moveLeft();
+    }
+
+    header: toolBar
+    ToolBar
+    {
+        id: toolBar
+        RowLayout
+        {
+            LoaderGirdButton
+            {
+                text: qsTr("5x5")
+                onClicked: gridModel.grid5x5()
+            }
+            LoaderGirdButton
+            {
+                text: qsTr("10x10")
+                onClicked: gridModel.grid10x10()
+            }
+            LoaderGirdButton
+            {
+                text: qsTr("5x5")
+                onClicked: gridModel.grid15x15()
+            }
+        }
+    }
+    Shortcut { sequence: StandardKey.Quit; onActivated: Qt.quit() }
 }
