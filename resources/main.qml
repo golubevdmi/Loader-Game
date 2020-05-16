@@ -9,55 +9,68 @@ ApplicationWindow
 {
     id: root
     visible: true
-    width: 640
-    height: 400
-    minimumWidth: 400
-    minimumHeight: 220
+    minimumWidth: 640
+    minimumHeight: 480
     color: "#09102B"
     title: qsTr("Loader Game")
 
-    GridModel
+    menuBar: MenuBar
     {
-        id: gridModel
-    }
-    Component
-    {
-        id: gridDelegate
-        Rectangle
+        Menu
         {
-            implicitWidth: 40
-            implicitHeight: implicitWidth
-            color:
+            title: qsTr("&File")
+            MenuSeparator { }
+            Action
             {
-                if (LoaderPlayer == true)
-                    "green";
-                else if (Cargo == true)
-                    "blue";
-                else if (CargoDestination == true)
-                    "purple";
-                else if (Barrier == true)
-                    "black";
-                else
-                    "white";
+                text: qsTr("&Quit")
+                icon.source: "qrc:/images/resources/exit.png"
+                shortcut: StandardKey.Quit
+                onTriggered: Qt.quit()
             }
-            Text
+        }
+        Menu
+        {
+            title: qsTr("&Edit")
+            Action
             {
-                text: display
-                font.pointSize: 12
-                anchors.centerIn: parent
+                text: qsTr("&Undo")
+                icon.source: "qrc:/images/resources/undo.png"
+                shortcut: StandardKey.Undo
+                onTriggered: gridModel.undo()
+            }
+            Action
+            {
+                text: qsTr("&Redo")
+                icon.source: "qrc:/images/resources/redo.png"
+                shortcut: StandardKey.Redo
+                onTriggered: gridModel.redo()
+            }
+        }
+        Menu
+        {
+            title: qsTr("&Help")
+            Action
+            {
+                text: qsTr("&About")
+                icon.source: "qrc:/images/resources/about.png"
             }
         }
     }
 
     TableView
     {
-        id: gridView
+        id: tableView
         anchors.fill: parent
         clip: true
-        model: gridModel
-        delegate: gridDelegate
-        contentX: (contentWidth - parent.width) / 2;
-        contentY: (contentHeight - parent.height) / 2;
+        rowSpacing: 1
+        columnSpacing: 1
+        model: GridModel { id: gridModel }
+        delegate: LoaderGridDelegate
+        {
+            id: loaderGrid
+            implicitWidth: root.contentItem.width / gridModel.columnCount()
+            implicitHeight: root.contentItem.height / gridModel.rowCount()
+        }
     }
 
     Item
@@ -69,30 +82,44 @@ ApplicationWindow
         Keys.onDownPressed: gridModel.moveDown();
         Keys.onRightPressed: gridModel.moveRight();
         Keys.onLeftPressed: gridModel.moveLeft();
-    }
 
-    header: toolBar
-    ToolBar
-    {
-        id: toolBar
-        RowLayout
+        onFocusChanged:
         {
-            LoaderGirdButton
-            {
-                text: qsTr("5x5")
-                onClicked: gridModel.grid5x5()
-            }
-            LoaderGirdButton
-            {
-                text: qsTr("10x10")
-                onClicked: gridModel.grid10x10()
-            }
-            LoaderGirdButton
-            {
-                text: qsTr("5x5")
-                onClicked: gridModel.grid15x15()
-            }
+            keysNavigation.focus = true
         }
     }
-    Shortcut { sequence: StandardKey.Quit; onActivated: Qt.quit() }
+
+
+    header: RowLayout
+    {
+        LoaderGirdButton
+        {
+            Layout.alignment: Qt.AlignLeft
+            backgroundColor: root.color
+            text: qsTr("5x5")
+            onClicked: gridModel.grid5x5()
+        }
+        LoaderGirdButton
+        {
+            Layout.alignment: Qt.AlignLeft
+            backgroundColor: root.color
+            text: qsTr("10x10")
+            onClicked: gridModel.grid10x10()
+        }
+        LoaderGirdButton
+        {
+            Layout.alignment: Qt.AlignLeft
+            backgroundColor: root.color
+            text: qsTr("15x15")
+            onClicked: gridModel.grid15x15()
+        }
+
+        Item
+        {
+            id: spacerItem
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
+        }
+    }
 }
