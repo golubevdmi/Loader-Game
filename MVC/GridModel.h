@@ -15,8 +15,8 @@ public:
     Q_INVOKABLE void reset();
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    Q_INVOKABLE int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::EditRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -30,6 +30,9 @@ public:
     Q_INVOKABLE bool moveDown();
     Q_INVOKABLE bool moveLeft();
     Q_INVOKABLE bool moveRight();
+
+    Q_INVOKABLE bool undo();
+    Q_INVOKABLE bool redo();
 
 signals:
     void grid_changed();

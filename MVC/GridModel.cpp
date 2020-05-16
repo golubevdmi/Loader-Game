@@ -72,8 +72,16 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     if (value.isNull() && value.toInt() != FieldValue::LoaderPlayer)
         return false;
 
+    int nCargosLeft = calcCargosLeft();
+    if (!nCargosLeft)
+    {
+        emit game_win();
+        return false;
+    }
+
     // --TODO change
     beginResetModel();
+
     QModelIndex indexLoaderPlayer = getLoaderPlayerIndex();
     if (!indexLoaderPlayer.isValid())
         return false;
@@ -112,9 +120,16 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     // Set new LoaderPlayer pos
     setValue(index, static_cast<QVariant>(FieldValue::LoaderPlayer));
     emit dataChanged(index, index, {role});
+
     // --TODO change
     endResetModel();
+
     ++_nSteps;
+
+    nCargosLeft = calcCargosLeft();
+    if (!nCargosLeft)
+        emit game_win();
+
     return true;
 }
 
@@ -291,6 +306,18 @@ bool GridModel::moveRight()
             }
         }
     }
+    return false;
+}
+
+bool GridModel::undo()
+{
+    qDebug() << "undo";
+    return false;
+}
+
+bool GridModel::redo()
+{
+    qDebug() << "undo";
     return false;
 }
 
