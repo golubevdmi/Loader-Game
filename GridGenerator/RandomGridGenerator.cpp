@@ -15,7 +15,7 @@ int random(int min, int max)
 }
 
 
-void RandomGridGenerator::fill(FieldType value, int count, GridType &grid)
+void RandomGridGenerator::fill(int value, int count, GridType &grid)
 {
     Q_ASSERT(value != FieldValue::Undefined && value != FieldValue::Empty);
 

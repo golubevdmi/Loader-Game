@@ -5,17 +5,15 @@
 
 enum FieldValue
 {
-    Undefined = -1,
-    Empty = 0,
-    Loader = 1,
-    Cargo = 2,
-    CargoDestination = 3,
-    Barrier = 4
+    Undefined = Qt::UserRole,
+    Empty,
+    LoaderPlayer,
+    Cargo,
+    CargoDestination,
+    Barrier
 };
 
-
-using FieldType = int;
-using GridType = QVector<FieldType>;
+using GridType = QVector<int>;
 
 
 class GridGenerator
@@ -32,14 +30,14 @@ public:
 
     void setWidth(int width);
     void setHeight(int height);
-    void setLoaders(int loaders);
+    void setLoaderPlayers(int LoaderPlayers);
     void setCargos(int cargos);
     void setCargosDestination(int cargosDst);
     void setBarriers(int barriers);
 
     int getWidth() const;
     int getHeight() const;
-    int getLoaders() const;
+    int getLoaderPlayers() const;
     int getCargos() const;
     int getCargosDestination() const;
     int getBarriers() const;
@@ -49,20 +47,20 @@ public:
 protected:
     int _width;
     int _height;
-    int _nLoader;
+    int _nLoaderPlayer;
     int _nCargo;
     int _nCargoDst;
     int _nBarrier;
     GridType _grid;
 
-    virtual void fill(FieldType value, int count, GridType &grid) = 0;
+    virtual void fill(int value, int count, GridType &grid) = 0;
 };
 
 
 class RandomGridGenerator : public GridGenerator
 {
 protected:
-    void fill(FieldType value, int count, GridType &grid) override;
+    void fill(int value, int count, GridType &grid) override;
 };
 
 #endif // !_GRID_H_

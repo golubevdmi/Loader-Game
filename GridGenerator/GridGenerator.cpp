@@ -4,7 +4,7 @@
 GridGenerator::GridGenerator()
     : _width(0)
     , _height(0)
-    , _nLoader(1)
+    , _nLoaderPlayer(1)
     , _nCargo(1)
     , _nCargoDst(1)
     , _nBarrier(0)
@@ -15,17 +15,17 @@ void GridGenerator::init()
 {
     _grid.clear();
     _grid.resize(_width * _height);
-    std::fill(_grid.begin(), _grid.end(), 0);
+    std::fill(_grid.begin(), _grid.end(), FieldValue::Empty);
 }
 
 // Generate GridGenerator
 void GridGenerator::generate()
 {
-    Q_ASSERT(_nLoader > 0 && _nCargo > 0 && _nCargoDst > 0 && _nBarrier >= 0);
+    Q_ASSERT(_nLoaderPlayer > 0 && _nCargo > 0 && _nCargoDst > 0 && _nBarrier >= 0);
     Q_ASSERT(size_grid());
     Q_ASSERT(size_elements() < size_grid());
 
-    fill(FieldValue::Loader, _nLoader, _grid);
+    fill(FieldValue::LoaderPlayer, _nLoaderPlayer, _grid);
     fill(FieldValue::Cargo, _nCargo, _grid);
     fill(FieldValue::CargoDestination, _nCargoDst, _grid);
     fill(FieldValue::Barrier, _nBarrier, _grid);
@@ -38,7 +38,7 @@ size_t GridGenerator::size_grid()
 
 size_t GridGenerator::size_elements()
 {
-    return static_cast<size_t>(_nLoader + _nCargo + _nCargoDst + _nBarrier);
+    return static_cast<size_t>(_nLoaderPlayer + _nCargo + _nCargoDst + _nBarrier);
 }
 
 void GridGenerator::setWidth(int width)
@@ -53,10 +53,10 @@ void GridGenerator::setHeight(int height)
     _height = height;
 }
 
-void GridGenerator::setLoaders(int loaders)
+void GridGenerator::setLoaderPlayers(int LoaderPlayers)
 {
-    Q_ASSERT(loaders > 0);
-    _nLoader = loaders;
+    Q_ASSERT(LoaderPlayers > 0);
+    _nLoaderPlayer = LoaderPlayers;
 }
 
 void GridGenerator::setCargos(int cargos)
@@ -87,9 +87,9 @@ int GridGenerator::getHeight() const
     return _height;
 }
 
-int GridGenerator::getLoaders() const
+int GridGenerator::getLoaderPlayers() const
 {
-    return _nLoader;
+    return _nLoaderPlayer;
 }
 
 int GridGenerator::getCargos() const
