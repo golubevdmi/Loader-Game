@@ -2,5 +2,12 @@
     <qresource prefix="/forms">
         <file>resources/main.qml</file>
         <file>resources/LoaderGirdButton.qml</file>
+        <file>resources/LoaderGridDelegate.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>resources/redo.png</file>
+        <file>resources/undo.png</file>
+        <file>resources/about.png</file>
+        <file>resources/exit.png</file>
     </qresource>
 </RCC>
