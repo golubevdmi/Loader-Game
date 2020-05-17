@@ -6,17 +6,21 @@
 
 #include <GridGenerator/GridGenerator.h>
 
+class QUndoStack;
+class QUndoCommand;
+
 class GridModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
     GridModel(QObject *parent = nullptr);
+    ~GridModel();
 
     Q_INVOKABLE void reset();
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    Q_INVOKABLE int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::EditRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -44,11 +48,16 @@ private:
     QSharedPointer<GridGenerator> _gridGenerator;
     GridType _beginGrid;
     GridType _currentGrid;
+    QUndoStack *_pStack;
+    QUndoCommand *_pUndoCmd;
     int _width;
     int _height;
     int _nSteps;
 
+    bool move(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
     bool moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
+    void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
+    void saveStep();
     void createGrid(int width, int height);
     size_t calcCargosLeft();
 

@@ -1,13 +1,16 @@
-#include <MVC/GridModel.h>
+#include <Model/GridModel.h>
 
-#include <QFile>
-#include <QJsonObject>
-#include <QRect>
+#include <Model/StepCommand.h>
+
+#include <QUndoStack>
+#include <QUndoCommand>
 #include <QDebug>
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
     , _gridGenerator(new RandomGridGenerator)
+    , _pStack(new QUndoStack(this))
+    , _pUndoCmd(nullptr)
     , _width(0)
     , _height(0)
     , _nSteps(0)
@@ -15,9 +18,22 @@ GridModel::GridModel(QObject *parent)
     grid5x5();
 }
 
+GridModel::~GridModel()
+{
+    if (_pUndoCmd)
+        delete _pUndoCmd;
+}
+
 void GridModel::reset()
 {
     _currentGrid = _beginGrid;
+    if (_pStack)
+        _pStack->clear();
+    if (_pUndoCmd)
+    {
+        delete _pUndoCmd;
+        _pUndoCmd = nullptr;
+    }
     _nSteps = 0;
 }
 
@@ -67,105 +83,30 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
 {
     if (!index.isValid())
         return false;
-    if (role != Qt::DisplayRole && role != Qt::EditRole)
-        return false;
-    if (value.isNull() && value.toInt() != FieldValue::LoaderPlayer)
-        return false;
 
-    int nCargosLeft = calcCargosLeft();
-    if (!nCargosLeft)
-    {
-        emit game_win();
-        return false;
-    }
-
-    // --TODO change
     beginResetModel();
 
-    QModelIndex indexLoaderPlayer = getLoaderPlayerIndex();
-    if (!indexLoaderPlayer.isValid())
-        return false;
-
-    // Check move of other objects
-    switch (index.data().toInt())
+    switch (role)
     {
-    case FieldValue::Cargo:
-    {
-        // Cargo destination
-        int rowOffset = index.row() - indexLoaderPlayer.row();
-        int colOffset = index.column() - indexLoaderPlayer.column();
-        QModelIndex indexCargoDst = this->index(index.row() + rowOffset, index.column() + colOffset, QModelIndex());
-        if (!moveCargo(index, indexCargoDst))
-            return false;
-        break;
-    }
-    case FieldValue::Barrier:
-        return false;
-    default:
-        break;
-    }
-
-    // Fill old LoaderPlayer pos
-    switch (getBeginValue(indexLoaderPlayer).toInt())
-    {
-    case FieldValue::CargoDestination:
-        setValue(indexLoaderPlayer, static_cast<QVariant>(FieldValue::CargoDestination));
+    case Qt::DisplayRole:
+    case Qt::EditRole:
+        setValue(index, value);
+        emit dataChanged(index, index, {role});
         break;
     default:
-        setValue(indexLoaderPlayer, static_cast<QVariant>(FieldValue::Empty));
-        break;
+        return false;
     }
-    emit dataChanged(indexLoaderPlayer, indexLoaderPlayer, {role});
 
-    // Set new LoaderPlayer pos
-    setValue(index, static_cast<QVariant>(FieldValue::LoaderPlayer));
-    emit dataChanged(index, index, {role});
-
-    // --TODO change
     endResetModel();
-
-    ++_nSteps;
-
-    nCargosLeft = calcCargosLeft();
-    if (!nCargosLeft)
-        emit game_win();
 
     return true;
 }
 
-bool GridModel::moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
-{
-    if (!indexBegin.isValid() || !indexEnd.isValid())
-        return false;
-
-    switch (indexEnd.data().toInt())
-    {
-    case FieldValue::CargoDestination:
-        emit cargo_delivered();
-        qDebug() << "cargo delivered";
-    case FieldValue::Empty:
-        // Old cargo pos
-        //setValue(indexBegin, static_cast<QVariant>(FieldValue::Empty));
-        //emit dataChanged(indexBegin, indexBegin, {Qt::EditRole});
-        // New cargo pos
-        setValue(indexEnd, static_cast<QVariant>(FieldValue::Cargo));
-        emit dataChanged(indexEnd, indexEnd, {Qt::EditRole});
-        return true;
-    default:
-        return false;
-    }
-}
-
 Qt::ItemFlags GridModel::flags(const QModelIndex &index) const
 {
+    Q_UNUSED(index);
     Qt::ItemFlags nReturn;
     nReturn |= Qt::ItemIsEnabled;
-    nReturn |= Qt::ItemIsSelectable;
-    if (index.isValid())
-    {
-        //if (index.model()->data(index, Qt::DisplayRole).toInt() == FieldValue::LoaderPlayer)
-            //nReturn |= Qt::ItemIsSelectable;
-    }
     return nReturn;
 }
 
@@ -245,7 +186,7 @@ bool GridModel::moveUp()
         QModelIndex indexToMove = this->index(indexLoader.row() - 1, indexLoader.column(), QModelIndex());
         if (indexToMove.isValid())
         {
-            if (setData(indexToMove, indexLoader.data(), Qt::EditRole))
+            if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move up";
                 return true;
@@ -263,7 +204,7 @@ bool GridModel::moveDown()
         QModelIndex indexToMove = this->index(indexLoader.row() + 1, indexLoader.column(), QModelIndex());
         if (indexToMove.isValid())
         {
-            if (setData(indexToMove, indexLoader.data(), Qt::EditRole))
+            if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move down";
                 return true;
@@ -281,7 +222,7 @@ bool GridModel::moveLeft()
         QModelIndex indexToMove = this->index(indexLoader.row(), indexLoader.column() - 1, QModelIndex());
         if (indexToMove.isValid())
         {
-            if (setData(indexToMove, indexLoader.data(), Qt::EditRole))
+            if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move left";
                 return true;
@@ -299,7 +240,7 @@ bool GridModel::moveRight()
         QModelIndex indexToMove = this->index(indexLoader.row(), indexLoader.column() + 1, QModelIndex());
         if (indexToMove.isValid())
         {
-            if (setData(indexToMove, indexLoader.data(), Qt::EditRole))
+            if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move right";
                 return true;
@@ -309,15 +250,133 @@ bool GridModel::moveRight()
     return false;
 }
 
+bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
+{
+    if (!indexBegin.isValid() || !indexEnd.isValid())
+        return false;
+
+    int nCargosLeft = calcCargosLeft();
+    if (!nCargosLeft)
+    {
+        emit game_win();
+        return false;
+    }
+
+    // Check move of other objects
+    switch (indexEnd.data().toInt())
+    {
+    case FieldValue::Cargo:
+    {
+        // Cargo destination cell
+        int rowOffset = indexEnd.row() - indexBegin.row();
+        int colOffset = indexEnd.column() - indexBegin.column();
+        QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
+        if (!moveCargo(indexEnd, indexCargoDst))
+            return false;
+        break;
+    }
+    case FieldValue::Barrier:
+        return false;
+    default:
+        break;
+    }
+
+    addIndexForCommand(indexEnd, indexEnd.data(), indexBegin.data());
+    setData(indexEnd, indexBegin.data());
+
+    // Fill old LoaderPlayer pos
+    switch (getBeginValue(indexBegin).toInt())
+    {
+    case FieldValue::CargoDestination:
+        addIndexForCommand(indexBegin, indexBegin.data(), static_cast<QVariant>(FieldValue::CargoDestination));
+        setData(indexBegin, static_cast<QVariant>(FieldValue::CargoDestination));
+        break;
+    default:
+        addIndexForCommand(indexBegin, indexBegin.data(), static_cast<QVariant>(FieldValue::Empty));
+        setData(indexBegin, static_cast<QVariant>(FieldValue::Empty));
+        break;
+    }
+
+    nCargosLeft = calcCargosLeft();
+    if (!nCargosLeft)
+    {
+        emit game_win();
+    }
+
+    saveStep();
+    ++_nSteps;
+    return true;
+}
+
+bool GridModel::moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
+{
+    if (!indexBegin.isValid() || !indexEnd.isValid())
+        return false;
+
+    switch (indexEnd.data().toInt())
+    {
+    case FieldValue::CargoDestination:
+        emit cargo_delivered();
+        qDebug() << "cargo delivered";
+    case FieldValue::Empty:
+        // Old cargo pos
+        //setValue(indexBegin, static_cast<QVariant>(FieldValue::Empty));
+        //emit dataChanged(indexBegin, indexBegin, {Qt::EditRole});
+        // New cargo pos
+        addIndexForCommand(indexEnd, indexEnd.data(), static_cast<QVariant>(FieldValue::Cargo));
+        setData(indexEnd, static_cast<QVariant>(FieldValue::Cargo));
+        return true;
+    default:
+        return false;
+    }
+}
+
+void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
+{
+    try
+    {
+        if (!_pUndoCmd)
+        {
+            _pUndoCmd = new StepCommand(this);
+        }
+        dynamic_cast<StepCommand*>(_pUndoCmd)->addIndex(index, oldValue, newValue);
+    }
+    catch (...)
+    {}
+}
+
+void GridModel::saveStep()
+{
+    if (_pStack && _pUndoCmd)
+    {
+        _pStack->push(_pUndoCmd);
+        _pUndoCmd = nullptr;
+    }
+}
+
 bool GridModel::undo()
 {
-    qDebug() << "undo";
+    if (_pStack && _pStack->index() > 0)
+    {
+        qDebug() << "stack index: " + QString::number(_pStack->index())
+                 << ", nSteps: " + QString::number(_nSteps)
+                 << " - undo";
+        _pStack->undo();
+        return true;
+    }
     return false;
 }
 
 bool GridModel::redo()
 {
-    qDebug() << "undo";
+    if (_pStack && _pStack->index() < _nSteps)
+    {
+        qDebug() << "stack index: " + QString::number(_pStack->index())
+                 << ", nSteps: " + QString::number(_nSteps)
+                 << " - redo";
+        _pStack->redo();
+        return true;
+    }
     return false;
 }
 
@@ -330,7 +389,9 @@ size_t GridModel::calcCargosLeft()
 void GridModel::setValue(const QModelIndex &index, QVariant value)
 {
     if (index.isValid() && !value.isNull())
+    {
         _currentGrid[index.row() * _height + index.column()] = value.toInt();
+    }
 }
 
 QModelIndex GridModel::getLoaderPlayerIndex()
