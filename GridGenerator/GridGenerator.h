@@ -5,8 +5,7 @@
 
 enum FieldValue
 {
-    Undefined = Qt::UserRole,
-    Empty,
+    Empty = Qt::UserRole,
     LoaderPlayer,
     Cargo,
     CargoDestination,

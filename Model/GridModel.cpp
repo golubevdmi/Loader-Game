@@ -8,7 +8,7 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , _gridGenerator(new RandomGridGenerator)
+    , _gridGenerator(new TestGridGenerator)
     , _pStack(new QUndoStack(this))
     , _pUndoCmd(nullptr)
     , _width(0)
@@ -120,7 +120,6 @@ QHash<int, QByteArray> GridModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[Qt::DisplayRole] = "display";
     roles[Qt::EditRole] = "edit";
-    roles[FieldValue::Undefined] = "Undefined";
     roles[FieldValue::Empty] = "Empty";
     roles[FieldValue::LoaderPlayer] = "LoaderPlayer";
     roles[FieldValue::Cargo] = "Cargo";
