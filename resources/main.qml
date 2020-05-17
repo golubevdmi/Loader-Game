@@ -9,8 +9,12 @@ ApplicationWindow
 {
     id: root
     visible: true
-    minimumWidth: 640
-    minimumHeight: 480
+    width: 640
+    height: 480
+    maximumHeight: height
+    maximumWidth: width
+    minimumHeight: height
+    minimumWidth: width
     color: "#09102B"
     title: qsTr("Loader Game")
 
@@ -120,6 +124,14 @@ ApplicationWindow
             Layout.fillWidth: true
             Layout.fillHeight: true
             Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
+        }
+
+        LoaderGirdButton
+        {
+            Layout.alignment: Qt.AlignLeft
+            backgroundColor: root.color
+            text: qsTr("Reset")
+            onClicked: gridModel.reset()
         }
     }
 }

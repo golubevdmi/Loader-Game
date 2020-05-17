@@ -26,7 +26,12 @@ GridModel::~GridModel()
 
 void GridModel::reset()
 {
+    beginResetModel();
+
     _currentGrid = _beginGrid;
+
+    endResetModel();
+
     if (_pStack)
         _pStack->clear();
     if (_pUndoCmd)
