@@ -2,7 +2,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <MVC/GridModel.h>
+#include <Model/GridModel.h>
 
 int main(int argc, char *argv[])
 {
