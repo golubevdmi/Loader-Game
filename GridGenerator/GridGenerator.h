@@ -63,5 +63,17 @@ protected:
     void fill(int value, int count, GridType &grid) override;
 };
 
+// Grid generator for debugging
+class TestGridGenerator : public GridGenerator
+{
+    void generate() override;
+protected:
+    void fill(int value, int count, GridType &grid) override;
+private:
+    void grid5x5();
+    void grid10x10();
+    void grid15x15();
+};
+
 #endif // !_GRID_H_
 
