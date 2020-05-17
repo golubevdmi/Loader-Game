@@ -15,13 +15,13 @@ int random(int min, int max)
 }
 
 
-void RandomGridGenerator::fill(int value, int count, GridType &grid)
+void RandomGridGenerator::fill(int value, int count)
 {
     Q_ASSERT(value != FieldValue::Undefined && value != FieldValue::Empty);
 
     // Number of free fields
-    auto nFree = std::count(grid.begin(), grid.end(), FieldValue::Empty);
-    nFree += std::count(grid.begin(), grid.end(), FieldValue::Undefined);
+    auto nFree = std::count(_grid.begin(), _grid.end(), FieldValue::Empty);
+    nFree += std::count(_grid.begin(), _grid.end(), FieldValue::Undefined);
 
     if (count > nFree)
         return;
@@ -30,10 +30,11 @@ void RandomGridGenerator::fill(int value, int count, GridType &grid)
     int counter = 0;
     while (counter < count)
     {
-        int index = random(0, grid.size() - 1);
-        if (grid.at(index) == FieldValue::Undefined || grid.at(index) == FieldValue::Empty)
+        int row = random(0, _height - 1);
+        int column = random(0, _width - 1);
+        if (getValue(row, column) == FieldValue::Undefined || getValue(row, column) == FieldValue::Empty)
         {
-            grid[index] = value;
+            setValue(row, column, value);
             ++counter;
         }
     }

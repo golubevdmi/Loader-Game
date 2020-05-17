@@ -25,8 +25,8 @@ public:
     virtual void init();
     virtual void generate();
 
-    size_t size_grid();
-    size_t size_elements();
+    size_t size_grid() const;
+    size_t size_elements() const;
 
     void setWidth(int width);
     void setHeight(int height);
@@ -53,14 +53,17 @@ protected:
     int _nBarrier;
     GridType _grid;
 
-    virtual void fill(int value, int count, GridType &grid) = 0;
+    virtual void fill(int value, int count) = 0;
+
+    void setValue(int row, int column, int value);
+    int getValue(int row, int column) const;
 };
 
 
 class RandomGridGenerator : public GridGenerator
 {
 protected:
-    void fill(int value, int count, GridType &grid) override;
+    void fill(int value, int count) override;
 };
 
 // Grid generator for debugging
@@ -68,7 +71,7 @@ class TestGridGenerator : public GridGenerator
 {
     void generate() override;
 protected:
-    void fill(int value, int count, GridType &grid) override;
+    void fill(int value, int count) override;
 private:
     void grid5x5();
     void grid10x10();
