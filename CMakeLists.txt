@@ -14,7 +14,7 @@ qt5_add_resources(QRC_WRAPPERS
 
 # MOC
 qt5_wrap_cpp(MOC_WRAPPERS
-    MVC/GridModel.h
+    Model/GridModel.h
     )
 
 set(GRID_FILES
@@ -24,10 +24,10 @@ set(GRID_FILES
     )
 
 set(MVC_FILES
-    MVC/GridModel.cpp
-    MVC/GridModel.h
-    MVC/JsonStorage.cpp
-    MVC/JsonStorage.h
+    Model/GridModel.cpp
+    Model/GridModel.h
+    Model/StepCommand.cpp
+    Model/StepCommand.h
     )
 
 add_executable(LoaderGame
