@@ -11,10 +11,8 @@ ApplicationWindow
     visible: true
     width: 640
     height: 480
-    //maximumHeight: height
-    //maximumWidth: width
-    //minimumHeight: height
-    //minimumWidth: width
+    minimumWidth: 320
+    minimumHeight: 240
     color: "#09102B"
     title: qsTr("Loader Game")
 
@@ -100,11 +98,11 @@ ApplicationWindow
             onClicked: gridModel.reset()
         }
     }
-
     footer: ToolBar
     {
         RowLayout
         {
+            anchors.fill: parent
             LabelInformation
             {
                 id: labelCargos
@@ -153,7 +151,6 @@ ApplicationWindow
         rowSpacing: 1
         columnSpacing: 1
         model: gridModel
-
         GridModel
         {
             id: gridModel
@@ -172,7 +169,33 @@ ApplicationWindow
             id: loaderGrid
             implicitWidth: root.contentItem.width / gridModel.columnCount()
             implicitHeight: root.contentItem.height / gridModel.rowCount()
+            colorCell:
+            {
+                if (Cargo == true)
+                    "blue";
+                else if (CargoDestination == true)
+                    "purple";
+                else if (Barrier == true)
+                    "black";
+                else
+                    "white";
+            }
+            colorCircle:
+            {
+                if (LoaderPlayer == true)
+                    "green";
+                else if (Cargo == true)
+                    "blue";
+                else if (CargoDestination == true)
+                    "purple";
+                else if (Barrier == true)
+                    "black";
+                else
+                    "white";
+            }
         }
+        onWidthChanged: tableView.forceLayout();
+        onHeightChanged: tableView.forceLayout();
     }
 
     Item
@@ -185,9 +208,6 @@ ApplicationWindow
         Keys.onRightPressed: gridModel.moveRight();
         Keys.onLeftPressed: gridModel.moveLeft();
 
-        onFocusChanged:
-        {
-            keysNavigation.focus = true
-        }
+        onFocusChanged: keysNavigation.focus = true
     }
 }
