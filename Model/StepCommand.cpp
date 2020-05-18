@@ -31,8 +31,9 @@ void StepCommand::redo()
 void StepCommand::undo()
 {
     Q_ASSERT(_pModel);
-    foreach (const Data &data, _dataVec)
+    for (int i = _dataVec.size() - 1; i >= 0; --i)
     {
+        auto &data = _dataVec[i];
         _pModel->setData(data.index, data.oldValue);
     }
 }
