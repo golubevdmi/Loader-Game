@@ -4,22 +4,14 @@ import QtQuick.Controls 2.12
 
 Rectangle
 {
-    id: root
-    color:
-    {
-        if (Cargo == true)
-            "blue";
-        else if (CargoDestination == true)
-            "purple";
-        else if (Barrier == true)
-            "black";
-        else
-            "white";
-    }
+    property alias colorCell: root.color
+    property alias colorCircle: delegateRect.color
+    property alias text: text.text
 
+    id: root
     Text
     {
-        //text: display
+        id: text
         font.pointSize: 12
         anchors.centerIn: parent
     }
@@ -34,19 +26,6 @@ Rectangle
         border.color: "black"
         border.width: 2
 
-        color:
-        {
-            if (LoaderPlayer == true)
-                "green";
-            else if (Cargo == true)
-                "blue";
-            else if (CargoDestination == true)
-                "purple";
-            else if (Barrier == true)
-                "black";
-            else
-                "white";
-        }
 
         ColorAnimation
         {
