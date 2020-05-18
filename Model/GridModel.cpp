@@ -14,9 +14,7 @@ GridModel::GridModel(QObject *parent)
     , _width(0)
     , _height(0)
     , _nSteps(0)
-{
-    grid5x5();
-}
+{}
 
 GridModel::~GridModel()
 {
@@ -339,6 +337,7 @@ void GridModel::movedComplete()
         qDebug() << "game win";
         emit game_win();
     }
+    emit cargos_left(calcCargosLeft());
     saveStep();
     ++_nSteps;
 }
@@ -374,6 +373,7 @@ bool GridModel::undo()
                  << ", nSteps: " + QString::number(_nSteps)
                  << " - undo";
         _pStack->undo();
+        emit cargos_left(calcCargosLeft());
         return true;
     }
     return false;
@@ -387,6 +387,7 @@ bool GridModel::redo()
                  << ", nSteps: " + QString::number(_nSteps)
                  << " - redo";
         _pStack->redo();
+        emit cargos_left(calcCargosLeft());
         return true;
     }
     return false;
@@ -410,6 +411,27 @@ void GridModel::setValue(const QModelIndex &index, QVariant value)
     {
         _currentGrid[index.row() * _height + index.column()] = value.toInt();
     }
+}
+
+int GridModel::getFieldsCargos() const
+{
+    if (_gridGenerator)
+        return _gridGenerator->getCargos();
+    return -1;
+}
+
+int GridModel::getFieldsCargosDestination() const
+{
+    if (_gridGenerator)
+        return _gridGenerator->getCargosDestination();
+    return -1;
+}
+
+int GridModel::getFieldsBarriers() const
+{
+    if (_gridGenerator)
+        return _gridGenerator->getBarriers();
+    return -1;
 }
 
 QModelIndex GridModel::getLoaderPlayerIndex()

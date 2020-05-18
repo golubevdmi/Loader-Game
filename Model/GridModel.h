@@ -38,6 +38,10 @@ public:
     Q_INVOKABLE bool undo();
     Q_INVOKABLE bool redo();
 
+    Q_INVOKABLE int getFieldsCargos() const;
+    Q_INVOKABLE int getFieldsCargosDestination() const;
+    Q_INVOKABLE int getFieldsBarriers() const;
+
 signals:
     void grid_changed();
     void loader_index_changed(const QModelIndex &index);

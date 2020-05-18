@@ -3,6 +3,7 @@
         <file>resources/main.qml</file>
         <file>resources/LoaderGirdButton.qml</file>
         <file>resources/LoaderGridDelegate.qml</file>
+        <file>resources/LabelInformation.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>resources/redo.png</file>
