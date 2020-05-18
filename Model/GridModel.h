@@ -55,11 +55,12 @@ private:
     int _nSteps;
 
     bool move(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
-    bool moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
+    void movedComplete();
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
     void saveStep();
     void createGrid(int width, int height);
-    size_t calcCargosLeft();
+    size_t calcCargosLeft() const;
+    bool checkWin();
 
     void setValue(const QModelIndex &index, QVariant value);
 

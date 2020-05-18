@@ -184,6 +184,11 @@ void GridModel::grid15x15()
 
 bool GridModel::moveUp()
 {
+    if (checkWin())
+    {
+        emit game_win();
+        return false;
+    }
     QModelIndex indexLoader = getLoaderPlayerIndex();
     if (indexLoader.isValid())
     {
@@ -193,6 +198,7 @@ bool GridModel::moveUp()
             if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move up";
+                movedComplete();
                 return true;
             }
         }
@@ -202,6 +208,11 @@ bool GridModel::moveUp()
 
 bool GridModel::moveDown()
 {
+    if (checkWin())
+    {
+        emit game_win();
+        return false;
+    }
     QModelIndex indexLoader = getLoaderPlayerIndex();
     if (indexLoader.isValid())
     {
@@ -211,6 +222,7 @@ bool GridModel::moveDown()
             if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move down";
+                movedComplete();
                 return true;
             }
         }
@@ -220,6 +232,11 @@ bool GridModel::moveDown()
 
 bool GridModel::moveLeft()
 {
+    if (checkWin())
+    {
+        emit game_win();
+        return false;
+    }
     QModelIndex indexLoader = getLoaderPlayerIndex();
     if (indexLoader.isValid())
     {
@@ -229,6 +246,7 @@ bool GridModel::moveLeft()
             if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move left";
+                movedComplete();
                 return true;
             }
         }
@@ -238,6 +256,11 @@ bool GridModel::moveLeft()
 
 bool GridModel::moveRight()
 {
+    if (checkWin())
+    {
+        emit game_win();
+        return false;
+    }
     QModelIndex indexLoader = getLoaderPlayerIndex();
     if (indexLoader.isValid())
     {
@@ -247,6 +270,7 @@ bool GridModel::moveRight()
             if (move(indexLoader, indexToMove))
             {
                 qDebug() << "move right";
+                movedComplete();
                 return true;
             }
         }
@@ -259,80 +283,64 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
     if (!indexBegin.isValid() || !indexEnd.isValid())
         return false;
 
-    int nCargosLeft = calcCargosLeft();
-    if (!nCargosLeft)
-    {
-        emit game_win();
-        return false;
-    }
-
-    // Check move of other objects
+    // Check end pos
     switch (indexEnd.data().toInt())
     {
+    case FieldValue::Barrier:
+        return false;
     case FieldValue::Cargo:
     {
+        if (indexBegin.data().toInt() == FieldValue::Cargo)
+            return false;
         // Cargo destination cell
         int rowOffset = indexEnd.row() - indexBegin.row();
         int colOffset = indexEnd.column() - indexBegin.column();
         QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
-        if (!moveCargo(indexEnd, indexCargoDst))
+        if (move(indexEnd, indexCargoDst))
+        {
+            if (getBeginValue(indexCargoDst).toInt() == FieldValue::CargoDestination)
+            {
+                qDebug() << "cargo delivered";
+                emit cargo_delivered();
+            }
+        }
+        else
+        {
             return false;
+        }
         break;
     }
-    case FieldValue::Barrier:
-        return false;
-    default:
-        break;
     }
 
+    // Fill begin pos
     addIndexForCommand(indexEnd, indexEnd.data(), indexBegin.data());
     setData(indexEnd, indexBegin.data());
 
-    // Fill old LoaderPlayer pos
+    // Fill old pos
+    QVariant valueBegin = indexBegin.data();
     switch (getBeginValue(indexBegin).toInt())
     {
     case FieldValue::CargoDestination:
-        addIndexForCommand(indexBegin, indexBegin.data(), static_cast<QVariant>(FieldValue::CargoDestination));
-        setData(indexBegin, static_cast<QVariant>(FieldValue::CargoDestination));
+        addIndexForCommand(indexBegin, indexBegin.data(), QVariant(FieldValue::CargoDestination));
+        setData(indexBegin, QVariant(FieldValue::CargoDestination));
         break;
     default:
-        addIndexForCommand(indexBegin, indexBegin.data(), static_cast<QVariant>(FieldValue::Empty));
-        setData(indexBegin, static_cast<QVariant>(FieldValue::Empty));
+        addIndexForCommand(indexBegin, indexBegin.data(), QVariant(FieldValue::Empty));
+        setData(indexBegin, QVariant(FieldValue::Empty));
         break;
     }
-
-    nCargosLeft = calcCargosLeft();
-    if (!nCargosLeft)
-    {
-        emit game_win();
-    }
-
-    saveStep();
-    ++_nSteps;
     return true;
 }
 
-bool GridModel::moveCargo(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
+void GridModel::movedComplete()
 {
-    if (!indexBegin.isValid() || !indexEnd.isValid())
-        return false;
-
-    switch (indexEnd.data().toInt())
+    if (checkWin())
     {
-    case FieldValue::CargoDestination:
-        emit cargo_delivered();
-        qDebug() << "cargo delivered";
-    case FieldValue::Empty:
-        // Old cargo pos
-        //setValue(indexBegin, static_cast<QVariant>(FieldValue::Empty));
-        //emit dataChanged(indexBegin, indexBegin, {Qt::EditRole});
-        // New cargo pos
-        addIndexForCommand(indexEnd, indexEnd.data(), static_cast<QVariant>(FieldValue::Cargo));
-        setData(indexEnd, static_cast<QVariant>(FieldValue::Cargo));
-        return true;
-    default:
-        return false;
+        qDebug() << "game win";
+        emit game_win();
     }
+    saveStep();
+    ++_nSteps;
 }
 
 void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
@@ -384,10 +392,16 @@ bool GridModel::redo()
     return false;
 }
 
-size_t GridModel::calcCargosLeft()
+size_t GridModel::calcCargosLeft() const
 {
     size_t nCargos = std::count(_currentGrid.begin(), _currentGrid.end(), FieldValue::CargoDestination);
     return nCargos;
+}
+
+bool GridModel::checkWin()
+{
+    int nCargos = calcCargosLeft();
+    return !nCargos;
 }
 
 void GridModel::setValue(const QModelIndex &index, QVariant value)
@@ -412,13 +426,13 @@ QModelIndex GridModel::getLoaderPlayerIndex()
 QVariant GridModel::getValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return static_cast<QVariant>(_currentGrid[index.row() * _height + index.column()]);
+        return QVariant(_currentGrid[index.row() * _height + index.column()]);
     return QVariant();
 }
 
 QVariant GridModel::getBeginValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return static_cast<QVariant>(_beginGrid[index.row() * _height + index.column()]);
+        return QVariant(_beginGrid[index.row() * _height + index.column()]);
     return QVariant();
 }
