@@ -36,6 +36,7 @@ public:
 
     int getWidth() const;
     int getHeight() const;
+    int getEmpty() const;
     int getLoaderPlayers() const;
     int getCargos() const;
     int getCargosDestination() const;

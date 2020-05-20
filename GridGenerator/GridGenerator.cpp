@@ -1,6 +1,13 @@
 #include <GridGenerator/GridGenerator.h>
 
 
+int getNumberOfElements(const GridType &grid, int value)
+{
+    auto n = std::count(grid.begin(), grid.end(), value);
+    return n;
+}
+
+
 GridGenerator::GridGenerator()
     : m_width(0)
     , m_height(0)
@@ -87,24 +94,33 @@ int GridGenerator::getHeight() const
     return m_height;
 }
 
+int GridGenerator::getEmpty() const
+{
+    return getNumberOfElements(m_grid, FieldValue::Empty);
+}
+
 int GridGenerator::getLoaderPlayers() const
 {
-    return m_nLoaderPlayers;
+    return getNumberOfElements(m_grid, FieldValue::LoaderPlayer);
+    //return m_nLoaderPlayers;
 }
 
 int GridGenerator::getCargos() const
 {
-    return m_nCargos;
+    return getNumberOfElements(m_grid, FieldValue::Cargo);
+    //return m_nCargos;
 }
 
 int GridGenerator::getCargosDestination() const
 {
-    return m_nCargosDst;
+    return getNumberOfElements(m_grid, FieldValue::CargoDestination);
+    //return m_nCargosDst;
 }
 
 int GridGenerator::getBarriers() const
 {
-    return m_nBarriers;
+    return getNumberOfElements(m_grid, FieldValue::Barrier);
+    //return m_nBarriers;
 }
 
 GridType GridGenerator::getGrid() const
