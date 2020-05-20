@@ -8,7 +8,7 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new TestGridGenerator)
+    , m_pGridGenerator(new RandomGridGenerator)
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
     , m_width(0)
@@ -67,12 +67,14 @@ QVariant GridModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     QVariant value = getValue(index);
+    QVariant valueBegin = getBeginValue(index);
     switch (role)
     {
+    case FieldValue::CargoDestination:
+        return valueBegin.toInt() == role ? true : false;
     case FieldValue::Empty:
     case FieldValue::LoaderPlayer:
     case FieldValue::Cargo:
-    case FieldValue::CargoDestination:
     case FieldValue::Barrier:
         return value.toInt() == role ? true : false;
     case Qt::DisplayRole:
@@ -147,6 +149,7 @@ void GridModel::createGrid(int width, int height)
     endResetModel();
 
     emit grid_changed();
+    emit cargos_left(cargosLeft());
     emit loader_index_changed(getLoaderPlayerIndex());
 }
 
@@ -297,7 +300,7 @@ void GridModel::movedComplete()
         qDebug() << "game win";
         emit game_win();
     }
-    emit cargos_left(calcCargosLeft());
+    emit cargos_left(cargosLeft());
     saveStep();
     ++m_nSteps;
 }
@@ -330,7 +333,7 @@ bool GridModel::undo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - undo";
         m_pStack->undo();
-        emit cargos_left(calcCargosLeft());
+        emit cargos_left(cargosLeft());
         return true;
     }
     return false;
@@ -344,21 +347,60 @@ bool GridModel::redo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - redo";
         m_pStack->redo();
-        emit cargos_left(calcCargosLeft());
+        emit cargos_left(cargosLeft());
         return true;
     }
     return false;
 }
 
-size_t GridModel::calcCargosLeft() const
+int GridModel::cargos() const
 {
-    size_t nCargos = std::count(m_currentGrid.begin(), m_currentGrid.end(), FieldValue::CargoDestination);
+    if (m_pGridGenerator)
+    {
+        return m_pGridGenerator->getCargos();
+    }
+    return -1;
+}
+
+int GridModel::cargosDst() const
+{
+    if (m_pGridGenerator)
+    {
+        return m_pGridGenerator->getCargosDestination();
+    }
+    return -1;
+}
+
+int GridModel::barriers() const
+{
+    if (m_pGridGenerator)
+    {
+        return m_pGridGenerator->getBarriers();
+    }
+    return -1;
+}
+
+int GridModel::cargosLeft() const
+{
+    int nCargos = 0;
+    auto it = m_beginGrid.begin();
+    while (it != m_beginGrid.end())
+    {
+        it = std::find(it, m_beginGrid.end(), FieldValue::CargoDestination);
+        if (it != m_beginGrid.end())
+        {
+            auto index = std::distance(m_beginGrid.begin(), it);
+            if (m_currentGrid[index] != FieldValue::Cargo)
+                ++nCargos;
+            ++it;
+        }
+    }
     return nCargos;
 }
 
 bool GridModel::checkWin()
 {
-    int nCargos = calcCargosLeft();
+    int nCargos = cargosLeft();
     return !nCargos;
 }
 
@@ -368,27 +410,6 @@ void GridModel::setValue(const QModelIndex &index, QVariant value)
     {
         m_currentGrid[index.row() * m_height + index.column()] = value.toInt();
     }
-}
-
-int GridModel::getFieldsCargos() const
-{
-    if (m_pGridGenerator)
-        return m_pGridGenerator->getCargos();
-    return -1;
-}
-
-int GridModel::getFieldsCargosDestination() const
-{
-    if (m_pGridGenerator)
-        return m_pGridGenerator->getCargosDestination();
-    return -1;
-}
-
-int GridModel::getFieldsBarriers() const
-{
-    if (m_pGridGenerator)
-        return m_pGridGenerator->getBarriers();
-    return -1;
 }
 
 QModelIndex GridModel::getLoaderPlayerIndex()

@@ -108,6 +108,7 @@ ApplicationWindow
                 id: labelCargos
                 Layout.alignment: Qt.AlignLeft
                 text1: "Cargos:"
+                text2: gridModel.cargos
                 color: root.color
             }
             LabelInformation
@@ -115,6 +116,7 @@ ApplicationWindow
                 id: labelCargosDst
                 Layout.alignment: Qt.AlignLeft
                 text1: "Cargos Dst:"
+                text2: gridModel.cargosDst
                 color: root.color
             }
             LabelInformation
@@ -122,6 +124,7 @@ ApplicationWindow
                 id: labelBarriers
                 Layout.alignment: Qt.AlignLeft
                 text1: "Barriers:"
+                text2: gridModel.barriers
                 color: root.color
             }
 
@@ -130,7 +133,7 @@ ApplicationWindow
                 id: spacerFooterItem
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
+                Rectangle { anchors.fill: parent; color: root.color }
             }
 
             LabelInformation
@@ -138,6 +141,7 @@ ApplicationWindow
                 id: labelCargosLeft
                 Layout.alignment: Qt.AlignRight
                 text1: "Cargos Left:"
+                text2: gridModel.cargosLeft
                 color: root.color
             }
         }
@@ -154,14 +158,6 @@ ApplicationWindow
         GridModel
         {
             id: gridModel
-            onGrid_changed:
-            {
-                labelCargos.text2 = gridModel.getFieldsCargos();
-                labelCargosDst.text2 = gridModel.getFieldsCargosDestination();
-                labelBarriers.text2 = gridModel.getFieldsBarriers();
-                labelCargosLeft.text2 = gridModel.getFieldsCargosDestination();
-            }
-            onCargos_left: labelCargosLeft.text2 = nCargos
             Component.onCompleted: grid5x5()
         }
         delegate: LoaderGridDelegate
@@ -182,17 +178,16 @@ ApplicationWindow
             }
             colorCircle:
             {
-                if (LoaderPlayer == true)
+                if (Cargo == true && CargoDestination == true)
+                    "yellow"
+                else if (LoaderPlayer == true)
                     "green";
-                else if (Cargo == true)
-                    "blue";
-                else if (CargoDestination == true)
-                    "purple";
                 else if (Barrier == true)
                     "black";
                 else
                     "white";
             }
+            //borderColorCircle: { return "white" }
         }
         onWidthChanged: tableView.forceLayout();
         onHeightChanged: tableView.forceLayout();

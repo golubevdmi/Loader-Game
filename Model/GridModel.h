@@ -12,6 +12,10 @@ class QUndoCommand;
 class GridModel : public QAbstractTableModel
 {
     Q_OBJECT
+    Q_PROPERTY(int cargos READ cargos NOTIFY grid_changed)
+    Q_PROPERTY(int cargosDst READ cargosDst NOTIFY grid_changed)
+    Q_PROPERTY(int barriers READ barriers NOTIFY grid_changed)
+    Q_PROPERTY(int cargosLeft READ cargosLeft NOTIFY cargos_left)
 public:
     GridModel(QObject *parent = nullptr);
     ~GridModel();
@@ -38,9 +42,10 @@ public:
     Q_INVOKABLE bool undo();
     Q_INVOKABLE bool redo();
 
-    Q_INVOKABLE int getFieldsCargos() const;
-    Q_INVOKABLE int getFieldsCargosDestination() const;
-    Q_INVOKABLE int getFieldsBarriers() const;
+    Q_INVOKABLE int cargos() const;
+    Q_INVOKABLE int cargosDst() const;
+    Q_INVOKABLE int barriers() const;
+    Q_INVOKABLE int cargosLeft() const;
 
 signals:
     void grid_changed();
@@ -64,7 +69,6 @@ private:
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
     void saveStep();
     void createGrid(int width, int height);
-    size_t calcCargosLeft() const;
     bool checkWin();
 
     void setValue(const QModelIndex &index, QVariant value);
