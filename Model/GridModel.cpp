@@ -344,16 +344,13 @@ void GridModel::movedComplete()
 
 void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
 {
-    try
+    if (!_pUndoCmd)
     {
-        if (!_pUndoCmd)
-        {
-            _pUndoCmd = new StepCommand(this);
-        }
-        dynamic_cast<StepCommand*>(_pUndoCmd)->addIndex(index, oldValue, newValue);
+        _pUndoCmd = new StepCommand(this);
     }
-    catch (...)
-    {}
+    auto pCustomCmd = dynamic_cast<StepCommand*>(_pUndoCmd);
+    if (pCustomCmd)
+        pCustomCmd->addIndex(index, oldValue, newValue);
 }
 
 void GridModel::saveStep()
