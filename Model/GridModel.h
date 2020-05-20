@@ -49,14 +49,14 @@ signals:
     void cargos_left(int nCargos);
     void game_win();
 private:
-    QSharedPointer<GridGenerator> _gridGenerator;
-    GridType _beginGrid;
-    GridType _currentGrid;
-    QUndoStack *_pStack;
-    QUndoCommand *_pUndoCmd;
-    int _width;
-    int _height;
-    int _nSteps;
+    QSharedPointer<GridGenerator> m_pGridGenerator;
+    GridType m_beginGrid;
+    GridType m_currentGrid;
+    QUndoStack *m_pStack;
+    QUndoCommand *m_pUndoCmd;
+    int m_width;
+    int m_height;
+    int m_nSteps;
 
     bool move(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
     void movedComplete();

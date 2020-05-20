@@ -2,9 +2,9 @@
 
 void TestGridGenerator::generate()
 {
-    if (_width != _height)
+    if (m_width != m_height)
         return;
-    int sz = _width;
+    int sz = m_width;
     switch (sz)
     {
     case 5:
@@ -24,8 +24,8 @@ void TestGridGenerator::fill(int value, int count)
 
 void TestGridGenerator::grid5x5()
 {
-    int center = _width / 2;
-    int border = _width - 1;
+    int center = m_width / 2;
+    int border = m_width - 1;
 
     setValue(center, center, LoaderPlayer);
 
@@ -43,8 +43,8 @@ void TestGridGenerator::grid5x5()
 
 void TestGridGenerator::grid10x10()
 {
-    int center = _width / 2;
-    int border = _width - 1;
+    int center = m_width / 2;
+    int border = m_width - 1;
 
     setValue(center, center, LoaderPlayer);
 
@@ -62,8 +62,8 @@ void TestGridGenerator::grid10x10()
 
 void TestGridGenerator::grid15x15()
 {
-    int center = _width / 2;
-    int border = _width - 1;
+    int center = m_width / 2;
+    int border = m_width - 1;
 
     setValue(center, center, LoaderPlayer);
 

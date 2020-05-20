@@ -8,36 +8,36 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , _gridGenerator(new TestGridGenerator)
-    , _pStack(new QUndoStack(this))
-    , _pUndoCmd(nullptr)
-    , _width(0)
-    , _height(0)
-    , _nSteps(0)
+    , m_pGridGenerator(new TestGridGenerator)
+    , m_pStack(new QUndoStack(this))
+    , m_pUndoCmd(nullptr)
+    , m_width(0)
+    , m_height(0)
+    , m_nSteps(0)
 {}
 
 GridModel::~GridModel()
 {
-    if (_pUndoCmd)
-        delete _pUndoCmd;
+    if (m_pUndoCmd)
+        delete m_pUndoCmd;
 }
 
 void GridModel::reset()
 {
     beginResetModel();
 
-    _currentGrid = _beginGrid;
+    m_currentGrid = m_beginGrid;
 
     endResetModel();
 
-    if (_pStack)
-        _pStack->clear();
-    if (_pUndoCmd)
+    if (m_pStack)
+        m_pStack->clear();
+    if (m_pUndoCmd)
     {
-        delete _pUndoCmd;
-        _pUndoCmd = nullptr;
+        delete m_pUndoCmd;
+        m_pUndoCmd = nullptr;
     }
-    _nSteps = 0;
+    m_nSteps = 0;
 }
 
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const
@@ -51,14 +51,14 @@ int GridModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
-    return _height;
+    return m_height;
 }
 
 int GridModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
-    return _width;
+    return m_width;
 }
 
 QVariant GridModel::data(const QModelIndex &index, int role) const
@@ -129,20 +129,20 @@ QHash<int, QByteArray> GridModel::roleNames() const
 void GridModel::createGrid(int width, int height)
 {
     Q_ASSERT(width > 0 && height > 0);
-    Q_ASSERT(_gridGenerator);
+    Q_ASSERT(m_pGridGenerator);
 
-    _width = width;
-    _height = height;
+    m_width = width;
+    m_height = height;
 
-    _gridGenerator->setWidth(_width);
-    _gridGenerator->setHeight(_height);
+    m_pGridGenerator->setWidth(m_width);
+    m_pGridGenerator->setHeight(m_height);
 
-    _gridGenerator->init();
-    _gridGenerator->generate();
+    m_pGridGenerator->init();
+    m_pGridGenerator->generate();
 
     // Update grid
     beginResetModel();
-    _beginGrid = _gridGenerator->getGrid();
+    m_beginGrid = m_pGridGenerator->getGrid();
     reset();
     endResetModel();
 
@@ -152,31 +152,31 @@ void GridModel::createGrid(int width, int height)
 
 void GridModel::grid5x5()
 {
-    Q_ASSERT(_gridGenerator);
-    _gridGenerator->setLoaderPlayers(1);
-    _gridGenerator->setCargos(2);
-    _gridGenerator->setCargosDestination(2);
-    _gridGenerator->setBarriers(3);
+    Q_ASSERT(m_pGridGenerator);
+    m_pGridGenerator->setLoaderPlayers(1);
+    m_pGridGenerator->setCargos(2);
+    m_pGridGenerator->setCargosDestination(2);
+    m_pGridGenerator->setBarriers(3);
     createGrid(5, 5);
 }
 
 void GridModel::grid10x10()
 {
-    Q_ASSERT(_gridGenerator);
-    _gridGenerator->setLoaderPlayers(1);
-    _gridGenerator->setCargos(2);
-    _gridGenerator->setCargosDestination(2);
-    _gridGenerator->setBarriers(3);
+    Q_ASSERT(m_pGridGenerator);
+    m_pGridGenerator->setLoaderPlayers(1);
+    m_pGridGenerator->setCargos(2);
+    m_pGridGenerator->setCargosDestination(2);
+    m_pGridGenerator->setBarriers(3);
     createGrid(10, 10);
 }
 
 void GridModel::grid15x15()
 {
-    Q_ASSERT(_gridGenerator);
-    _gridGenerator->setLoaderPlayers(1);
-    _gridGenerator->setCargos(5);
-    _gridGenerator->setCargosDestination(5);
-    _gridGenerator->setBarriers(15);
+    Q_ASSERT(m_pGridGenerator);
+    m_pGridGenerator->setLoaderPlayers(1);
+    m_pGridGenerator->setCargos(5);
+    m_pGridGenerator->setCargosDestination(5);
+    m_pGridGenerator->setBarriers(15);
     createGrid(15, 15);
 }
 
@@ -339,37 +339,37 @@ void GridModel::movedComplete()
     }
     emit cargos_left(calcCargosLeft());
     saveStep();
-    ++_nSteps;
+    ++m_nSteps;
 }
 
 void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
 {
-    if (!_pUndoCmd)
+    if (!m_pUndoCmd)
     {
-        _pUndoCmd = new StepCommand(this);
+        m_pUndoCmd = new StepCommand(this);
     }
-    auto pCustomCmd = dynamic_cast<StepCommand*>(_pUndoCmd);
+    auto pCustomCmd = dynamic_cast<StepCommand*>(m_pUndoCmd);
     if (pCustomCmd)
         pCustomCmd->addIndex(index, oldValue, newValue);
 }
 
 void GridModel::saveStep()
 {
-    if (_pStack && _pUndoCmd)
+    if (m_pStack && m_pUndoCmd)
     {
-        _pStack->push(_pUndoCmd);
-        _pUndoCmd = nullptr;
+        m_pStack->push(m_pUndoCmd);
+        m_pUndoCmd = nullptr;
     }
 }
 
 bool GridModel::undo()
 {
-    if (_pStack && _pStack->index() > 0)
+    if (m_pStack && m_pStack->index() > 0)
     {
-        qDebug() << "stack index: " + QString::number(_pStack->index())
-                 << ", nSteps: " + QString::number(_nSteps)
+        qDebug() << "stack index: " + QString::number(m_pStack->index())
+                 << ", nSteps: " + QString::number(m_nSteps)
                  << " - undo";
-        _pStack->undo();
+        m_pStack->undo();
         emit cargos_left(calcCargosLeft());
         return true;
     }
@@ -378,12 +378,12 @@ bool GridModel::undo()
 
 bool GridModel::redo()
 {
-    if (_pStack && _pStack->index() < _nSteps)
+    if (m_pStack && m_pStack->index() < m_nSteps)
     {
-        qDebug() << "stack index: " + QString::number(_pStack->index())
-                 << ", nSteps: " + QString::number(_nSteps)
+        qDebug() << "stack index: " + QString::number(m_pStack->index())
+                 << ", nSteps: " + QString::number(m_nSteps)
                  << " - redo";
-        _pStack->redo();
+        m_pStack->redo();
         emit cargos_left(calcCargosLeft());
         return true;
     }
@@ -392,7 +392,7 @@ bool GridModel::redo()
 
 size_t GridModel::calcCargosLeft() const
 {
-    size_t nCargos = std::count(_currentGrid.begin(), _currentGrid.end(), FieldValue::CargoDestination);
+    size_t nCargos = std::count(m_currentGrid.begin(), m_currentGrid.end(), FieldValue::CargoDestination);
     return nCargos;
 }
 
@@ -406,38 +406,38 @@ void GridModel::setValue(const QModelIndex &index, QVariant value)
 {
     if (index.isValid() && !value.isNull())
     {
-        _currentGrid[index.row() * _height + index.column()] = value.toInt();
+        m_currentGrid[index.row() * m_height + index.column()] = value.toInt();
     }
 }
 
 int GridModel::getFieldsCargos() const
 {
-    if (_gridGenerator)
-        return _gridGenerator->getCargos();
+    if (m_pGridGenerator)
+        return m_pGridGenerator->getCargos();
     return -1;
 }
 
 int GridModel::getFieldsCargosDestination() const
 {
-    if (_gridGenerator)
-        return _gridGenerator->getCargosDestination();
+    if (m_pGridGenerator)
+        return m_pGridGenerator->getCargosDestination();
     return -1;
 }
 
 int GridModel::getFieldsBarriers() const
 {
-    if (_gridGenerator)
-        return _gridGenerator->getBarriers();
+    if (m_pGridGenerator)
+        return m_pGridGenerator->getBarriers();
     return -1;
 }
 
 QModelIndex GridModel::getLoaderPlayerIndex()
 {
-    auto it = std::find(_currentGrid.begin(), _currentGrid.end(), FieldValue::LoaderPlayer);
-    if (it != _currentGrid.end())
+    auto it = std::find(m_currentGrid.begin(), m_currentGrid.end(), FieldValue::LoaderPlayer);
+    if (it != m_currentGrid.end())
     {
-        auto index = std::distance(_currentGrid.begin(), it);
-        return createIndex(index / _height, index % _height);
+        auto index = std::distance(m_currentGrid.begin(), it);
+        return createIndex(index / m_height, index % m_height);
     }
     return QModelIndex();
 }
@@ -445,13 +445,13 @@ QModelIndex GridModel::getLoaderPlayerIndex()
 QVariant GridModel::getValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return QVariant(_currentGrid[index.row() * _height + index.column()]);
+        return QVariant(m_currentGrid[index.row() * m_height + index.column()]);
     return QVariant();
 }
 
 QVariant GridModel::getBeginValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return QVariant(_beginGrid[index.row() * _height + index.column()]);
+        return QVariant(m_beginGrid[index.row() * m_height + index.column()]);
     return QVariant();
 }

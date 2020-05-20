@@ -44,13 +44,13 @@ public:
     GridType getGrid() const;
 
 protected:
-    int _width;
-    int _height;
-    int _nLoaderPlayer;
-    int _nCargo;
-    int _nCargoDst;
-    int _nBarrier;
-    GridType _grid;
+    int m_width;
+    int m_height;
+    int m_nLoaderPlayers;
+    int m_nCargos;
+    int m_nCargosDst;
+    int m_nBarriers;
+    GridType m_grid;
 
     virtual void fill(int value, int count) = 0;
 
