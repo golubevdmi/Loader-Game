@@ -1,6 +1,7 @@
 #include <GridGenerator/GridGenerator.h>
 
 #include <random>
+#include <QRandomGenerator>
 
 // PRNG
 int random(int min, int max)
@@ -14,7 +15,7 @@ int random(int min, int max)
     return distribution(generator);
 }
 
-
+#include <QDebug>
 void RandomGridGenerator::fill(int value, int count)
 {
     Q_ASSERT(value != FieldValue::Empty);
@@ -29,8 +30,10 @@ void RandomGridGenerator::fill(int value, int count)
     int counter = 0;
     while (counter < count)
     {
-        int row = random(0, m_height - 1);
-        int column = random(0, m_width - 1);
+        //int row = random(0, m_height - 1);
+        //int column = random(0, m_width - 1);
+        int row = QRandomGenerator::global()->bounded(m_width);
+        int column = QRandomGenerator::global()->bounded(m_height);
         if (getValue(row, column) == FieldValue::Empty)
         {
             setValue(row, column, value);
