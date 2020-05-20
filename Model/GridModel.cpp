@@ -182,92 +182,52 @@ void GridModel::grid15x15()
 
 bool GridModel::moveUp()
 {
-    if (checkWin())
-    {
-        emit game_win();
-        return false;
-    }
-    QModelIndex indexLoader = getLoaderPlayerIndex();
-    if (indexLoader.isValid())
-    {
-        QModelIndex indexToMove = this->index(indexLoader.row() - 1, indexLoader.column(), QModelIndex());
-        if (indexToMove.isValid())
-        {
-            if (move(indexLoader, indexToMove))
-            {
-                qDebug() << "move up";
-                movedComplete();
-                return true;
-            }
-        }
-    }
-    return false;
+    bool ret = moveLoader(-1, 0);
+    if (ret)
+        qDebug() << "move up";
+    return ret;
 }
 
 bool GridModel::moveDown()
 {
-    if (checkWin())
-    {
-        emit game_win();
-        return false;
-    }
-    QModelIndex indexLoader = getLoaderPlayerIndex();
-    if (indexLoader.isValid())
-    {
-        QModelIndex indexToMove = this->index(indexLoader.row() + 1, indexLoader.column(), QModelIndex());
-        if (indexToMove.isValid())
-        {
-            if (move(indexLoader, indexToMove))
-            {
-                qDebug() << "move down";
-                movedComplete();
-                return true;
-            }
-        }
-    }
-    return false;
+    bool ret = moveLoader(1, 0);
+    if (ret)
+        qDebug() << "move down";
+    return ret;
 }
 
 bool GridModel::moveLeft()
 {
-    if (checkWin())
-    {
-        emit game_win();
-        return false;
-    }
-    QModelIndex indexLoader = getLoaderPlayerIndex();
-    if (indexLoader.isValid())
-    {
-        QModelIndex indexToMove = this->index(indexLoader.row(), indexLoader.column() - 1, QModelIndex());
-        if (indexToMove.isValid())
-        {
-            if (move(indexLoader, indexToMove))
-            {
-                qDebug() << "move left";
-                movedComplete();
-                return true;
-            }
-        }
-    }
-    return false;
+    bool ret = moveLoader(0, -1);
+    if (ret)
+        qDebug() << "move left";
+    return ret;
 }
 
 bool GridModel::moveRight()
+{
+    bool ret = moveLoader(0, 1);
+    if (ret)
+        qDebug() << "move right";
+    return ret;
+}
+
+bool GridModel::moveLoader(int rowOffset, int columnOffset)
 {
     if (checkWin())
     {
         emit game_win();
         return false;
     }
-    QModelIndex indexLoader = getLoaderPlayerIndex();
-    if (indexLoader.isValid())
+    QModelIndex index = getLoaderPlayerIndex();
+    if (index.isValid())
     {
-        QModelIndex indexToMove = this->index(indexLoader.row(), indexLoader.column() + 1, QModelIndex());
+        QModelIndex indexToMove = this->index(index.row() + rowOffset,
+                                              index.column() + columnOffset, QModelIndex());
         if (indexToMove.isValid())
         {
-            if (move(indexLoader, indexToMove))
+            if (move(index, indexToMove))
             {
-                qDebug() << "move right";
                 movedComplete();
                 return true;
             }

@@ -58,6 +58,7 @@ private:
     int m_height;
     int m_nSteps;
 
+    bool moveLoader(int rowOffset, int columnOffset);
     bool move(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
     void movedComplete();
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
