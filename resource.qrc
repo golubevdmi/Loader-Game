@@ -4,11 +4,21 @@
         <file>resources/LoaderGirdButton.qml</file>
         <file>resources/LoaderGridDelegate.qml</file>
         <file>resources/LabelInformation.qml</file>
+        <file>resources/canvas.js</file>
     </qresource>
     <qresource prefix="/images">
         <file>resources/redo.png</file>
         <file>resources/undo.png</file>
         <file>resources/about.png</file>
         <file>resources/exit.png</file>
+    </qresource>
+    <qresource prefix="/sprites">
+        <file>resources/field_floor1.png</file>
+        <file>resources/field_wall1.png</file>
+        <file>resources/field_player1_pose1.png</file>
+        <file>resources/field_cargo1_s1.png</file>
+        <file>resources/field_cargodst1_s1.png</file>
+        <file>resources/field_cargodst1_s2.png</file>
+        <file>resources/field_delivered1.png</file>
     </qresource>
 </RCC>

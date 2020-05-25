@@ -152,8 +152,6 @@ ApplicationWindow
         id: tableView
         anchors.fill: parent
         clip: true
-        rowSpacing: 1
-        columnSpacing: 1
         model: gridModel
         GridModel
         {
@@ -165,29 +163,6 @@ ApplicationWindow
             id: loaderGrid
             implicitWidth: root.contentItem.width / gridModel.columnCount()
             implicitHeight: root.contentItem.height / gridModel.rowCount()
-            colorCell:
-            {
-                if (Cargo == true)
-                    "blue";
-                else if (CargoDestination == true)
-                    "purple";
-                else if (Barrier == true)
-                    "black";
-                else
-                    "white";
-            }
-            colorCircle:
-            {
-                if (Cargo == true && CargoDestination == true)
-                    "yellow"
-                else if (LoaderPlayer == true)
-                    "green";
-                else if (Barrier == true)
-                    "black";
-                else
-                    "white";
-            }
-            //borderColorCircle: { return "white" }
         }
         onWidthChanged: tableView.forceLayout();
         onHeightChanged: tableView.forceLayout();
