@@ -62,6 +62,7 @@ private:
     int m_width;
     int m_height;
     int m_nSteps;
+    int m_nMoves;
 
     bool moveLoader(int rowOffset, int columnOffset);
     bool move(const QModelIndex &indexBegin, const QModelIndex &indexEnd);
@@ -70,6 +71,7 @@ private:
     void saveStep();
     void createGrid(int width, int height);
     bool checkWin();
+    void cmdComplete();
 
     void setValue(const QModelIndex &index, QVariant value);
 

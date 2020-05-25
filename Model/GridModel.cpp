@@ -14,6 +14,7 @@ GridModel::GridModel(QObject *parent)
     , m_width(0)
     , m_height(0)
     , m_nSteps(0)
+    , m_nMoves(0)
 {}
 
 GridModel::~GridModel()
@@ -302,6 +303,7 @@ void GridModel::movedComplete()
     }
     emit cargos_left(cargosLeft());
     saveStep();
+    ++m_nMoves;
     ++m_nSteps;
 }
 
@@ -333,6 +335,7 @@ bool GridModel::undo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - undo";
         m_pStack->undo();
+        cmdComplete();
         emit cargos_left(cargosLeft());
         return true;
     }
@@ -347,10 +350,16 @@ bool GridModel::redo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - redo";
         m_pStack->redo();
+        cmdComplete();
         emit cargos_left(cargosLeft());
         return true;
     }
     return false;
+}
+
+void GridModel::cmdComplete()
+{
+    ++m_nMoves;
 }
 
 int GridModel::cargos() const
