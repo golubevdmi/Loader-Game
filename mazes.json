@@ -1,0 +1,1410 @@
+[
+    {
+        "Maze 1": {
+            "Grid": [
+                "    XXXXX             ",
+                "    X   X             ",
+                "    X*  X             ",
+                "  XXX  *XXX           ",
+                "  X  *  * X           ",
+                "XXX X XXX X     XXXXXX",
+                "X   X XXX XXXXXXX  ..X",
+                "X *  *             ..X",
+                "XXXXX XXXX X@XXXX  ..X",
+                "    X      XXX  XXXXXX",
+                "    XXXXXXXX          "
+            ],
+            "Size X": "22",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 2": {
+            "Grid": [
+                "XXXXXXXXXXXX  ",
+                "X..  X     XXX",
+                "X..  X *  *  X",
+                "X..  X*XXXX  X",
+                "X..    @ XX  X",
+                "X..  X X  * XX",
+                "XXXXXX XX* * X",
+                "  X *  * * * X",
+                "  X    X     X",
+                "  XXXXXXXXXXXX"
+            ],
+            "Size X": "14",
+            "Size Y": "10"
+        }
+    },
+    {
+        "Maze 3": {
+            "Grid": [
+                "        XXXXXXXX ",
+                "        X     @X ",
+                "        X *X* XX ",
+                "        X *  *X  ",
+                "        XX* * X  ",
+                "XXXXXXXXX * X XXX",
+                "X....  XX *  *  X",
+                "XX...    *  *   X",
+                "X....  XXXXXXXXXX",
+                "XXXXXXXX         "
+            ],
+            "Size X": "17",
+            "Size Y": "10"
+        }
+    },
+    {
+        "Maze 4": {
+            "Grid": [
+                "              XXXXXXXX",
+                "              X  ....X",
+                "   XXXXXXXXXXXX  ....X",
+                "   X    X  * *   ....X",
+                "   X ***X*  * X  ....X",
+                "   X  *     * X  ....X",
+                "   X ** X* * *XXXXXXXX",
+                "XXXX  * X     X       ",
+                "X   X XXXXXXXXX       ",
+                "X    *  XX            ",
+                "X **X** @X            ",
+                "X   X   XX            ",
+                "XXXXXXXXX             "
+            ],
+            "Size X": "22",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 5": {
+            "Grid": [
+                "        XXXXX    ",
+                "        X   XXXXX",
+                "        X X*XX  X",
+                "        X     * X",
+                "XXXXXXXXX XXX   X",
+                "X....  XX *  *XXX",
+                "X....    * ** XX ",
+                "X....  XX*  * @X ",
+                "XXXXXXXXX  *  XX ",
+                "        X * *  X ",
+                "        XXX XX X ",
+                "          X    X ",
+                "          XXXXXX "
+            ],
+            "Size X": "17",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 6": {
+            "Grid": [
+                "XXXXXX  XXX ",
+                "X..  X XX@XX",
+                "X..  XXX   X",
+                "X..     ** X",
+                "X..  X X * X",
+                "X..XXX X * X",
+                "XXXX * X*  X",
+                "   X  *X * X",
+                "   X *  *  X",
+                "   X  XX   X",
+                "   XXXXXXXXX"
+            ],
+            "Size X": "12",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 7": {
+            "Grid": [
+                "       XXXXX ",
+                " XXXXXXX   XX",
+                "XX X @XX ** X",
+                "X    *      X",
+                "X  *  XXX   X",
+                "XXX XXXXX*XXX",
+                "X *  XXX ..X ",
+                "X * * * ...X ",
+                "X    XXX...X ",
+                "X ** X X...X ",
+                "X  XXX XXXXX ",
+                "XXXX         "
+            ],
+            "Size X": "13",
+            "Size Y": "12"
+        }
+    },
+    {
+        "Maze 8": {
+            "Grid": [
+                "  XXXX          ",
+                "  X  XXXXXXXXXXX",
+                "  X    *   * * X",
+                "  X *X * X  *  X",
+                "  X  * *  X    X",
+                "XXX *X X  XXXX X",
+                "X@X* * *  XX   X",
+                "X    * X*X   X X",
+                "XX  *    * * * X",
+                " XXXX  XXXXXXXXX",
+                "  XXX  XXX      ",
+                "  X      X      ",
+                "  X      X      ",
+                "  X......X      ",
+                "  X......X      ",
+                "  X......X      ",
+                "  XXXXXXXX      "
+            ],
+            "Size X": "16",
+            "Size Y": "17"
+        }
+    },
+    {
+        "Maze 9": {
+            "Grid": [
+                "          XXXXXXX",
+                "          X  ...X",
+                "      XXXXX  ...X",
+                "      X      ...X",
+                "      X  XX  ...X",
+                "      XX XX  ...X",
+                "     XXX XXXXXXXX",
+                "     X *** XX    ",
+                " XXXXX  * * XXXXX",
+                "XX   X* *   X   X",
+                "X@ *  *    *  * X",
+                "XXXXXX ** * XXXXX",
+                "     X *    X    ",
+                "     XXXX XXX    ",
+                "        X  X     ",
+                "        X  X     ",
+                "        X  X     ",
+                "        XXXX     "
+            ],
+            "Size X": "17",
+            "Size Y": "18"
+        }
+    },
+    {
+        "Maze 10": {
+            "Grid": [
+                "              XXXX   ",
+                "         XXXXXX  X   ",
+                "         X       X   ",
+                "         X  XXXX XXX ",
+                " XXX  XXXXX XXX    X ",
+                "XX@XXXX   *** X    X ",
+                "X **   ** *   X....XX",
+                "X  ***X    *  X.....X",
+                "X *   X ** ** X.....X",
+                "XXX   X  *    X.....X",
+                "  X   X * * * X.....X",
+                "  X XXXXXXX XXX.....X",
+                "  X   X  * *  X.....X",
+                "  XXX X ** * *XXXXXXX",
+                "    X X  *      X    ",
+                "    X X *** *** X    ",
+                "    X X       X X    ",
+                "    X XXXXXXXXX X    ",
+                "    X           X    ",
+                "    XXXXXXXXXXXXX    "
+            ],
+            "Size X": "21",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 11": {
+            "Grid": [
+                "          XXXX     ",
+                "     XXXX X  X     ",
+                "   XXX  XXX* X     ",
+                "  XX   @  *  X     ",
+                " XX  * **XX XX     ",
+                " X  X*XX     X     ",
+                " X X * ** X XXX    ",
+                " X   * X  X * XXXXX",
+                "XXXX    X  ** X   X",
+                "XXXX XX *         X",
+                "X.    XXX  XXXXXXXX",
+                "X.. ..X XXXX       ",
+                "X...X.X            ",
+                "X.....X            ",
+                "XXXXXXX            "
+            ],
+            "Size X": "19",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 12": {
+            "Grid": [
+                "  XXXXXXXXX  ",
+                "  X&.&X&.&X  ",
+                "  X.&.&.&.X  ",
+                "  X&.&.&.&X  ",
+                "  X.&.&.&.X  ",
+                "  X&.&.&.&X  ",
+                "  XXX   XXX  ",
+                "    X   X    ",
+                "XXXXXX XXXXXX",
+                "X           X",
+                "X * * * * * X",
+                "XX * * * * XX",
+                " X* * * * *X ",
+                " X   *@*   X ",
+                " X  XXXXX  X ",
+                " XXXX   XXXX "
+            ],
+            "Size X": "13",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 13": {
+            "Grid": [
+                "    XXXXXXXXX       ",
+                "  XXX   XX  XXXXX   ",
+                "XXX      X  X   XXXX",
+                "X  ** X* X  X  ... X",
+                "X X  *X@*XX X X.X. X",
+                "X  XX X*  X    ... X",
+                "X *X    * X X X.X. X",
+                "X    XX  XX* * ... X",
+                "X * XX   X  X*X.X. X",
+                "XX **  *   *  *... X",
+                " X*  XXXXXX    XX  X",
+                " X   X    XXXXXXXXXX",
+                " XXXXX              "
+            ],
+            "Size X": "20",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 14": {
+            "Grid": [
+                "XXXXXXXXXXXXXXXX ",
+                "X              X ",
+                "X X XXXXXX     X ",
+                "X X  * * * *X  X ",
+                "X X   *@*   XX XX",
+                "X X X* * *XXX...X",
+                "X X   * *  XX...X",
+                "X XXX*** * XX...X",
+                "X     X XX XX...X",
+                "XXXXX   XX XX...X",
+                "    XXXXX     XXX",
+                "        X     X  ",
+                "        XXXXXXX  "
+            ],
+            "Size X": "17",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 15": {
+            "Grid": [
+                "       XXXX      ",
+                "    XXXX  X      ",
+                "   XX  X  X      ",
+                "   X  * * X      ",
+                " XXX X*   XXXX   ",
+                " X  *  XX*   X   ",
+                " X  X @ * X *X   ",
+                " X  X      * XXXX",
+                " XX XXXX*XX     X",
+                " X *X.....X X   X",
+                " X  *...&. *X XXX",
+                "XX  X.....X   X  ",
+                "X   XXX XXXXXXX  ",
+                "X **  X  X       ",
+                "X  X     X       ",
+                "XXXXXX   X       ",
+                "     XXXXX       "
+            ],
+            "Size X": "17",
+            "Size Y": "17"
+        }
+    },
+    {
+        "Maze 16": {
+            "Grid": [
+                "XXXXX         ",
+                "X   XX        ",
+                "X    X  XXXX  ",
+                "X *  XXXX  X  ",
+                "X  ** *   *X  ",
+                "XXX@ X*    XX ",
+                " X  XX  * * XX",
+                " X *  XX XX .X",
+                " X  X*XX*  X.X",
+                " XXX   *..XX.X",
+                "  X    X.&...X",
+                "  X ** X.....X",
+                "  X  XXXXXXXXX",
+                "  X  X        ",
+                "  XXXX        "
+            ],
+            "Size X": "14",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 17": {
+            "Grid": [
+                "       XXXXXXX    ",
+                " XXXXXXX     X    ",
+                " X     X *@* X    ",
+                " X** X   XXXXXXXXX",
+                " X XXX......XX   X",
+                " X   *......XX X X",
+                " X XXX......     X",
+                "XX   XXXX XXX X*XX",
+                "X  X*   X  *  X X ",
+                "X  * ***  X *XX X ",
+                "X   * * XXX** X X ",
+                "XXXXX     *   X X ",
+                "    XXX XXX   X X ",
+                "      X     X   X ",
+                "      XXXXXXXX  X ",
+                "             XXXX "
+            ],
+            "Size X": "18",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 18": {
+            "Grid": [
+                "      XXXXXXXXXXXX    ",
+                "      X  .  XX   X    ",
+                "      X X.     @ X    ",
+                " XXXXXX XX...X XXXX   ",
+                "XX  XX...XXXX     XXXX",
+                "X * XX...    * X  *  X",
+                "X     .. XX X XX XX  X",
+                "XXXX*XXX*X *  X   X XX",
+                " XXX  X    XX* ** X X ",
+                " X   ** X X * X *XX X ",
+                " X                  X ",
+                " XXXXXXXXXXXXXXXXX  X ",
+                "                 XXXX "
+            ],
+            "Size X": "22",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 19": {
+            "Grid": [
+                "        XXXXXX              ",
+                "        X   @XXXX           ",
+                "      XXXXX *   X           ",
+                "      X   XX    XXXX        ",
+                "      X *XX  XX    X        ",
+                "      X   X  XXXXX X        ",
+                "      X X** *    X X        ",
+                "      X  * * XXX X X        ",
+                "      X X   *  X X X        ",
+                "      X X  X*X   X X        ",
+                "     XX XXXX   X X X        ",
+                "     X  *  XXXXX X X XXXX   ",
+                "    XX    *     *  XXX  XXXX",
+                "XXXXX  XXX * *X * X   .....X",
+                "X     XX      X  XX  X.....X",
+                "X ****    XXXXXX*XX   X.XX.X",
+                "XX    XX              X....X",
+                " XX  XXXXXXXXXXXXXXX   ....X",
+                "  X  X             XXXXX  XX",
+                "  XXXX                 XXXX "
+            ],
+            "Size X": "28",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 20": {
+            "Grid": [
+                "       XXXXXXXXXXXX ",
+                "       X..........X ",
+                "     XXX.X.X.X.X..X ",
+                "     X   .........X ",
+                "     X@ * * * &.&.X ",
+                "    XXXXXXX XXXXXXX ",
+                " XXXX   X    XX  X  ",
+                "XX    * X    X * XX ",
+                "X  X*X XXX XXX*   XX",
+                "X *  * *   X * * * X",
+                "X  X * XX       X* X",
+                "X   *XXXX*XXXX*XX  X",
+                "XXXX  XX   X    X  X",
+                "   X* XX   X X **  X",
+                "   X   X * X  *    X",
+                "   XXX X ** X  * XXX",
+                "     X X    X * XX  ",
+                "     X XXXXXXXX X   ",
+                "     X          X   ",
+                "     XXXXXXXXXXXX   "
+            ],
+            "Size X": "20",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 21": {
+            "Grid": [
+                "   XXXXXXXXXX   ",
+                "   X..  X   X   ",
+                "   X..      X   ",
+                "   X..  X  XXXX ",
+                "  XXXXXXX  X  XX",
+                "  X            X",
+                "  X  X  XX  X  X",
+                "XXXX XX  XXXX XX",
+                "X  *  XXXXX X  X",
+                "X X *  *  X *  X",
+                "X @*  *   X   XX",
+                "XXXX XX XXXXXXX ",
+                "   X    X       ",
+                "   XXXXXX       "
+            ],
+            "Size X": "16",
+            "Size Y": "14"
+        }
+    },
+    {
+        "Maze 22": {
+            "Grid": [
+                "            XXXX      ",
+                " XXXXXXXXXXXX  XXXXX  ",
+                " X    X  X  *  X   XX ",
+                " X * * *  * X * *   X ",
+                " XX* *   X @X *   * X ",
+                "XXX   XXXXXXXXXXXX XX ",
+                "X  * *X  X......X *X  ",
+                "X X   X  X......XX X  ",
+                "X  XX XX X .....X  X  ",
+                "X X      *...... * X  ",
+                "X X * XX X......X  X  ",
+                "X  * *X  X......X *X  ",
+                "X *   X  XX*XXXXX  X  ",
+                "X * * XXXX * *  * *X  ",
+                "XX X     * * * *   XXX",
+                " X  XXXXXX *    *    X",
+                " X         X XXXXXXX X",
+                " XXXXXXX X*          X",
+                "       X   XXXXXXXXXXX",
+                "       XXXXX          "
+            ],
+            "Size X": "22",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 23": {
+            "Grid": [
+                "       XXXXXXX           ",
+                "       X  X  XXXX        ",
+                "       X *X* X  XX       ",
+                "XXXXXXXX  X  X   XXXXXXXX",
+                "X....  X *X* X  *X  X   X",
+                "X....X X     X*  X      X",
+                "X..X.    *X  X *    X*  X",
+                "X... @XX  X* X*  X  X   X",
+                "X.... XX *X     *XXXXXXXX",
+                "XXXXXXXX  X**X*  X       ",
+                "       X *X  X  *X       ",
+                "       X  X  X   X       ",
+                "       XXXX  XXXXX       ",
+                "          XXXX           "
+            ],
+            "Size X": "25",
+            "Size Y": "14"
+        }
+    },
+    {
+        "Maze 24": {
+            "Grid": [
+                "   XXXXXXXXXX        ",
+                "   X........XXXX     ",
+                "   X.X.X....X  X     ",
+                "   X........** X     ",
+                "   X     .XXX  XXXX  ",
+                " XXXXXXXXX  * X   X  ",
+                " X     *   * *  * X  ",
+                " X  X    X  * *X  X  ",
+                " XX XXXXX   X  X  X  ",
+                " X *     X   XXXX X  ",
+                "XX  *X   X XX  X  X  ",
+                "X    XX*XXX    X  XX ",
+                "X *    * X  X  X   X ",
+                "XXXXX    X XX X XX XX",
+                "    X*X X  *  * *   X",
+                "    X@X  *X***  X   X",
+                "    XXX  *      XXXXX",
+                "      XX  X  X  X    ",
+                "       XXXXXXXXXX    "
+            ],
+            "Size X": "21",
+            "Size Y": "19"
+        }
+    },
+    {
+        "Maze 25": {
+            "Grid": [
+                "               XXXX    ",
+                "          XXXXXX  XXXXX",
+                "    XXXXXXX       X   X",
+                "    X      * * XX X X X",
+                "    X  XXXX *  X     .X",
+                "    X      * X X XX.X.X",
+                "    XX*XXXX* * * XX.X.X",
+                "    X     X    XXXX.XXX",
+                "    X *   XXXXXX  X.X.X",
+                "XXXXXX***XX      @X.X.X",
+                "X      X    X*X*XXX. .X",
+                "X XXXX X*****    X ...X",
+                "X X    *     X   X ...X",
+                "X X   XX XX     XXX...X",
+                "X XXXXXX*XXXXXX  XXXXXX",
+                "X        X    X  X     ",
+                "XXXXXXXXXX    XXXX     "
+            ],
+            "Size X": "23",
+            "Size Y": "17"
+        }
+    },
+    {
+        "Maze 26": {
+            "Grid": [
+                "XXXXXXXXX      ",
+                "X       X      ",
+                "X       XXXX   ",
+                "XX XXXX X  X   ",
+                "XX X@XX    X   ",
+                "X *** *  **X   ",
+                "X  X XX *  X   ",
+                "X  X XX  * XXXX",
+                "XXXX  *** *X  X",
+                " X   XX   ....X",
+                " X X   X X.. .X",
+                " X   X X XX...X",
+                " XXXXX *  X...X",
+                "     XX   XXXXX",
+                "      XXXXX    "
+            ],
+            "Size X": "15",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 27": {
+            "Grid": [
+                " XXXXXXXXXXXXXXXXX     ",
+                " X...   X    X   XXX   ",
+                "XX.....  *XX X X * X   ",
+                "X......X  *  X  *  X   ",
+                "X......X  X  X X X XX  ",
+                "XXXXXXXXX *  * X X  XXX",
+                "  X     X*XX* XX XX   X",
+                " XX   *    X *  *   X X",
+                " X  XX XXX X  XXXXX*X X",
+                " X * **     *   *     X",
+                " X *    *XX* XXXXXXXX X",
+                " XXXXXXX  @ XX      XXX",
+                "       XXXXXX          "
+            ],
+            "Size X": "23",
+            "Size Y": "13"
+        }
+    },
+    {
+        "Maze 28": {
+            "Grid": [
+                "     XXXXXXX   ",
+                "     X@ X  X   ",
+                "     X *   X   ",
+                "    XXX XX X   ",
+                " XXXX *  X XX  ",
+                " X       X  XX ",
+                " X * *XXXX * X ",
+                " X ** X  X  *X ",
+                " X*  *   X*  X ",
+                "XX  **X   ** XX",
+                "X **  X  X  * X",
+                "X     XXXX *  X",
+                "X  X*XX..XX   X",
+                "XXX .X....XXXXX",
+                "  X .......XX  ",
+                "  X....   ..X  ",
+                "  XXXXXXXXXXX  "
+            ],
+            "Size X": "15",
+            "Size Y": "17"
+        }
+    },
+    {
+        "Maze 29": {
+            "Grid": [
+                "                XXXXX   ",
+                "       XXXXXX XXX   XXXX",
+                "   XXXXX    XXX * *  * X",
+                "XXXX  XX X* *    * X   X",
+                "X....   ** * *  *   X*XX",
+                "X.. X XX X   XXX*XX X  X",
+                "X....    X XXX    X    X",
+                "X....    X XX  *  XXX* X",
+                "X..XXXXXX  *  X  XXXX XX",
+                "XXXX    X   XXX    @  X ",
+                "        XXXXXXXXXXXXXXX "
+            ],
+            "Size X": "24",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 30": {
+            "Grid": [
+                " XXXXX        ",
+                " X   XXXXXXX  ",
+                " X * XXX   X  ",
+                " X *    ** X  ",
+                " XX XXXX   X  ",
+                "XXX X  X XXX  ",
+                "X   X  X@XX   ",
+                "X **    * X   ",
+                "X   X X * XXXX",
+                "XXXXX X   X  X",
+                " X   *XXXX   X",
+                " X  *     *  X",
+                " XX   XXXXX XX",
+                " XXXXXXXXXX  X",
+                "XX....X *  * X",
+                "X.....X **X  X",
+                "X.. ..X *  * X",
+                "X.....*   X  X",
+                "XX  XXXXXXXXXX",
+                " XXXX         "
+            ],
+            "Size X": "14",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 31": {
+            "Grid": [
+                " XXXXXXX       ",
+                " X  X  XXXXX   ",
+                "XX  X  X...XXX ",
+                "X  *X  X...  X ",
+                "X * X** ...  X ",
+                "X  *X  X... .X ",
+                "X   X *XXXXXXXX",
+                "XX*       * * X",
+                "XX  X  ** X   X",
+                " XXXXXX  XX**@X",
+                "      X      XX",
+                "      XXXXXXXX "
+            ],
+            "Size X": "15",
+            "Size Y": "12"
+        }
+    },
+    {
+        "Maze 32": {
+            "Grid": [
+                "  XXXX            ",
+                "  X  XXXXXXXXX    ",
+                " XX  XX @X   X    ",
+                " X  *X * *   XXXX ",
+                " X*  *  X * *X  XX",
+                "XX  *XX X* *     X",
+                "X  X  X X   ***  X",
+                "X *    *  *XX XXXX",
+                "X * * X*X  X  X   ",
+                "XX  XXX  XXX* X   ",
+                " X  X....     X   ",
+                " XXXX......XXXX   ",
+                "   X....XXXX      ",
+                "   X...XX         ",
+                "   X...X          ",
+                "   XXXXX          "
+            ],
+            "Size X": "18",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 33": {
+            "Grid": [
+                "      XXXX   ",
+                "  XXXXX  X   ",
+                " XX     *X   ",
+                "XX *  XX XXX ",
+                "X@* * X *  X ",
+                "XXXX XX   *X ",
+                " X....X* * X ",
+                " X....X   *X ",
+                " X....  ** XX",
+                " X... X *   X",
+                " XXXXXX* *  X",
+                "      X   XXX",
+                "      X* XXX ",
+                "      X  X   ",
+                "      XXXX   "
+            ],
+            "Size X": "13",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 34": {
+            "Grid": [
+                "XXXXXXXXXXXX",
+                "XX     XX  X",
+                "XX   *   * X",
+                "XXXX XX ** X",
+                "X   * X    X",
+                "X *** X XXXX",
+                "X   X X * XX",
+                "X  X  X  * X",
+                "X *X *X    X",
+                "X   ..X XXXX",
+                "XXXX.. * X@X",
+                "X.....X *X X",
+                "XX....X  * X",
+                "XXX..XX    X",
+                "XXXXXXXXXXXX"
+            ],
+            "Size X": "12",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 35": {
+            "Grid": [
+                "XXXXXXXXXXXX  XXXXXX",
+                "X   X    X@XXXX....X",
+                "X   **X       .....X",
+                "X   X XXX   XX ....X",
+                "XX XX XXX  X   ....X",
+                " X * *     X XX XXXX",
+                " X  * *XX  X       X",
+                "XXXX X  XXXX XX XX X",
+                "X  X X*   XX XX    X",
+                "X *  *  X XX XXXXXXX",
+                "X X * *    X X      ",
+                "X  * XX XX X X      ",
+                "X **     **  X      ",
+                "XX XX XXX *  X      ",
+                " X    X X    X      ",
+                " XXXXXX XXXXXX      "
+            ],
+            "Size X": "20",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 36": {
+            "Grid": [
+                "     XXXX         ",
+                "   XXX  XX        ",
+                "XXXX  *  X        ",
+                "X   * *  XXXX     ",
+                "X *   X *   X XXXX",
+                "X  X  X   * X X..X",
+                "XX*X* XXXX*XXXX..X",
+                " X   XXXXX XX ...X",
+                " X*X XX@XX XX  ..X",
+                " X X    *     ...X",
+                " X   XXXX XXX  ..X",
+                " XXX XX X  XX ...X",
+                "  XX* XXXX* XXX..X",
+                "  X   XX    X X..X",
+                " XX **XX  * X XXXX",
+                " X     **** X     ",
+                " X * XXX    X     ",
+                " X   X XXXXXX     ",
+                " XXXXX            "
+            ],
+            "Size X": "18",
+            "Size Y": "19"
+        }
+    },
+    {
+        "Maze 37": {
+            "Grid": [
+                "XXXXXXXXXXX          ",
+                "X......   XXXXXXXXX  ",
+                "X......   X  XX   X  ",
+                "X..XXX *    *     X  ",
+                "X... * * X  XXX   X  ",
+                "X...X*XXXXX    X  X  ",
+                "XXX    X   X*  X *XXX",
+                "  X  ** * *  *XX  * X",
+                "  X  *   X*X  XX    X",
+                "  XXX XX X  * XXXXXXX",
+                "   X  * * XX XX      ",
+                "   X    *  *  X      ",
+                "   XX   X X   X      ",
+                "    XXXXX@XXXXX      ",
+                "        XXX          "
+            ],
+            "Size X": "21",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 38": {
+            "Grid": [
+                " XXXXXXXXX    ",
+                " X....   XX   ",
+                " X.X.X  * XX  ",
+                "XX....X X @XX ",
+                "X ....X  X  XX",
+                "X     X* XX* X",
+                "XX XXX  *    X",
+                " X*  * * *X  X",
+                " X X  * * XX X",
+                " X  XXX  XX  X",
+                " X    XX XX XX",
+                " X  * X  *  X ",
+                " XXX* *   XXX ",
+                "   X  XXXXX   ",
+                "   XXXX       "
+            ],
+            "Size X": "14",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 39": {
+            "Grid": [
+                "              XXX      ",
+                "             XX.XXX    ",
+                "             X....X    ",
+                " XXXXXXXXXXXXX....X    ",
+                "XX   XX     XX....XXXXX",
+                "X  **XX  * @XX....    X",
+                "X      ** *X  ....X   X",
+                "X  * XX ** X X....X  XX",
+                "X  * XX *  X XX XXX  X ",
+                "XX XXXXX XXX         X ",
+                "XX   *  * XXXXX XXX  X ",
+                "X *XXX  X XXXXX X XXXX ",
+                "X   *   X       X      ",
+                "X  * X* * *XXX  X      ",
+                "X ***X *   X XXXX      ",
+                "X    X  ** X           ",
+                "XXXXXX   XXX           ",
+                "     XXXXX             "
+            ],
+            "Size X": "23",
+            "Size Y": "18"
+        }
+    },
+    {
+        "Maze 40": {
+            "Grid": [
+                "      XXXX ",
+                "XXXXXXX @X ",
+                "X     *  X ",
+                "X   *XX *X ",
+                "XX*X...X X ",
+                " X *...  X ",
+                " X X. .X XX",
+                " X   X X* X",
+                " X*  *    X",
+                " X  XXXXXXX",
+                " XXXX      "
+            ],
+            "Size X": "11",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 41": {
+            "Grid": [
+                "           XXXXX    ",
+                "          XX   XX   ",
+                "         XX     X   ",
+                "        XX  **  X   ",
+                "       XX **  * X   ",
+                "       X *    * X   ",
+                "XXXX   X   ** XXXXX ",
+                "X  XXXXXXXX XX    X ",
+                "X..           ***@X ",
+                "X.X XXXXXXX XX   XX ",
+                "X.X XXXXXXX. X* *XXX",
+                "X........... X   * X",
+                "XXXXXXXXXXXXXX  *  X",
+                "             XX  XXX",
+                "              XXXX  "
+            ],
+            "Size X": "20",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 42": {
+            "Grid": [
+                " XXXXXXXX    ",
+                " X@XX   XXXX ",
+                " X *   *   X ",
+                " X  * * ***X ",
+                " X **X X   X ",
+                "XX*    *   X ",
+                "X  *  *****XX",
+                "X *XXXX X   X",
+                "X  *....X   X",
+                "X XX....X** X",
+                "X XX....   XX",
+                "X   ....X  X ",
+                "XX X....X**X ",
+                " X X....X  X ",
+                " X         X ",
+                " XXXX XX*XXX ",
+                "    X    X   ",
+                "    XXXXXX   "
+            ],
+            "Size X": "13",
+            "Size Y": "18"
+        }
+    },
+    {
+        "Maze 43": {
+            "Grid": [
+                "    XXXXXXXXXXXX ",
+                "    X          XX",
+                "    X  X X** *  X",
+                "    X* X*X  XX @X",
+                "   XX XX X * X XX",
+                "   X   * X*  X X ",
+                "   X   X *   X X ",
+                "   XX * *   XX X ",
+                "   X  X  XX  * X ",
+                "   X    XX **X X ",
+                "XXXXXX**   X   X ",
+                "X....X  XXXXXXXX ",
+                "X.X... XX        ",
+                "X....   X        ",
+                "X....   X        ",
+                "XXXXXXXXX        "
+            ],
+            "Size X": "17",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 44": {
+            "Grid": [
+                "      XXXXXX             ",
+                "   XXXXX   X             ",
+                "   X   X X XXXXX         ",
+                "   X * X  *    XXXXXX    ",
+                "  XX*  XXX XX       X    ",
+                "XXX  ** * * X  XX   XXXXX",
+                "X       *   XXXXXX XX   X",
+                "X  XXXXXXXX X@   X X  X X",
+                "XX XXX      XXXX X*X X  X",
+                " X XXX XXXX XX.. X   * XX",
+                " X  *  *  X*XX.. X*XX  XX",
+                " X  X X X     ..XX XX * X",
+                " XXXX   X XX X..X    *  X",
+                "    XXXXX    X..X X X  XX",
+                "        XXXXXX..X   X XX ",
+                "             X..XXXXX  X ",
+                "             X..       X ",
+                "             XX  XXX  XX ",
+                "              XXXXXXXXX  "
+            ],
+            "Size X": "25",
+            "Size Y": "19"
+        }
+    },
+    {
+        "Maze 45": {
+            "Grid": [
+                "        XXXXXXX    ",
+                "    XXXXX  X  XXXX ",
+                "    X   X   *    X ",
+                " XXXX X** XX XX  X ",
+                "XX      X X  XX XXX",
+                "X  XXX *X*  *  *  X",
+                "X...    X XX  X   X",
+                "X...X    @ X XXX XX",
+                "X...X  XXX  *  *  X",
+                "XXXXXXXX XX   X   X",
+                "          XXXXXXXXX"
+            ],
+            "Size X": "19",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 46": {
+            "Grid": [
+                "    XXXXXXXXX  XXXX   ",
+                "    X   XX  XXXX  X   ",
+                "    X   *   X  *  X   ",
+                "    X  X XX X     XXXX",
+                "    XX *   * **X X   X",
+                "    XXXX  X  X * *   X",
+                "XXXXX  XXXX    XXX...X",
+                "X   X* X  X XXXX.....X",
+                "X      X  X X XX.....X",
+                "XXXXXX X  X*   XXX...X",
+                "   X   XX X *X   X...X",
+                "  XX       *  *X XXXXX",
+                " XX ***XX  X *   X    ",
+                " X   X  X XXX  XXX    ",
+                " X   *  X* @XXXX      ",
+                " XXXXX  X   X         ",
+                "     XXXXXXXX         "
+            ],
+            "Size X": "22",
+            "Size Y": "17"
+        }
+    },
+    {
+        "Maze 47": {
+            "Grid": [
+                " XXXXX             ",
+                " X   X             ",
+                " X X XXXXXX        ",
+                " X      *@XXXXXX   ",
+                " X * XX* XXX   X   ",
+                " X XXXX *    * X   ",
+                " X XXXXX X  X* XXXX",
+                "XX  XXXX XX*      X",
+                "X  *X  *  X XX XX X",
+                "X         X X...X X",
+                "XXXXXX  XXX  ...  X",
+                "     XXXX X X...X X",
+                "          X XXX X X",
+                "          X       X",
+                "          XXXXXXXXX"
+            ],
+            "Size X": "19",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 48": {
+            "Grid": [
+                "       XXXX     ",
+                "       X  XX    ",
+                "       X   XX   ",
+                "       X ** XX  ",
+                "     XXX*  * XX ",
+                "  XXXX    *   X ",
+                "XXX  X XXXXX  X ",
+                "X    X X....* X ",
+                "X X   * ....X X ",
+                "X  * X X.&..X X ",
+                "XXX  XXXX XXX X ",
+                "  XXXX @*  XX*XX",
+                "     XXX *     X",
+                "       X  XX   X",
+                "       XXXXXXXXX"
+            ],
+            "Size X": "16",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 49": {
+            "Grid": [
+                "      XXXXXXXXXXXX ",
+                "     XX..    X   X ",
+                "    XX..& *    * X ",
+                "   XX..&.X X X* XX ",
+                "   X..&.X X X *  X ",
+                "XXXX...X  X    X X ",
+                "X  XX X          X ",
+                "X @* * XXX  X X XX ",
+                "X *   *   X X   X  ",
+                "XXX**   X X X X X  ",
+                "  X   *   X X XXXXX",
+                "  X *X XXXXX      X",
+                "  X*   X   X   X  X",
+                "  X  XXX   XX     X",
+                "  X  X      X    XX",
+                "  XXXX      XXXXXX "
+            ],
+            "Size X": "19",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 50": {
+            "Grid": [
+                "     XXXXXXXXXXXXX   ",
+                "     X    XXX    X   ",
+                "     X     * *  XXXX ",
+                "   XXXX X   * *    X ",
+                "  XX *  X*XXXX * * X ",
+                "XXX   X X   XXX  * X ",
+                "X *  *  X  *  X XXXX ",
+                "X XX*XXXX X*X  *  XXX",
+                "X XX  XXX X X X  *  X",
+                "X    @*   *   X * X X",
+                "XXXXX  X  XX  X *X  X",
+                "  X... XXXXX*  X  X X",
+                "  X.......X ** X* X X",
+                "  X.......X         X",
+                "  X.......XXXXXXX  XX",
+                "  XXXXXXXXX     XXXX "
+            ],
+            "Size X": "21",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 51": {
+            "Grid": [
+                "XXXXX XXXX      ",
+                "X...X X  XXXX   ",
+                "X...XXX  *  X   ",
+                "X....XX *  *XXX ",
+                "XX....XX   *  X ",
+                "XXX... XX * * X ",
+                "X XX    X  *  X ",
+                "X  XX X XXX XXXX",
+                "X * X X*  *    X",
+                "X  * @ *    *  X",
+                "X   X * ** * XXX",
+                "X  XXXXXX  XXX  ",
+                "X XX    XXXX    ",
+                "XXX             "
+            ],
+            "Size X": "16",
+            "Size Y": "14"
+        }
+    },
+    {
+        "Maze 52": {
+            "Grid": [
+                " XXXX                ",
+                "XX  XXXXX            ",
+                "X       X XXXXX      ",
+                "X *XXX  XXX   X      ",
+                "X..X  *X X  X X      ",
+                "X..X      **X XXX    ",
+                "X.&X X  X* *    XXXXX",
+                "X..X  XX     XX*X   X",
+                "X.&*  * X XX  *     X",
+                "X..XX  *   X   XXXXXX",
+                "X.&XX*XX   XXXXX     ",
+                "X..  * XXXXX         ",
+                "X  X @ X             ",
+                "XXXXXXXX             "
+            ],
+            "Size X": "21",
+            "Size Y": "14"
+        }
+    },
+    {
+        "Maze 53": {
+            "Grid": [
+                "   XXXXXXXXXX",
+                "   X  XXX   X",
+                "   X *   *  X",
+                "   X  XXXX*XX",
+                "   XX X  X  X",
+                "  XX  X.&   X",
+                "  X  XX..X  X",
+                "  X @ X.&X XX",
+                "  X X*X..X* X",
+                "  X * X..X  X",
+                "  X X X&&X  X",
+                "  X * X..X*XX",
+                "  X    .&X  X",
+                " XXX  X  X  X",
+                "XX    XXXX  X",
+                "X  XXXXXXX*XX",
+                "X *      *  X",
+                "X  XX   X   X",
+                "XXXXXXXXXXXXX"
+            ],
+            "Size X": "13",
+            "Size Y": "19"
+        }
+    },
+    {
+        "Maze 54": {
+            "Grid": [
+                " XXXXXXXXXXXXXXXXXXXXX ",
+                " X   XX  X   X   X   X ",
+                " X *     *   *   *   XX",
+                "XXXXX X  X   XXX XX*XXX",
+                "X   X XX*XXXXXX   X   X",
+                "X *   X ......X   X * X",
+                "XX X  X ......XXXXX   X",
+                "XX XXXXXXXXX..X   X XXX",
+                "X          X..X *   X  ",
+                "X XX XXX XXX..XX X  XXX",
+                "X X   X   XX..XX XXX  X",
+                "X   @      *..X       X",
+                "X X   X   XX  X   XX  X",
+                "XXXXX XXXXXXXXXXXXXX XX",
+                "X          X   X    * X",
+                "X *  X * * *   X X    X",
+                "X X*XX *X  XX XX    X X",
+                "X  * ** XXXX *  * X X X",
+                "X          X   X      X",
+                "XXXXXXXXXXXXXXXXXXXXXXX"
+            ],
+            "Size X": "23",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 55": {
+            "Grid": [
+                " XXXXXXXXXXXXXXXXXXXXX",
+                "XX                   X",
+                "X    * X      XX X   X",
+                "X  XXXXXX XXX  X*XX XX",
+                "XX*X   XX*X....   X X ",
+                "X  X    * X....XX X X ",
+                "X * X X X X....XX   X ",
+                "X * X**   X....XX*X X ",
+                "X X *@*XX*X....XX   X ",
+                "X   ***   X....X    X ",
+                "X  *X   X XXXXXX *XXX ",
+                "XX  X XXX**  *   * X  ",
+                "XX     X *  * XX   X  ",
+                " XXXXX   X   XXXXXXX  ",
+                "     XXXXXXXXX        "
+            ],
+            "Size X": "22",
+            "Size Y": "15"
+        }
+    },
+    {
+        "Maze 56": {
+            "Grid": [
+                "XXXXXXXXXX    ",
+                "X        XXXX ",
+                "X XXXXXX X  XX",
+                "X X * * *  * X",
+                "X       X*   X",
+                "XXX*  **X  XXX",
+                "  X  XX X *XX ",
+                "  XX*X   * @X ",
+                "   X  * * XXX ",
+                "   X X   *  X ",
+                "   X XX   X X ",
+                "  XX  XXXXX X ",
+                "  X         X ",
+                "  X.......XXX ",
+                "  X.......X   ",
+                "  XXXXXXXXX   "
+            ],
+            "Size X": "14",
+            "Size Y": "16"
+        }
+    },
+    {
+        "Maze 57": {
+            "Grid": [
+                "         XXXX     ",
+                " XXXXXXXXX  XX    ",
+                "XX  *      * XXXXX",
+                "X   XX XX   XX...X",
+                "X X** * **X*XX...X",
+                "X X    @  X   ...X",
+                "X  *X XXX**   ...X",
+                "X *  **  * XX....X",
+                "XXX*       XXXXXXX",
+                "  X  XXXXXXX      ",
+                "  XXXX            "
+            ],
+            "Size X": "18",
+            "Size Y": "11"
+        }
+    },
+    {
+        "Maze 58": {
+            "Grid": [
+                "              XXXXXX       ",
+                "          XXXXX    X       ",
+                "          X  XX X  XXXXX   ",
+                "          X   &.X..X   X   ",
+                " XXXXX XXXX *X.X...    X   ",
+                " X   XXX  XX X&....XX XX   ",
+                " X *      XX X..X..XX X    ",
+                "XXXXXX X   X X&.XXXXX X    ",
+                "X   X *X*X X X..XXXXX X    ",
+                "X *  *     X X&.    X X    ",
+                "XX XX  * XXX X  XX  X X    ",
+                " X  *  * XXX XXXXX XX X    ",
+                " XXX*XXX*XXX  XXXX XX X    ",
+                "XXXX X         XXX  X X    ",
+                "X  * X  *XXXX  XXX**X@XXXXX",
+                "X      * X X  XXXX  X*X   X",
+                "XXXX X  *X X              X",
+                "   X  *  X XX  XX  XXXXXXXX",
+                "   XX  XXX  XXXXXXXX       ",
+                "    XXXX                   "
+            ],
+            "Size X": "27",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 59": {
+            "Grid": [
+                "         XXXX                ",
+                "         X  X                ",
+                "         X  XXXXXXXX         ",
+                "   XXXXXXX  X      X         ",
+                "   X   X X X X X   XX        ",
+                "   X *     *  XX  * X        ",
+                "  XXX *X X  X X     XXXXXXXXX",
+                "  X  *  X  *X X ** X   X X  X",
+                " XX X   X     XXX    * X X  X",
+                " X  X*   X XXX  X  X **X X  X",
+                " X    *XX *  X   XX *  X X XX",
+                "XXXX* * X    XX  X   *    ..X",
+                "X  X    XXX X * * XXX  XXX.&X",
+                "X     XX  ** @  *     XX....X",
+                "X  XX  XX   *  X*X  XX....&.X",
+                "XX X  *  X X *XX  XX....&.XXX",
+                "XX XX  *  X * X  X....&.XXX  ",
+                "X    * XXXX   X ....&.XXX    ",
+                "X   X  X  X  X  ..&.XXX      ",
+                "XXXXXXXX  XXXXXXXXXXX        "
+            ],
+            "Size X": "29",
+            "Size Y": "20"
+        }
+    },
+    {
+        "Maze 60": {
+            "Grid": [
+                "        XXXXX             ",
+                "        X   XXXX          ",
+                "        X *    XXXX  XXXX ",
+                "        X   X *X  XXXX  X ",
+                "XXXXXXXXXXX X   *   X   X ",
+                "X..     X *  XXXX X  X  X ",
+                "X..*  X   *  X  * X * .XX ",
+                "X.&X X * * XX  XX    X.X  ",
+                "X..X* @ X   XX    ** X.X  ",
+                "X..X * *  * * XX   XX .X  ",
+                "X.&** X XX   * X*X * X.X  ",
+                "X..X      XX   X     X.X  ",
+                "X..XXXXXXX  XXX XXXXXX.XX ",
+                "X **                  &.XX",
+                "X  XXXXXXXXXXXXXXXXXX  ..X",
+                "XXXX                XXXXXX"
+            ],
+            "Size X": "26",
+            "Size Y": "16"
+        }
+    }
+]
