@@ -93,14 +93,16 @@ public:
 
     void next();
     void previous();
+
+    int getCurrentMaze() const;
 protected:
     void fill(int value, int count) override;
 private:
     QFile *m_pFile;
     int m_currMaze;
+    int m_lastMaze;
 
     bool readGrid(int mazeNumber);
-    int symbolToValue(QChar symbol);
 };
 
 #endif // !_GRID_H_

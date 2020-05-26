@@ -10,6 +10,7 @@
 GridMazes::GridMazes(QString filename)
     : m_pFile(new QFile(filename))
     , m_currMaze(0)
+    , m_lastMaze(0)
 {}
 
 GridMazes::~GridMazes()
@@ -34,25 +35,44 @@ void GridMazes::generate()
     if (!readGrid(m_currMaze))
     {
         qDebug() << "grid not open";
+        m_currMaze = m_lastMaze;
     }
+    m_lastMaze = m_currMaze;
     m_pFile->close();
-    ++m_currMaze;
 }
 
 void GridMazes::next()
 {
-
+    ++m_currMaze;
 }
 
 void GridMazes::previous()
 {
-
+    if (m_currMaze > 0)
+        --m_currMaze;
 }
 
 void GridMazes::fill(int value, int count)
 {
     Q_UNUSED(value);
     Q_UNUSED(count);
+}
+
+int symbolToValue(QChar symbol)
+{
+    switch (symbol.unicode())
+    {
+    case '@':
+        return FieldValue::LoaderPlayer;
+    case 'X':
+        return FieldValue::Barrier;
+    case '.':
+        return FieldValue::CargoDestination;
+    case '*':
+        return FieldValue::Cargo;
+    default:
+        return FieldValue::Empty;
+    }
 }
 
 bool GridMazes::readGrid(int mazeNumber)
@@ -97,19 +117,7 @@ bool GridMazes::readGrid(int mazeNumber)
     return false;
 }
 
-int GridMazes::symbolToValue(QChar symbol)
+int GridMazes::getCurrentMaze() const
 {
-    switch (symbol.unicode())
-    {
-    case '@':
-        return FieldValue::LoaderPlayer;
-    case 'X':
-        return FieldValue::Barrier;
-    case '.':
-        return FieldValue::CargoDestination;
-    case '*':
-        return FieldValue::Cargo;
-    default:
-        return FieldValue::Empty;
-    }
+    return m_lastMaze;
 }
