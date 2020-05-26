@@ -38,6 +38,8 @@ void GridModel::reset()
         m_pUndoCmd = nullptr;
     }
     m_nSteps = 0;
+    m_nMoves = 0;
+    move_changed();
 }
 
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const
