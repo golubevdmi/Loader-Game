@@ -4,7 +4,7 @@
         <file>resources/LoaderGirdButton.qml</file>
         <file>resources/LoaderGridDelegate.qml</file>
         <file>resources/LabelInformation.qml</file>
-        <file>resources/SokobanAnimatedSprite.qml</file>
+        <file>resources/PlayerAnimation.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>resources/redo.png</file>
@@ -19,5 +19,7 @@
         <file>resources/field_floor.png</file>
         <file>resources/field_player_poses.png</file>
         <file>resources/field_wall.png</file>
+        <file>resources/field_cargodst1.gif</file>
+        <file>resources/field_cargodst2.gif</file>
     </qresource>
 </RCC>
