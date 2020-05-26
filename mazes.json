@@ -1,5 +1,25 @@
 [
     {
+        "Maze 0": {
+            "Grid": [
+                "XXXXXXXXXXXXXX XXXXXXX",
+                "X**  ***             X",
+                "X    ** *          *.X",
+                "X.*         @      *.X",
+                "XXXXXXXXXXXXXXXXXXXXXX",
+				"**********************",
+                "*  XX    XX XXXXXXXX@*",
+                "*  XX@@@@XX    XX@@***",
+                "*  XXXXXXXX    XX@@*@*",
+                "*  XX@@@@XX    XX@@***",
+                "*  XX@**@XX XXXXXXXX@*",
+				"**********************"
+            ],
+            "Size X": "22",
+            "Size Y": "12"
+        }
+    },
+    {
         "Maze 1": {
             "Grid": [
                 "    XXXXX             ",
