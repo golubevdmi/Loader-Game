@@ -8,11 +8,10 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new RandomGridGenerator)
+    , m_pGridGenerator(new GridMazes("Z:/Loader-Game/mazes.json"))
+    //, m_pGridGenerator(new RandomGridGenerator)
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
-    , m_width(0)
-    , m_height(0)
     , m_nSteps(0)
     , m_nMoves(0)
 {}
@@ -52,14 +51,14 @@ int GridModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
-    return m_height;
+    return m_pGridGenerator->getHeight();
 }
 
 int GridModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
-    return m_width;
+    return m_pGridGenerator->getWidth();
 }
 
 QVariant GridModel::data(const QModelIndex &index, int role) const
@@ -134,20 +133,12 @@ void GridModel::createGrid(int width, int height)
     Q_ASSERT(width > 0 && height > 0);
     Q_ASSERT(m_pGridGenerator);
 
-    m_width = width;
-    m_height = height;
-
-    m_pGridGenerator->setWidth(m_width);
-    m_pGridGenerator->setHeight(m_height);
-
     m_pGridGenerator->init();
     m_pGridGenerator->generate();
 
     // Update grid
-    beginResetModel();
     m_beginGrid = m_pGridGenerator->getGrid();
     reset();
-    endResetModel();
 
     emit grid_changed();
     emit cargos_left(cargosLeft());
@@ -304,6 +295,7 @@ void GridModel::movedComplete()
     emit cargos_left(cargosLeft());
     saveStep();
     ++m_nMoves;
+    move_changed();
     ++m_nSteps;
 }
 
@@ -360,6 +352,7 @@ bool GridModel::redo()
 void GridModel::cmdComplete()
 {
     ++m_nMoves;
+    move_changed();
 }
 
 int GridModel::cargos() const
@@ -407,6 +400,16 @@ int GridModel::cargosLeft() const
     return nCargos;
 }
 
+int GridModel::step() const
+{
+    return m_nSteps;
+}
+
+int GridModel::nMoves() const
+{
+    return m_nMoves;
+}
+
 bool GridModel::checkWin()
 {
     int nCargos = cargosLeft();
@@ -417,7 +420,7 @@ void GridModel::setValue(const QModelIndex &index, QVariant value)
 {
     if (index.isValid() && !value.isNull())
     {
-        m_currentGrid[index.row() * m_height + index.column()] = value.toInt();
+        m_currentGrid[index.row() * columnCount() + index.column()] = value.toInt();
     }
 }
 
@@ -427,7 +430,7 @@ QModelIndex GridModel::getLoaderPlayerIndex()
     if (it != m_currentGrid.end())
     {
         auto index = std::distance(m_currentGrid.begin(), it);
-        return createIndex(index / m_height, index % m_height);
+        return createIndex(index / columnCount(), index % columnCount());
     }
     return QModelIndex();
 }
@@ -435,13 +438,13 @@ QModelIndex GridModel::getLoaderPlayerIndex()
 QVariant GridModel::getValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return QVariant(m_currentGrid[index.row() * m_height + index.column()]);
+        return QVariant(m_currentGrid[index.row() * columnCount() + index.column()]);
     return QVariant();
 }
 
 QVariant GridModel::getBeginValue(const QModelIndex &index) const
 {
     if (index.isValid())
-        return QVariant(m_beginGrid[index.row() * m_height + index.column()]);
+        return QVariant(m_beginGrid[index.row() * columnCount() + index.column()]);
     return QVariant();
 }

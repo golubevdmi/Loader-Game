@@ -16,6 +16,7 @@ class GridModel : public QAbstractTableModel
     Q_PROPERTY(int cargosDst READ cargosDst NOTIFY grid_changed)
     Q_PROPERTY(int barriers READ barriers NOTIFY grid_changed)
     Q_PROPERTY(int cargosLeft READ cargosLeft NOTIFY cargos_left)
+    Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
 public:
     GridModel(QObject *parent = nullptr);
     ~GridModel();
@@ -46,12 +47,15 @@ public:
     Q_INVOKABLE int cargosDst() const;
     Q_INVOKABLE int barriers() const;
     Q_INVOKABLE int cargosLeft() const;
+    Q_INVOKABLE int step() const;
+    Q_INVOKABLE int nMoves() const;
 
 signals:
     void grid_changed();
     void loader_index_changed(const QModelIndex &index);
     void cargo_delivered();
     void cargos_left(int nCargos);
+    void move_changed();
     void game_win();
 private:
     QSharedPointer<GridGenerator> m_pGridGenerator;
@@ -59,8 +63,6 @@ private:
     GridType m_currentGrid;
     QUndoStack *m_pStack;
     QUndoCommand *m_pUndoCmd;
-    int m_width;
-    int m_height;
     int m_nSteps;
     int m_nMoves;
 
