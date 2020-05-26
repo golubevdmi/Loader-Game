@@ -2,6 +2,7 @@
 #define _GRID_H_
 
 #include <QVector>
+#include <QString>
 
 enum FieldValue
 {
@@ -14,6 +15,8 @@ enum FieldValue
 
 using GridType = QVector<int>;
 
+
+class QFile;
 
 class GridGenerator
 {
@@ -69,6 +72,7 @@ protected:
 // Grid generator for debugging
 class TestGridGenerator : public GridGenerator
 {
+public:
     void generate() override;
 protected:
     void fill(int value, int count) override;
@@ -76,6 +80,27 @@ private:
     void grid5x5();
     void grid10x10();
     void grid15x15();
+};
+
+class GridMazes : public GridGenerator
+{
+public:
+    GridMazes(QString filename);
+    ~GridMazes();
+
+    void init() override;
+    void generate() override;
+
+    void next();
+    void previous();
+protected:
+    void fill(int value, int count) override;
+private:
+    QFile *m_pFile;
+    int m_currMaze;
+
+    bool readGrid(int mazeNumber);
+    int symbolToValue(QChar symbol);
 };
 
 #endif // !_GRID_H_

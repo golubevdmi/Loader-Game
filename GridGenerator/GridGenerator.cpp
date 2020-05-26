@@ -127,17 +127,19 @@ GridType GridGenerator::getGrid() const
 {
     return m_grid;
 }
-
+#include <QDebug>
 void GridGenerator::setValue(int row, int column, int value)
 {
     Q_ASSERT(size_grid());
-    Q_ASSERT(m_height > 0);
-    m_grid[row * m_height + column] = value;
+    Q_ASSERT(getHeight() > 0 && getWidth() > 0);
+    Q_ASSERT(row < getHeight() && column < getWidth());
+    m_grid[row * m_width + column] = value;
 }
 
 int GridGenerator::getValue(int row, int column) const
 {
     Q_ASSERT(size_grid());
-    Q_ASSERT(m_height > 0);
-    return m_grid.at(row * m_height + column);
+    Q_ASSERT(getHeight() > 0 && getWidth() > 0);
+    Q_ASSERT(row < getHeight() && column < getWidth());
+    return m_grid.at(row * m_width + column);
 }
