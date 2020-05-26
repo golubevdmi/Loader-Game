@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(LoaderGame LANGUAGES CXX)
+set(project_name Sokoban)
+project(${project_name} LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
@@ -32,13 +33,13 @@ set(MVC_FILES
     Model/StepCommand.h
     )
 
-add_executable(LoaderGame
-    loadermain.cpp
+add_executable(${project_name}
+    sokobanmain.cpp
     ${GRID_FILES}
     ${MVC_FILES}
     ${MOC_WRAPPERS}
     ${QRC_WRAPPERS}
     )
 
-target_compile_definitions(LoaderGame PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(LoaderGame PRIVATE Qt5::Core Qt5::Gui Qt5::Quick Qt5::Qml Qt5::Widgets)
+target_compile_definitions(${project_name} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+target_link_libraries(${project_name} PRIVATE Qt5::Core Qt5::Gui Qt5::Quick Qt5::Qml Qt5::Widgets)

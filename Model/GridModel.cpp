@@ -8,7 +8,7 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new GridMazes("Z:/Loader-Game/mazes.json"))
+    , m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
     //, m_pGridGenerator(new RandomGridGenerator)
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
