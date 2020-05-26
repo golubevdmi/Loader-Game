@@ -1,11 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import "canvas.js" as Figure
-
 
 Rectangle
 {
     id: root
+
+    //
+    // Static sprites
 
     Image
     {
@@ -14,45 +15,60 @@ Rectangle
         source:
         {
             if (Barrier == true)
-                "qrc:/sprites/resources/field_wall1.png";
+                return "qrc:/sprites/resources/field_wall.png";
             else
-                "qrc:/sprites/resources/field_floor1.png";
+                return "qrc:/sprites/resources/field_floor.png";
         }
         sourceSize: Qt.size(width, height)
     }
 
-    Canvas
+    Image
     {
-        property string fgImage
-
         id: fgSprite
-        contextType: "2d"
-        anchors.fill: parent
-        onPaint:
+        anchors.centerIn: parent
+        fillMode: Image.PreserveAspectCrop
+        scale: 0.8
+        width: Math.min(parent.implicitWidth, parent.implicitHeight)
+        height: width
+
+        source:
         {
             if (Cargo == true && CargoDestination == true)
-            {
-                fgImage = qsTr("qrc:/sprites/resources/field_delivered1.png");
-                Figure.drawSprite(context, fgImage, width, height);
-            }
-            else if (LoaderPlayer == true)
-            {
-                fgImage = qsTr("qrc:/sprites/resources/field_player1_pose1.png");
-                Figure.drawSprite(context, fgImage, width, height);
-            }
+                return "qrc:/sprites/resources/field_delivered.png";
             else if (Cargo == true)
-            {
-                fgImage = qsTr("qrc:/sprites/resources/field_cargo1_s1.png");
-                Figure.drawSprite(context, fgImage, width, height);
-            }
-            else if (CargoDestination == true)
-            {
-                fgImage = qsTr("qrc:/sprites/resources/field_cargodst1_s1.png");
-                Figure.drawSprite(context, fgImage, width, height);
-            }
+                return "qrc:/sprites/resources/field_cargo.png";
+            else
+                return "";
         }
-        onImageLoaded: { requestPaint(); }
-        Component.onCompleted: { loadImage(fgImage); }
+    }
+
+    SokobanAnimatedSprite
+    {
+        id: playerSprite
+        role: LoaderPlayer
+        frameWidth: 227
+        frameHeight: 294
+        frameCount: 4
+        source: "qrc:/sprites/resources/field_player_poses.png"
+    }
+    SokobanAnimatedSprite
+    {
+        id: cargodstSprite
+        role: { CargoDestination && !Cargo && !LoaderPlayer }
+        frameWidth: 50
+        frameCount: 4
+        frameDuration: 3000
+        source: "qrc:/sprites/resources/field_cargodst.png"
+
+        RotationAnimator
+        {
+            target: cargodstSprite;
+            loops: Animation.Infinite
+            from: 0;
+            to: 360;
+            duration: 3000
+            running: true
+        }
     }
 }
 
