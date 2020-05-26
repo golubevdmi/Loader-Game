@@ -3,6 +3,8 @@ import QtQuick.Controls 2.12
 
 Rectangle
 {
+    property string playerState: "left"
+
     id: root
 
     //
@@ -42,32 +44,25 @@ Rectangle
         }
     }
 
-    SokobanAnimatedSprite
+    PlayerAnimation
     {
         id: playerSprite
         role: LoaderPlayer
-        frameWidth: 227
-        frameHeight: 294
-        frameCount: 4
+        state: playerState
         source: "qrc:/sprites/resources/field_player_poses.png"
     }
-    SokobanAnimatedSprite
+    AnimatedImage
     {
         id: cargodstSprite
-        role: { CargoDestination && !Cargo && !LoaderPlayer }
-        frameWidth: 50
-        frameCount: 4
-        frameDuration: 3000
-        source: "qrc:/sprites/resources/field_cargodst.png"
-
-        RotationAnimator
+        width: Math.min(parent.implicitWidth, parent.implicitHeight)
+        height: width
+        speed: 0.5
+        source:
         {
-            target: cargodstSprite;
-            loops: Animation.Infinite
-            from: 0;
-            to: 360;
-            duration: 3000
-            running: true
+            if (CargoDestination && !Cargo && !LoaderPlayer)
+                return "qrc:/sprites/resources/field_cargodst2.gif";
+            else
+                return "";
         }
     }
 }

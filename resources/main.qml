@@ -80,12 +80,12 @@ ApplicationWindow
             text: qsTr("Next")
             onClicked: gridModel.next()
         }
-        LabelInformation
+        LoaderGirdButton
         {
             Layout.alignment: Qt.AlignLeft
-            text1: "Level:"
-            text2: gridModel.level
-            color: labelColor
+            backgroundColor: root.color
+            text: qsTr("Reset")
+            onClicked: gridModel.reset()
         }
 
         Item
@@ -96,12 +96,12 @@ ApplicationWindow
             Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
         }
 
-        LoaderGirdButton
+        LabelInformation
         {
             Layout.alignment: Qt.AlignLeft
-            backgroundColor: root.color
-            text: qsTr("Reset")
-            onClicked: gridModel.reset()
+            text1: "Level:"
+            text2: gridModel.level
+            color: "#48d1cc"
         }
         LabelInformation
         {
@@ -135,18 +135,27 @@ ApplicationWindow
 
     TableView
     {
+        property string animationState: "left"
+
         id: tableView
         anchors.fill: parent
         clip: true
-        model: GridModel
+        model: gridModel
+        GridModel
         {
             id: gridModel
+
+            onMoved_up:    tableView.animationState = "up"
+            onMoved_down:  tableView.animationState = "down"
+            onMoved_left:  tableView.animationState = "left"
+            onMoved_right: tableView.animationState = "right"
         }
         delegate: LoaderGridDelegate
         {
             id: loaderGrid
             implicitWidth: root.contentItem.width / gridModel.columnCount()
             implicitHeight: root.contentItem.height / gridModel.rowCount()
+            playerState: tableView.animationState
         }
         onWidthChanged: tableView.forceLayout();
         onHeightChanged: tableView.forceLayout();
@@ -157,10 +166,10 @@ ApplicationWindow
         id: keysNavigation
         anchors.fill: parent
         focus: true
-        Keys.onUpPressed: gridModel.moveUp();
-        Keys.onDownPressed: gridModel.moveDown();
+        Keys.onUpPressed:    gridModel.moveUp();
+        Keys.onDownPressed:  gridModel.moveDown();
         Keys.onRightPressed: gridModel.moveRight();
-        Keys.onLeftPressed: gridModel.moveLeft();
+        Keys.onLeftPressed:  gridModel.moveLeft();
 
         onFocusChanged: keysNavigation.focus = true
     }
