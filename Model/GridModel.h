@@ -17,6 +17,7 @@ class GridModel : public QAbstractTableModel
     Q_PROPERTY(int barriers READ barriers NOTIFY grid_changed)
     Q_PROPERTY(int cargosLeft READ cargosLeft NOTIFY cargos_left)
     Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
+    Q_PROPERTY(int level READ level NOTIFY grid_changed)
 public:
     GridModel(QObject *parent = nullptr);
     ~GridModel();
@@ -31,9 +32,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    Q_INVOKABLE void grid5x5();
-    Q_INVOKABLE void grid10x10();
-    Q_INVOKABLE void grid15x15();
+    Q_INVOKABLE void next();
+    Q_INVOKABLE void previous();
 
     Q_INVOKABLE bool moveUp();
     Q_INVOKABLE bool moveDown();
@@ -49,6 +49,7 @@ public:
     Q_INVOKABLE int cargosLeft() const;
     Q_INVOKABLE int step() const;
     Q_INVOKABLE int nMoves() const;
+    Q_INVOKABLE int level() const;
 
 signals:
     void grid_changed();
@@ -71,7 +72,7 @@ private:
     void movedComplete();
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
     void saveStep();
-    void createGrid(int width, int height);
+    void createGrid();
     bool checkWin();
     void cmdComplete();
 

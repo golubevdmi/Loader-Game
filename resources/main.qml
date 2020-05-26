@@ -70,22 +70,22 @@ ApplicationWindow
         {
             Layout.alignment: Qt.AlignLeft
             backgroundColor: bnColor
-            text: qsTr("5x5")
-            onClicked: gridModel.grid5x5()
+            text: qsTr("Previous")
+            onClicked: gridModel.previous()
         }
         LoaderGirdButton
         {
             Layout.alignment: Qt.AlignLeft
             backgroundColor: bnColor
-            text: qsTr("10x10")
-            onClicked: gridModel.grid10x10()
+            text: qsTr("Next")
+            onClicked: gridModel.next()
         }
-        LoaderGirdButton
+        LabelInformation
         {
             Layout.alignment: Qt.AlignLeft
-            backgroundColor: bnColor
-            text: qsTr("15x15")
-            onClicked: gridModel.grid15x15()
+            text1: "Level:"
+            text2: gridModel.level
+            color: labelColor
         }
 
         Item
@@ -105,7 +105,6 @@ ApplicationWindow
         }
         LabelInformation
         {
-            id: labelCargos
             Layout.alignment: Qt.AlignLeft
             text1: "Cargos:"
             text2: gridModel.cargos
@@ -113,7 +112,6 @@ ApplicationWindow
         }
         LabelInformation
         {
-            id: labelBarriers
             Layout.alignment: Qt.AlignLeft
             text1: "Moves:"
             text2: gridModel.nMoves
@@ -121,7 +119,6 @@ ApplicationWindow
         }
         LabelInformation
         {
-            id: labelCargosLeft
             Layout.alignment: Qt.AlignRight
             text1: "Cargos Left:"
             text2: gridModel.cargosLeft
@@ -137,7 +134,6 @@ ApplicationWindow
         model: GridModel
         {
             id: gridModel
-            Component.onCompleted: grid5x5()
         }
         delegate: LoaderGridDelegate
         {

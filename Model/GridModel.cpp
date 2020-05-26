@@ -8,13 +8,15 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
-    //, m_pGridGenerator(new RandomGridGenerator)
+    //, m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
+    , m_pGridGenerator(new RandomGridGenerator)
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
     , m_nSteps(0)
     , m_nMoves(0)
-{}
+{
+    createGrid();
+}
 
 GridModel::~GridModel()
 {
@@ -130,9 +132,8 @@ QHash<int, QByteArray> GridModel::roleNames() const
     return roles;
 }
 
-void GridModel::createGrid(int width, int height)
+void GridModel::createGrid()
 {
-    Q_ASSERT(width > 0 && height > 0);
     Q_ASSERT(m_pGridGenerator);
 
     m_pGridGenerator->init();
@@ -147,34 +148,26 @@ void GridModel::createGrid(int width, int height)
     emit loader_index_changed(getLoaderPlayerIndex());
 }
 
-void GridModel::grid5x5()
+void GridModel::next()
 {
     Q_ASSERT(m_pGridGenerator);
-    m_pGridGenerator->setLoaderPlayers(1);
-    m_pGridGenerator->setCargos(2);
-    m_pGridGenerator->setCargosDestination(2);
-    m_pGridGenerator->setBarriers(3);
-    createGrid(5, 5);
+    auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
+    if (pMaze)
+    {
+        pMaze->next();
+        createGrid();
+    }
 }
 
-void GridModel::grid10x10()
+void GridModel::previous()
 {
     Q_ASSERT(m_pGridGenerator);
-    m_pGridGenerator->setLoaderPlayers(1);
-    m_pGridGenerator->setCargos(2);
-    m_pGridGenerator->setCargosDestination(2);
-    m_pGridGenerator->setBarriers(3);
-    createGrid(10, 10);
-}
-
-void GridModel::grid15x15()
-{
-    Q_ASSERT(m_pGridGenerator);
-    m_pGridGenerator->setLoaderPlayers(1);
-    m_pGridGenerator->setCargos(5);
-    m_pGridGenerator->setCargosDestination(5);
-    m_pGridGenerator->setBarriers(15);
-    createGrid(15, 15);
+    auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
+    if (pMaze)
+    {
+        pMaze->previous();
+        createGrid();
+    }
 }
 
 bool GridModel::moveUp()
@@ -410,6 +403,19 @@ int GridModel::step() const
 int GridModel::nMoves() const
 {
     return m_nMoves;
+}
+
+int GridModel::level() const
+{
+    if (m_pGridGenerator)
+    {
+        auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
+        if (pMaze)
+        {
+            return pMaze->getCurrentMaze();
+        }
+    }
+    return -1;
 }
 
 bool GridModel::checkWin()
