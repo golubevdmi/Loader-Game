@@ -100,7 +100,6 @@ bool GridMazes::readGrid(int mazeNumber)
         std::fill(m_grid.begin(), m_grid.end(), FieldValue::Empty);
 
         qDebug() << szWidth << ", " << szHeight;
-        qDebug() << params.size();
         QJsonArray gridArray = params["Grid"].toArray();
         Q_ASSERT(gridArray.size() == szHeight);
         for (int i = 0; i < gridArray.size(); ++i)
