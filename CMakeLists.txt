@@ -22,6 +22,7 @@ set(GRID_FILES
     GridGenerator/GridGenerator.h
     GridGenerator/RandomGridGenerator.cpp
     GridGenerator/TestGridGenerator.cpp
+    GridGenerator/GridMazes.cpp
     )
 
 set(MVC_FILES
