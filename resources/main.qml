@@ -106,8 +106,8 @@ ApplicationWindow
         LabelInformation
         {
             Layout.alignment: Qt.AlignLeft
-            text1: "Cargos:"
-            text2: gridModel.cargos
+            text1: "Step:"
+            text2: gridModel.step
             color: labelColor
         }
         LabelInformation
@@ -115,6 +115,13 @@ ApplicationWindow
             Layout.alignment: Qt.AlignLeft
             text1: "Moves:"
             text2: gridModel.nMoves
+            color: labelColor
+        }
+        LabelInformation
+        {
+            Layout.alignment: Qt.AlignLeft
+            text1: "Cargos:"
+            text2: gridModel.cargos
             color: labelColor
         }
         LabelInformation

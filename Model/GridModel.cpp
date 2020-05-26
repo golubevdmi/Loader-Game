@@ -8,10 +8,11 @@
 
 GridModel::GridModel(QObject *parent)
     : QAbstractTableModel(parent)
-    //, m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
-    , m_pGridGenerator(new RandomGridGenerator)
+    , m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
+    //, m_pGridGenerator(new RandomGridGenerator)
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
+    , m_currStep(0)
     , m_nSteps(0)
     , m_nMoves(0)
 {
@@ -39,6 +40,7 @@ void GridModel::reset()
         delete m_pUndoCmd;
         m_pUndoCmd = nullptr;
     }
+    m_currStep = 0;
     m_nSteps = 0;
     m_nMoves = 0;
     move_changed();
@@ -289,9 +291,9 @@ void GridModel::movedComplete()
     }
     emit cargos_left(cargosLeft());
     saveStep();
+    m_nSteps = ++m_currStep;
     ++m_nMoves;
     move_changed();
-    ++m_nSteps;
 }
 
 void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
@@ -322,6 +324,7 @@ bool GridModel::undo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - undo";
         m_pStack->undo();
+        --m_currStep;
         cmdComplete();
         emit cargos_left(cargosLeft());
         return true;
@@ -337,6 +340,7 @@ bool GridModel::redo()
                  << ", nSteps: " + QString::number(m_nSteps)
                  << " - redo";
         m_pStack->redo();
+        ++m_currStep;
         cmdComplete();
         emit cargos_left(cargosLeft());
         return true;
@@ -397,7 +401,7 @@ int GridModel::cargosLeft() const
 
 int GridModel::step() const
 {
-    return m_nSteps;
+    return m_currStep;
 }
 
 int GridModel::nMoves() const

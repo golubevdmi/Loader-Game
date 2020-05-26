@@ -16,6 +16,7 @@ class GridModel : public QAbstractTableModel
     Q_PROPERTY(int cargosDst READ cargosDst NOTIFY grid_changed)
     Q_PROPERTY(int barriers READ barriers NOTIFY grid_changed)
     Q_PROPERTY(int cargosLeft READ cargosLeft NOTIFY cargos_left)
+    Q_PROPERTY(int step READ step NOTIFY move_changed)
     Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
     Q_PROPERTY(int level READ level NOTIFY grid_changed)
 public:
@@ -64,6 +65,7 @@ private:
     GridType m_currentGrid;
     QUndoStack *m_pStack;
     QUndoCommand *m_pUndoCmd;
+    int m_currStep;
     int m_nSteps;
     int m_nMoves;
 
