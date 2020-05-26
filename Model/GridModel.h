@@ -53,9 +53,11 @@ public:
     Q_INVOKABLE int level() const;
 
 signals:
+    void moved_up();
+    void moved_down();
+    void moved_left();
+    void moved_right();
     void grid_changed();
-    void loader_index_changed(const QModelIndex &index);
-    void cargo_delivered();
     void cargos_left(int nCargos);
     void move_changed();
     void game_win();

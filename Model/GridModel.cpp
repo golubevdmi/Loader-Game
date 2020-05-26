@@ -44,6 +44,9 @@ void GridModel::reset()
     m_nSteps = 0;
     m_nMoves = 0;
     move_changed();
+
+    emit grid_changed();
+    emit cargos_left(cargosLeft());
 }
 
 QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const
@@ -144,10 +147,6 @@ void GridModel::createGrid()
     // Update grid
     m_beginGrid = m_pGridGenerator->getGrid();
     reset();
-
-    emit grid_changed();
-    emit cargos_left(cargosLeft());
-    emit loader_index_changed(getLoaderPlayerIndex());
 }
 
 void GridModel::next()
@@ -176,7 +175,10 @@ bool GridModel::moveUp()
 {
     bool ret = moveLoader(-1, 0);
     if (ret)
+    {
+        emit moved_up();
         qDebug() << "move up";
+    }
     return ret;
 }
 
@@ -184,7 +186,10 @@ bool GridModel::moveDown()
 {
     bool ret = moveLoader(1, 0);
     if (ret)
+    {
+        moved_down();
         qDebug() << "move down";
+    }
     return ret;
 }
 
@@ -192,7 +197,10 @@ bool GridModel::moveLeft()
 {
     bool ret = moveLoader(0, -1);
     if (ret)
+    {
+        moved_left();
         qDebug() << "move left";
+    }
     return ret;
 }
 
@@ -200,7 +208,10 @@ bool GridModel::moveRight()
 {
     bool ret = moveLoader(0, 1);
     if (ret)
+    {
+        moved_right();
         qDebug() << "move right";
+    }
     return ret;
 }
 
@@ -246,15 +257,7 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
         int rowOffset = indexEnd.row() - indexBegin.row();
         int colOffset = indexEnd.column() - indexBegin.column();
         QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
-        if (move(indexEnd, indexCargoDst))
-        {
-            if (getBeginValue(indexCargoDst).toInt() == FieldValue::CargoDestination)
-            {
-                qDebug() << "cargo delivered";
-                emit cargo_delivered();
-            }
-        }
-        else
+        if (!move(indexEnd, indexCargoDst))
         {
             return false;
         }
