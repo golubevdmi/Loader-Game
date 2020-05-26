@@ -113,18 +113,10 @@ ApplicationWindow
             }
             LabelInformation
             {
-                id: labelCargosDst
-                Layout.alignment: Qt.AlignLeft
-                text1: "Cargos Dst:"
-                text2: gridModel.cargosDst
-                color: root.color
-            }
-            LabelInformation
-            {
                 id: labelBarriers
                 Layout.alignment: Qt.AlignLeft
-                text1: "Barriers:"
-                text2: gridModel.barriers
+                text1: "Moves:"
+                text2: gridModel.nMoves
                 color: root.color
             }
 
