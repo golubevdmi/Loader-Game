@@ -9,10 +9,10 @@ ApplicationWindow
 {
     id: root
     visible: true
-    width: 640
-    height: 480
-    minimumWidth: 320
-    minimumHeight: 240
+    width: 1280
+    height: 960
+    minimumWidth: 640
+    minimumHeight: 480
     color: "#09102B"
     title: qsTr("Loader Game")
 
@@ -144,8 +144,7 @@ ApplicationWindow
         id: tableView
         anchors.fill: parent
         clip: true
-        model: gridModel
-        GridModel
+        model: GridModel
         {
             id: gridModel
             Component.onCompleted: grid5x5()
