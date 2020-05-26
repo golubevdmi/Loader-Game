@@ -7,6 +7,9 @@ import GridModel 1.0
 
 ApplicationWindow
 {
+    property color labelColor: "#483d8b"
+    property color bnColor: root.color
+
     id: root
     visible: true
     width: 1280
@@ -15,6 +18,8 @@ ApplicationWindow
     minimumHeight: 480
     color: "#09102B"
     title: qsTr("Loader Game")
+
+
 
     menuBar: MenuBar
     {
@@ -60,24 +65,25 @@ ApplicationWindow
     }
     header: RowLayout
     {
+
         LoaderGirdButton
         {
             Layout.alignment: Qt.AlignLeft
-            backgroundColor: root.color
+            backgroundColor: bnColor
             text: qsTr("5x5")
             onClicked: gridModel.grid5x5()
         }
         LoaderGirdButton
         {
             Layout.alignment: Qt.AlignLeft
-            backgroundColor: root.color
+            backgroundColor: bnColor
             text: qsTr("10x10")
             onClicked: gridModel.grid10x10()
         }
         LoaderGirdButton
         {
             Layout.alignment: Qt.AlignLeft
-            backgroundColor: root.color
+            backgroundColor: bnColor
             text: qsTr("15x15")
             onClicked: gridModel.grid15x15()
         }
@@ -97,45 +103,29 @@ ApplicationWindow
             text: qsTr("Reset")
             onClicked: gridModel.reset()
         }
-    }
-    footer: ToolBar
-    {
-        RowLayout
+        LabelInformation
         {
-            anchors.fill: parent
-            LabelInformation
-            {
-                id: labelCargos
-                Layout.alignment: Qt.AlignLeft
-                text1: "Cargos:"
-                text2: gridModel.cargos
-                color: root.color
-            }
-            LabelInformation
-            {
-                id: labelBarriers
-                Layout.alignment: Qt.AlignLeft
-                text1: "Moves:"
-                text2: gridModel.nMoves
-                color: root.color
-            }
-
-            Item
-            {
-                id: spacerFooterItem
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Rectangle { anchors.fill: parent; color: root.color }
-            }
-
-            LabelInformation
-            {
-                id: labelCargosLeft
-                Layout.alignment: Qt.AlignRight
-                text1: "Cargos Left:"
-                text2: gridModel.cargosLeft
-                color: root.color
-            }
+            id: labelCargos
+            Layout.alignment: Qt.AlignLeft
+            text1: "Cargos:"
+            text2: gridModel.cargos
+            color: labelColor
+        }
+        LabelInformation
+        {
+            id: labelBarriers
+            Layout.alignment: Qt.AlignLeft
+            text1: "Moves:"
+            text2: gridModel.nMoves
+            color: labelColor
+        }
+        LabelInformation
+        {
+            id: labelCargosLeft
+            Layout.alignment: Qt.AlignRight
+            text1: "Cargos Left:"
+            text2: gridModel.cargosLeft
+            color: labelColor
         }
     }
 
