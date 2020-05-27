@@ -74,11 +74,11 @@ ApplicationWindow
             backgroundColor: bnColor
             text: qsTr("Previous")
             onClicked: gridModel.previous()
-            audioFile: "qrc:/audio/resources/sound_bn1.wav"
+            audioFile: "qrc:/sounds/sounds/sound_bn1.wav"
         }
         LoaderGirdButton
         {
-            audioFile: "qrc:/audio/resources/sound_bn2.wav"
+            audioFile: "qrc:/sounds/sounds/sound_bn2.wav"
             Layout.alignment: Qt.AlignLeft
             backgroundColor: bnColor
             text: qsTr("Next")
@@ -86,7 +86,7 @@ ApplicationWindow
         }
         LoaderGirdButton
         {
-            audioFile: "qrc:/audio/resources/sound_bn3.wav"
+            audioFile: "qrc:/sounds/sounds/sound_bn3.wav"
             Layout.alignment: Qt.AlignLeft
             backgroundColor: root.color
             text: qsTr("Reset")

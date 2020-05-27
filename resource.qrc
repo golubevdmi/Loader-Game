@@ -22,12 +22,12 @@
         <file>resources/field_cargodst1.gif</file>
         <file>resources/field_cargodst2.gif</file>
     </qresource>
-    <qresource prefix="/audio">
-        <file>resources/sound_bn2.wav</file>
-        <file>resources/sound_bn3.wav</file>
-        <file>resources/sound_delivered.wav</file>
-        <file>resources/sound_game_win.wav</file>
-        <file>resources/sound_step.wav</file>
-        <file>resources/sound_bn1.wav</file>
+    <qresource prefix="/sounds">
+        <file>sounds/sound_bn1.wav</file>
+        <file>sounds/sound_bn2.wav</file>
+        <file>sounds/sound_bn3.wav</file>
+        <file>sounds/sound_delivered.wav</file>
+        <file>sounds/sound_game_win.wav</file>
+        <file>sounds/sound_step.wav</file>
     </qresource>
 </RCC>
