@@ -9,11 +9,11 @@ RowLayout
 
     ManageButton
     {
+        audioFile: "qrc:/sounds/sounds/sound_bn1.wav"
         Layout.alignment: Qt.AlignLeft
         backgroundColor: colorButton
         text: qsTr("Previous")
         onClicked: gridModel.previous()
-        audioFile: "qrc:/sounds/sounds/sound_bn1.wav"
     }
     ManageButton
     {
@@ -34,10 +34,8 @@ RowLayout
 
     Item
     {
-        id: spacerHeaderItem
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
     }
 
     InfoLabel

@@ -5,7 +5,6 @@ import QtQuick.Controls 2.12
 import QtMultimedia 5.0
 import GridModel 1.0
 
-
 ApplicationWindow
 {
     id: root
@@ -26,11 +25,7 @@ ApplicationWindow
         id: tableView
         anchors.fill: parent
         clip: true
-        model: gridModel
-        GridModel
-        {
-            id: gridModel
-        }
+        model: GridModel { id: gridModel }
         delegate: ModelDelegate
         {
             id: loaderGrid
@@ -41,6 +36,12 @@ ApplicationWindow
             Connections
             {
                 target: gridModel
+                onData_changed_custom:
+                {
+                    if (row === model.row && col === model.column)
+                        loaderGrid.reload();
+                }
+
                 onMoved_up:    playerState = "up"
                 onMoved_down:  playerState = "down"
                 onMoved_left:  playerState = "left"

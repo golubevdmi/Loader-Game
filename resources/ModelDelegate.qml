@@ -4,66 +4,87 @@ import QtQuick.Controls 2.12
 Rectangle
 {
     property string playerState: "left"
+    signal reload
 
     id: root
 
-    //
-    // Static sprites
+    SpriteBackground { id: spriteFloor }
+    SpriteBackground { id: spriteBarrier }
 
-    Image
+    SpriteForeground { id: spriteCargo }
+    SpriteForeground { id: spriteDelivered }
+
+    DynamicForeground { id: spriteCargoDst }
+
+    PlayerAnimation  { id: spritePlayer }
+
+
+    onReload:
     {
-        id: bgSprite
-        anchors.fill: parent
-        source:
-        {
-            if (model.Barrier)
-                return "qrc:/sprites/sprites/field_wall.png";
-            else
-                return "qrc:/sprites/sprites/field_floor.png";
-        }
-        sourceSize: Qt.size(width, height)
+        //reloadSprite(loaderFloor);
+        //reloadSprite(loaderBarrier);
+        reloadSprite(loaderCargo);
+        //reloadSprite(loaderCargoDst);
+        reloadSprite(loaderDelivered);
+        reloadSprite(loaderPlayer);
     }
-
-    Image
+    function reloadSprite(loader)
     {
-        id: fgSprite
-        anchors.centerIn: parent
-        fillMode: Image.PreserveAspectCrop
-        scale: 0.8
-        width: Math.min(parent.implicitWidth, parent.implicitHeight)
-        height: width
-
-        source:
+        if (loader)
         {
-            if (model.Cargo && model.CargoDestination)
-                return "qrc:/sprites/sprites/field_delivered.png";
-            else if (model.Cargo)
-                return "qrc:/sprites/sprites/field_cargo.png";
-            else
-                return "";
+            loader.active = false;
+            loader.active = true;
         }
     }
 
-    PlayerAnimation
+    Loader
     {
-        id: playerSprite
-        role: model.LoaderPlayer
-        state: playerState
-        source: "qrc:/sprites/sprites/field_player_poses.png"
+        id: loaderFloor
+        property string sourceImage: "qrc:/sprites/sprites/field_floor.png"
+        sourceComponent: spriteFloor
+        anchors.fill: root
+        onActiveChanged: sourceComponent = spriteFloor
     }
-    AnimatedImage
+    Loader
     {
-        id: cargodstSprite
-        width: Math.min(parent.implicitWidth, parent.implicitHeight)
-        height: width
-        speed: 0.5
-        source:
-        {
-            if (model.CargoDestination && !model.Cargo && !model.LoaderPlayer)
-                return "qrc:/sprites/sprites/field_cargodst2.gif";
-            else
-                return "";
-        }
+        id: loaderBarrier
+        property string sourceImage: "qrc:/sprites/sprites/field_wall.png"
+        sourceComponent: model.Barrier ? spriteBarrier : undefined
+        anchors.fill: root
+        onActiveChanged: sourceComponent = model.Barrier ? spriteBarrier : undefined
+    }
+    Loader
+    {
+        id: loaderCargo
+        property string sourceImage: "qrc:/sprites/sprites/field_cargo.png"
+        sourceComponent: model.Cargo && !model.CargoDestination ? spriteCargo : undefined
+        anchors.fill: root
+        onActiveChanged: sourceComponent = model.Cargo && !model.CargoDestination ? spriteCargo : undefined
+    }
+    Loader
+    {
+        id: loaderCargoDst
+        property string sourceImage: "qrc:/sprites/sprites/field_cargodst2.gif"
+        sourceComponent: model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
+        anchors.fill: root
+        onActiveChanged: sourceComponent = model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
+    }
+    Loader
+    {
+        id: loaderDelivered
+        property string sourceImage: "qrc:/sprites/sprites/field_delivered.png"
+        sourceComponent: model.Cargo && model.CargoDestination ? spriteDelivered : undefined
+        anchors.fill: root
+        onActiveChanged: sourceComponent = model.Cargo && model.CargoDestination ? spriteDelivered : undefined
+    }
+    Loader
+    {
+        id: loaderPlayer
+        property string sourceImage: "qrc:/sprites/sprites/field_player_poses.png"
+        property string currentPlayerState: playerState
+        sourceComponent: model.LoaderPlayer ? spritePlayer : undefined
+        anchors.fill: root
+        onActiveChanged: sourceComponent = model.LoaderPlayer ? spritePlayer : undefined
     }
 }
 
