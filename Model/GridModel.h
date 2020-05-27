@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QSharedPointer>
 
+#include <FieldFlags.h>
 #include <GridGenerator/GridGenerator.h>
 
 class QUndoStack;

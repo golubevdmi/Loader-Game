@@ -35,6 +35,7 @@ set(MVC_FILES
 
 add_executable(${project_name}
     sokobanmain.cpp
+    FieldFlags.h
     ${GRID_FILES}
     ${MVC_FILES}
     ${MOC_WRAPPERS}

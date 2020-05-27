@@ -4,14 +4,7 @@
 #include <QVector>
 #include <QString>
 
-enum FieldValue
-{
-    Empty = Qt::UserRole,
-    LoaderPlayer,
-    Cargo,
-    CargoDestination,
-    Barrier
-};
+#include <FieldFlags.h>
 
 using GridType = QVector<int>;
 
