@@ -68,7 +68,7 @@ ApplicationWindow
     header: RowLayout
     {
 
-        LoaderGirdButton
+        ManageButton
         {
             Layout.alignment: Qt.AlignLeft
             backgroundColor: bnColor
@@ -76,7 +76,7 @@ ApplicationWindow
             onClicked: gridModel.previous()
             audioFile: "qrc:/sounds/sounds/sound_bn1.wav"
         }
-        LoaderGirdButton
+        ManageButton
         {
             audioFile: "qrc:/sounds/sounds/sound_bn2.wav"
             Layout.alignment: Qt.AlignLeft
@@ -84,7 +84,7 @@ ApplicationWindow
             text: qsTr("Next")
             onClicked: gridModel.next()
         }
-        LoaderGirdButton
+        ManageButton
         {
             audioFile: "qrc:/sounds/sounds/sound_bn3.wav"
             Layout.alignment: Qt.AlignLeft
@@ -101,35 +101,35 @@ ApplicationWindow
             Rectangle { anchors.fill: parent; color: root.color } // to visualize the spacer
         }
 
-        LabelInformation
+        InfoLabel
         {
             Layout.alignment: Qt.AlignLeft
             text1: "Level:"
             text2: gridModel.level
             color: "#48d1cc"
         }
-        LabelInformation
+        InfoLabel
         {
             Layout.alignment: Qt.AlignLeft
             text1: "Step:"
             text2: gridModel.step
             color: labelColor
         }
-        LabelInformation
+        InfoLabel
         {
             Layout.alignment: Qt.AlignLeft
             text1: "Moves:"
             text2: gridModel.nMoves
             color: labelColor
         }
-        LabelInformation
+        InfoLabel
         {
             Layout.alignment: Qt.AlignLeft
             text1: "Cargos:"
             text2: gridModel.cargos
             color: labelColor
         }
-        LabelInformation
+        InfoLabel
         {
             Layout.alignment: Qt.AlignRight
             text1: "Cargos Left:"
@@ -148,7 +148,7 @@ ApplicationWindow
         {
             id: gridModel
         }
-        delegate: LoaderGridDelegate
+        delegate: ModelDelegate
         {
             id: loaderGrid
             implicitWidth: root.contentItem.width / gridModel.columnCount()

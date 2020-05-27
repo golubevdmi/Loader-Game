@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<GridModel>("GridModel", 1, 0, "GridModel");
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/forms/resources/main.qml"));
+    const QUrl url(QStringLiteral("qrc:/forms/resources/sokoban.qml"));
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
