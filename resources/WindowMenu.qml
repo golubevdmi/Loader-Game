@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.12
 
 MenuBar
@@ -9,10 +10,21 @@ MenuBar
         MenuSeparator { }
         Action
         {
-            text: qsTr("&Quit")
+            text: qsTr("&Exit")
             icon.source: "qrc:/icons/icons/exit.png"
             shortcut: StandardKey.Quit
-            onTriggered: Qt.quit()
+            onTriggered: msgQuit.setVisible(true)
+        }
+
+        MessageDialog
+        {
+            id: msgQuit
+            title: "Exit?"
+            text: "Do you want exit?"
+            icon: StandardIcon.Question
+            modality: Qt.ApplicationModal
+            standardButtons: StandardButton.Yes | StandardButton.No
+            onYes: Qt.quit()
         }
     }
     Menu
@@ -40,6 +52,16 @@ MenuBar
         {
             text: qsTr("&About")
             icon.source: "qrc:/icons/icons/about.png"
+            shortcut: StandardKey.HelpContents
+            onTriggered: msgAbout.setVisible(true)
+
+        }
+        MessageDialog
+        {
+            id: msgAbout
+            title: "About"
+            text: "Free demo version of Sokoban game"
+            modality: Qt.ApplicationModal
         }
     }
 }
