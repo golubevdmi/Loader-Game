@@ -38,6 +38,6 @@ Button
 
     onClicked:
     {
-        sound.play();
+        //sound.play();
     }
 }

@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.12
+import QtMultimedia 5.0
 import GridModel 1.0
 
 
@@ -13,7 +14,8 @@ ApplicationWindow
     id: root
     visible: true
     width: 1280
-    height: 960
+    //height: 960
+    height: 600
     minimumWidth: 640
     minimumHeight: 480
     color: "#09102B"
@@ -138,8 +140,6 @@ ApplicationWindow
 
     TableView
     {
-        property string animationState: "left"
-
         id: tableView
         anchors.fill: parent
         clip: true
@@ -147,20 +147,24 @@ ApplicationWindow
         GridModel
         {
             id: gridModel
-
-            onMoved_up:    tableView.animationState = "up"
-            onMoved_down:  tableView.animationState = "down"
-            onMoved_left:  tableView.animationState = "left"
-            onMoved_right: tableView.animationState = "right"
         }
         delegate: LoaderGridDelegate
         {
             id: loaderGrid
             implicitWidth: root.contentItem.width / gridModel.columnCount()
             implicitHeight: root.contentItem.height / gridModel.rowCount()
-            playerState: tableView.animationState
+            playerState: "down"
+
+            Connections
+            {
+                target: gridModel
+                onMoved_up:    playerState = "up"
+                onMoved_down:  playerState = "down"
+                onMoved_left:  playerState = "left"
+                onMoved_right: playerState = "right"
+            }
         }
-        onWidthChanged: tableView.forceLayout();
+        onWidthChanged:  tableView.forceLayout();
         onHeightChanged: tableView.forceLayout();
     }
 

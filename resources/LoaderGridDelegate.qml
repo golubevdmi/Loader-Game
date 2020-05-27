@@ -16,7 +16,7 @@ Rectangle
         anchors.fill: parent
         source:
         {
-            if (Barrier == true)
+            if (model.Barrier)
                 return "qrc:/sprites/resources/field_wall.png";
             else
                 return "qrc:/sprites/resources/field_floor.png";
@@ -35,9 +35,9 @@ Rectangle
 
         source:
         {
-            if (Cargo == true && CargoDestination == true)
+            if (model.Cargo && model.CargoDestination)
                 return "qrc:/sprites/resources/field_delivered.png";
-            else if (Cargo == true)
+            else if (model.Cargo)
                 return "qrc:/sprites/resources/field_cargo.png";
             else
                 return "";
@@ -47,7 +47,7 @@ Rectangle
     PlayerAnimation
     {
         id: playerSprite
-        role: LoaderPlayer
+        role: model.LoaderPlayer
         state: playerState
         source: "qrc:/sprites/resources/field_player_poses.png"
     }
@@ -59,7 +59,7 @@ Rectangle
         speed: 0.5
         source:
         {
-            if (CargoDestination && !Cargo && !LoaderPlayer)
+            if (model.CargoDestination && !model.Cargo && !model.LoaderPlayer)
                 return "qrc:/sprites/resources/field_cargodst2.gif";
             else
                 return "";
