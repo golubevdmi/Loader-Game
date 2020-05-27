@@ -13,14 +13,14 @@
         <file>resources/exit.png</file>
     </qresource>
     <qresource prefix="/sprites">
-        <file>resources/field_cargodst.png</file>
-        <file>resources/field_cargo.png</file>
-        <file>resources/field_delivered.png</file>
-        <file>resources/field_floor.png</file>
-        <file>resources/field_player_poses.png</file>
-        <file>resources/field_wall.png</file>
-        <file>resources/field_cargodst1.gif</file>
-        <file>resources/field_cargodst2.gif</file>
+        <file>sprites/field_cargo.png</file>
+        <file>sprites/field_cargodst.png</file>
+        <file>sprites/field_cargodst1.gif</file>
+        <file>sprites/field_cargodst2.gif</file>
+        <file>sprites/field_delivered.png</file>
+        <file>sprites/field_floor.png</file>
+        <file>sprites/field_player_poses.png</file>
+        <file>sprites/field_wall.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>sounds/sound_bn1.wav</file>

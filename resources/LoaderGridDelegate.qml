@@ -17,9 +17,9 @@ Rectangle
         source:
         {
             if (model.Barrier)
-                return "qrc:/sprites/resources/field_wall.png";
+                return "qrc:/sprites/sprites/field_wall.png";
             else
-                return "qrc:/sprites/resources/field_floor.png";
+                return "qrc:/sprites/sprites/field_floor.png";
         }
         sourceSize: Qt.size(width, height)
     }
@@ -36,9 +36,9 @@ Rectangle
         source:
         {
             if (model.Cargo && model.CargoDestination)
-                return "qrc:/sprites/resources/field_delivered.png";
+                return "qrc:/sprites/sprites/field_delivered.png";
             else if (model.Cargo)
-                return "qrc:/sprites/resources/field_cargo.png";
+                return "qrc:/sprites/sprites/field_cargo.png";
             else
                 return "";
         }
@@ -49,7 +49,7 @@ Rectangle
         id: playerSprite
         role: model.LoaderPlayer
         state: playerState
-        source: "qrc:/sprites/resources/field_player_poses.png"
+        source: "qrc:/sprites/sprites/field_player_poses.png"
     }
     AnimatedImage
     {
@@ -60,7 +60,7 @@ Rectangle
         source:
         {
             if (model.CargoDestination && !model.Cargo && !model.LoaderPlayer)
-                return "qrc:/sprites/resources/field_cargodst2.gif";
+                return "qrc:/sprites/sprites/field_cargodst2.gif";
             else
                 return "";
         }
