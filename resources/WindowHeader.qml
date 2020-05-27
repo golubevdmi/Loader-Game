@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 RowLayout
 {
-    property color colorLvl: "#48d1cc"
+    property color colorLvl: "white"
     property color colorLabel: "white"
     property color colorButton: "white"
 
@@ -45,7 +45,7 @@ RowLayout
         Layout.alignment: Qt.AlignLeft
         text1: "Level:"
         text2: gridModel.level
-        color: colorLabel
+        color: colorLvl
     }
     InfoLabel
     {

@@ -16,10 +16,10 @@ ApplicationWindow
     minimumWidth: 640
     minimumHeight: 480
     color: "#09102B"
-    title: qsTr("Loader Game")
+    title: qsTr("Sakoban")
 
     menuBar: WindowMenu {}
-    header: WindowHeader { colorLabel: "#483d8b"; colorButton: root.color; }
+    header: WindowHeader { colorLvl: "#48d1cc"; colorLabel: root.color; colorButton: root.color; }
 
     TableView
     {
