@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 
 RowLayout
     {
-
         ManageButton
         {
             Layout.alignment: Qt.AlignLeft

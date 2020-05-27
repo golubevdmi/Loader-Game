@@ -21,50 +21,7 @@ ApplicationWindow
     color: "#09102B"
     title: qsTr("Loader Game")
 
-
-
-    menuBar: MenuBar
-    {
-        Menu
-        {
-            title: qsTr("&File")
-            MenuSeparator { }
-            Action
-            {
-                text: qsTr("&Quit")
-                icon.source: "qrc:/icons/icons/exit.png"
-                shortcut: StandardKey.Quit
-                onTriggered: Qt.quit()
-            }
-        }
-        Menu
-        {
-            title: qsTr("&Edit")
-            Action
-            {
-                text: qsTr("&Undo")
-                icon.source: "qrc:/icons/icons/undo.png"
-                shortcut: StandardKey.Undo
-                onTriggered: gridModel.undo()
-            }
-            Action
-            {
-                text: qsTr("&Redo")
-                icon.source: "qrc:/icons/icons/redo.png"
-                shortcut: StandardKey.Redo
-                onTriggered: gridModel.redo()
-            }
-        }
-        Menu
-        {
-            title: qsTr("&Help")
-            Action
-            {
-                text: qsTr("&About")
-                icon.source: "qrc:/icons/icons/about.png"
-            }
-        }
-    }
+    menuBar: WindowMenu {}
     header: WindowHeader {}
 
     TableView

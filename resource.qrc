@@ -6,6 +6,7 @@
         <file>resources/ModelDelegate.qml</file>
         <file>resources/sokoban.qml</file>
         <file>resources/WindowHeader.qml</file>
+        <file>resources/WindowMenu.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
