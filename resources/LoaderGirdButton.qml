@@ -1,9 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtMultimedia 5.0
 
 Button
 {
     property color backgroundColor
+    property alias audioFile: sound.source
 
     id: root
     contentItem: Text
@@ -27,5 +29,15 @@ Button
         border.color: "white"
         border.width: 2
         radius: 2
+    }
+
+    Audio
+    {
+        id: sound
+    }
+
+    onClicked:
+    {
+        sound.play();
     }
 }
