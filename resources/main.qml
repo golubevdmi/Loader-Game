@@ -32,7 +32,7 @@ ApplicationWindow
             Action
             {
                 text: qsTr("&Quit")
-                icon.source: "qrc:/images/resources/exit.png"
+                icon.source: "qrc:/icons/icons/exit.png"
                 shortcut: StandardKey.Quit
                 onTriggered: Qt.quit()
             }
@@ -43,14 +43,14 @@ ApplicationWindow
             Action
             {
                 text: qsTr("&Undo")
-                icon.source: "qrc:/images/resources/undo.png"
+                icon.source: "qrc:/icons/icons/undo.png"
                 shortcut: StandardKey.Undo
                 onTriggered: gridModel.undo()
             }
             Action
             {
                 text: qsTr("&Redo")
-                icon.source: "qrc:/images/resources/redo.png"
+                icon.source: "qrc:/icons/icons/redo.png"
                 shortcut: StandardKey.Redo
                 onTriggered: gridModel.redo()
             }
@@ -61,7 +61,7 @@ ApplicationWindow
             Action
             {
                 text: qsTr("&About")
-                icon.source: "qrc:/images/resources/about.png"
+                icon.source: "qrc:/icons/icons/about.png"
             }
         }
     }

@@ -6,11 +6,11 @@
         <file>resources/LabelInformation.qml</file>
         <file>resources/PlayerAnimation.qml</file>
     </qresource>
-    <qresource prefix="/images">
-        <file>resources/redo.png</file>
-        <file>resources/undo.png</file>
-        <file>resources/about.png</file>
-        <file>resources/exit.png</file>
+    <qresource prefix="/icons">
+        <file>icons/about.png</file>
+        <file>icons/exit.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/undo.png</file>
     </qresource>
     <qresource prefix="/sprites">
         <file>sprites/field_cargo.png</file>
