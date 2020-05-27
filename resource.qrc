@@ -5,6 +5,7 @@
         <file>resources/ManageButton.qml</file>
         <file>resources/ModelDelegate.qml</file>
         <file>resources/sokoban.qml</file>
+        <file>resources/WindowHeader.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
