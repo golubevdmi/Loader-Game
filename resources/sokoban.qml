@@ -8,9 +8,6 @@ import GridModel 1.0
 
 ApplicationWindow
 {
-    property color labelColor: "#483d8b"
-    property color bnColor: root.color
-
     id: root
     visible: true
     width: 1280
@@ -22,7 +19,7 @@ ApplicationWindow
     title: qsTr("Loader Game")
 
     menuBar: WindowMenu {}
-    header: WindowHeader {}
+    header: WindowHeader { colorLabel: "#483d8b"; colorButton: root.color; }
 
     TableView
     {
