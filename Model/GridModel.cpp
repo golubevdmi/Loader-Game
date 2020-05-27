@@ -98,20 +98,21 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     if (!index.isValid())
         return false;
 
-    beginResetModel();
+    //beginResetModel();
 
     switch (role)
     {
     case Qt::DisplayRole:
     case Qt::EditRole:
         setValue(index, value);
+        emit data_changed_custom(index.row(), index.column(), index.data());
         emit dataChanged(index, index, {role});
         break;
     default:
         return false;
     }
 
-    endResetModel();
+    //endResetModel();
 
     return true;
 }
