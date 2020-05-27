@@ -3,7 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.12
 import QtMultimedia 5.0
-import GridModel 1.0
+import SokobanModel 1.0
 
 ApplicationWindow
 {
@@ -25,17 +25,17 @@ ApplicationWindow
         id: tableView
         anchors.fill: parent
         clip: true
-        model: GridModel { id: gridModel }
+        model: SokobanModel { id: sokobanModel }
         delegate: ModelDelegate
         {
             id: loaderGrid
-            implicitWidth: root.contentItem.width / gridModel.columnCount()
-            implicitHeight: root.contentItem.height / gridModel.rowCount()
+            implicitWidth: root.contentItem.width / sokobanModel.columnCount()
+            implicitHeight: root.contentItem.height / sokobanModel.rowCount()
             playerState: "down"
 
             Connections
             {
-                target: gridModel
+                target: sokobanModel
                 onData_changed_custom:
                 {
                     if (row === model.row && col === model.column)
@@ -57,10 +57,10 @@ ApplicationWindow
         id: keysNavigation
         anchors.fill: parent
         focus: true
-        Keys.onUpPressed:    gridModel.moveUp();
-        Keys.onDownPressed:  gridModel.moveDown();
-        Keys.onRightPressed: gridModel.moveRight();
-        Keys.onLeftPressed:  gridModel.moveLeft();
+        Keys.onUpPressed:    sokobanModel.moveUp();
+        Keys.onDownPressed:  sokobanModel.moveDown();
+        Keys.onRightPressed: sokobanModel.moveRight();
+        Keys.onLeftPressed:  sokobanModel.moveLeft();
 
         onFocusChanged: keysNavigation.focus = true
     }

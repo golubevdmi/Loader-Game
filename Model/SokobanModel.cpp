@@ -1,4 +1,4 @@
-#include <Model/GridModel.h>
+#include <Model/SokobanModel.h>
 
 #include <Model/StepCommand.h>
 
@@ -6,7 +6,7 @@
 #include <QUndoCommand>
 #include <QDebug>
 
-GridModel::GridModel(QObject *parent)
+SokobanModel::SokobanModel(QObject *parent)
     : QAbstractTableModel(parent)
     , m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
     //, m_pGridGenerator(new RandomGridGenerator)
@@ -19,13 +19,13 @@ GridModel::GridModel(QObject *parent)
     createGrid();
 }
 
-GridModel::~GridModel()
+SokobanModel::~SokobanModel()
 {
     if (m_pUndoCmd)
         delete m_pUndoCmd;
 }
 
-void GridModel::reset()
+void SokobanModel::reset()
 {
     beginResetModel();
 
@@ -49,28 +49,28 @@ void GridModel::reset()
     emit cargos_left(cargosLeft());
 }
 
-QModelIndex GridModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex SokobanModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
         return QModelIndex();
     return createIndex(row, column);
 }
 
-int GridModel::rowCount(const QModelIndex &parent) const
+int SokobanModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
     return m_pGridGenerator->getHeight();
 }
 
-int GridModel::columnCount(const QModelIndex &parent) const
+int SokobanModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
     return m_pGridGenerator->getWidth();
 }
 
-QVariant GridModel::data(const QModelIndex &index, int role) const
+QVariant SokobanModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -93,7 +93,7 @@ QVariant GridModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool GridModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool SokobanModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid())
         return false;
@@ -113,7 +113,7 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     return true;
 }
 
-Qt::ItemFlags GridModel::flags(const QModelIndex &index) const
+Qt::ItemFlags SokobanModel::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     Qt::ItemFlags nReturn;
@@ -121,7 +121,7 @@ Qt::ItemFlags GridModel::flags(const QModelIndex &index) const
     return nReturn;
 }
 
-QHash<int, QByteArray> GridModel::roleNames() const
+QHash<int, QByteArray> SokobanModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[Qt::DisplayRole] = "display";
@@ -134,7 +134,7 @@ QHash<int, QByteArray> GridModel::roleNames() const
     return roles;
 }
 
-void GridModel::createGrid()
+void SokobanModel::createGrid()
 {
     Q_ASSERT(m_pGridGenerator);
 
@@ -147,7 +147,7 @@ void GridModel::createGrid()
 }
 
 // Read next grid
-void GridModel::next()
+void SokobanModel::next()
 {
     Q_ASSERT(m_pGridGenerator);
     auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
@@ -159,7 +159,7 @@ void GridModel::next()
 }
 
 // Read previous grid
-void GridModel::previous()
+void SokobanModel::previous()
 {
     Q_ASSERT(m_pGridGenerator);
     auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
@@ -170,7 +170,7 @@ void GridModel::previous()
     }
 }
 
-bool GridModel::moveUp()
+bool SokobanModel::moveUp()
 {
     bool ret = moveLoader(-1, 0);
     if (ret)
@@ -181,7 +181,7 @@ bool GridModel::moveUp()
     return ret;
 }
 
-bool GridModel::moveDown()
+bool SokobanModel::moveDown()
 {
     bool ret = moveLoader(1, 0);
     if (ret)
@@ -192,7 +192,7 @@ bool GridModel::moveDown()
     return ret;
 }
 
-bool GridModel::moveLeft()
+bool SokobanModel::moveLeft()
 {
     bool ret = moveLoader(0, -1);
     if (ret)
@@ -203,7 +203,7 @@ bool GridModel::moveLeft()
     return ret;
 }
 
-bool GridModel::moveRight()
+bool SokobanModel::moveRight()
 {
     bool ret = moveLoader(0, 1);
     if (ret)
@@ -214,7 +214,7 @@ bool GridModel::moveRight()
     return ret;
 }
 
-bool GridModel::moveLoader(int rowOffset, int columnOffset)
+bool SokobanModel::moveLoader(int rowOffset, int columnOffset)
 {
     if (checkWin())
     {
@@ -239,7 +239,7 @@ bool GridModel::moveLoader(int rowOffset, int columnOffset)
 }
 
 // Game logic of displacement of objects
-bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
+bool SokobanModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
 {
     if (!indexBegin.isValid() || !indexEnd.isValid())
         return false;
@@ -291,7 +291,7 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
 }
 
 // If the move player is successful
-void GridModel::movedComplete()
+void SokobanModel::movedComplete()
 {
     if (checkWin())
     {
@@ -306,7 +306,7 @@ void GridModel::movedComplete()
 }
 
 // Add move to undoCommand
-void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
+void SokobanModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
 {
     if (!m_pUndoCmd)
     {
@@ -318,7 +318,7 @@ void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &old
 }
 
 // Add UndoCommand to stack
-void GridModel::saveStep()
+void SokobanModel::saveStep()
 {
     if (m_pStack && m_pUndoCmd)
     {
@@ -327,7 +327,7 @@ void GridModel::saveStep()
     }
 }
 
-bool GridModel::undo()
+bool SokobanModel::undo()
 {
     if (m_pStack && m_pStack->index() > 0)
     {
@@ -340,7 +340,7 @@ bool GridModel::undo()
     return false;
 }
 
-bool GridModel::redo()
+bool SokobanModel::redo()
 {
     if (m_pStack && m_pStack->index() < m_nSteps)
     {
@@ -354,7 +354,7 @@ bool GridModel::redo()
 }
 
 // If undo/redo is successful
-void GridModel::cmdComplete()
+void SokobanModel::cmdComplete()
 {
     qDebug() << "stack index: " + QString::number(m_pStack->index())
              << ", nSteps: " + QString::number(m_nSteps);
@@ -362,7 +362,7 @@ void GridModel::cmdComplete()
     move_changed();
 }
 
-int GridModel::cargos() const
+int SokobanModel::cargos() const
 {
     if (m_pGridGenerator)
     {
@@ -371,7 +371,7 @@ int GridModel::cargos() const
     return -1;
 }
 
-int GridModel::cargosDst() const
+int SokobanModel::cargosDst() const
 {
     if (m_pGridGenerator)
     {
@@ -380,7 +380,7 @@ int GridModel::cargosDst() const
     return -1;
 }
 
-int GridModel::barriers() const
+int SokobanModel::barriers() const
 {
     if (m_pGridGenerator)
     {
@@ -389,7 +389,7 @@ int GridModel::barriers() const
     return -1;
 }
 
-int GridModel::cargosLeft() const
+int SokobanModel::cargosLeft() const
 {
     int nCargos = 0;
     auto it = m_beginGrid.begin();
@@ -407,17 +407,17 @@ int GridModel::cargosLeft() const
     return nCargos;
 }
 
-int GridModel::step() const
+int SokobanModel::step() const
 {
     return m_currStep;
 }
 
-int GridModel::nMoves() const
+int SokobanModel::nMoves() const
 {
     return m_nMoves;
 }
 
-int GridModel::level() const
+int SokobanModel::level() const
 {
     if (m_pGridGenerator)
     {
@@ -430,14 +430,14 @@ int GridModel::level() const
     return -1;
 }
 
-bool GridModel::checkWin()
+bool SokobanModel::checkWin()
 {
     int nCargos = cargosLeft();
     return !nCargos;
 }
 
 // Set value to current grid
-void GridModel::setValue(const QModelIndex &index, QVariant value)
+void SokobanModel::setValue(const QModelIndex &index, QVariant value)
 {
     if (index.isValid() && !value.isNull())
     {
@@ -445,7 +445,7 @@ void GridModel::setValue(const QModelIndex &index, QVariant value)
     }
 }
 
-QModelIndex GridModel::getLoaderPlayerIndex()
+QModelIndex SokobanModel::getLoaderPlayerIndex()
 {
     auto it = std::find(m_currentGrid.begin(), m_currentGrid.end(), FieldValue::LoaderPlayer);
     if (it != m_currentGrid.end())
@@ -457,7 +457,7 @@ QModelIndex GridModel::getLoaderPlayerIndex()
 }
 
 // Get value from current grid
-QVariant GridModel::getValue(const QModelIndex &index) const
+QVariant SokobanModel::getValue(const QModelIndex &index) const
 {
     if (index.isValid())
         return QVariant(m_currentGrid[index.row() * columnCount() + index.column()]);
@@ -465,7 +465,7 @@ QVariant GridModel::getValue(const QModelIndex &index) const
 }
 
 // Get value from begin grid
-QVariant GridModel::getBeginValue(const QModelIndex &index) const
+QVariant SokobanModel::getBeginValue(const QModelIndex &index) const
 {
     if (index.isValid())
         return QVariant(m_beginGrid[index.row() * columnCount() + index.column()]);

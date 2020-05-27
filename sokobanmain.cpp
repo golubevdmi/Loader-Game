@@ -2,14 +2,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <Model/GridModel.h>
+#include <Model/SokobanModel.h>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    qmlRegisterType<GridModel>("GridModel", 1, 0, "GridModel");
+    qmlRegisterType<SokobanModel>("SokobanModel", 1, 0, "SokobanModel");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/forms/resources/sokoban.qml"));

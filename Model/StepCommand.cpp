@@ -1,8 +1,8 @@
 #include <Model/StepCommand.h>
 
-#include <Model/GridModel.h>
+#include <QAbstractItemModel>
 
-StepCommand::StepCommand(GridModel *model, QUndoCommand *parent)
+StepCommand::StepCommand(QAbstractItemModel *model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , _pModel(model)
 {}

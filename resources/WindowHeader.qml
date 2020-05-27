@@ -13,7 +13,7 @@ RowLayout
         Layout.alignment: Qt.AlignLeft
         backgroundColor: colorButton
         text: qsTr("Previous")
-        onClicked: gridModel.previous()
+        onClicked: sokobanModel.previous()
     }
     ManageButton
     {
@@ -21,7 +21,7 @@ RowLayout
         Layout.alignment: Qt.AlignLeft
         backgroundColor: colorButton
         text: qsTr("Next")
-        onClicked: gridModel.next()
+        onClicked: sokobanModel.next()
     }
     ManageButton
     {
@@ -29,7 +29,7 @@ RowLayout
         Layout.alignment: Qt.AlignLeft
         backgroundColor: colorButton
         text: qsTr("Reset")
-        onClicked: gridModel.reset()
+        onClicked: sokobanModel.reset()
     }
 
     Item
@@ -42,35 +42,35 @@ RowLayout
     {
         Layout.alignment: Qt.AlignLeft
         text1: "Level:"
-        text2: gridModel.level
+        text2: sokobanModel.level
         color: colorLvl
     }
     InfoLabel
     {
         Layout.alignment: Qt.AlignLeft
         text1: "Step:"
-        text2: gridModel.step
+        text2: sokobanModel.step
         color: colorLabel
     }
     InfoLabel
     {
         Layout.alignment: Qt.AlignLeft
         text1: "Moves:"
-        text2: gridModel.nMoves
+        text2: sokobanModel.nMoves
         color: colorLabel
     }
     InfoLabel
     {
         Layout.alignment: Qt.AlignLeft
         text1: "Cargos:"
-        text2: gridModel.cargos
+        text2: sokobanModel.cargos
         color: colorLabel
     }
     InfoLabel
     {
         Layout.alignment: Qt.AlignRight
         text1: "Cargos Left:"
-        text2: gridModel.cargosLeft
+        text2: sokobanModel.cargosLeft
         color: colorLabel
     }
 }

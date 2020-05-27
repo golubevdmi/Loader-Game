@@ -10,7 +10,7 @@
 class QUndoStack;
 class QUndoCommand;
 
-class GridModel : public QAbstractTableModel
+class SokobanModel : public QAbstractTableModel
 {
     Q_OBJECT
     Q_PROPERTY(int cargos READ cargos NOTIFY grid_changed)
@@ -21,8 +21,8 @@ class GridModel : public QAbstractTableModel
     Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
     Q_PROPERTY(int level READ level NOTIFY grid_changed)
 public:
-    GridModel(QObject *parent = nullptr);
-    ~GridModel();
+    SokobanModel(QObject *parent = nullptr);
+    ~SokobanModel();
 
     Q_INVOKABLE void reset();
 

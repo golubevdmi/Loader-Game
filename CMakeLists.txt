@@ -15,7 +15,7 @@ qt5_add_resources(QRC_WRAPPERS
 
 # MOC
 qt5_wrap_cpp(MOC_WRAPPERS
-    Model/GridModel.h
+    Model/SokobanModel.h
     )
 
 set(GRID_FILES
@@ -27,8 +27,8 @@ set(GRID_FILES
     )
 
 set(MVC_FILES
-    Model/GridModel.cpp
-    Model/GridModel.h
+    Model/SokobanModel.cpp
+    Model/SokobanModel.h
     Model/StepCommand.cpp
     Model/StepCommand.h
     )

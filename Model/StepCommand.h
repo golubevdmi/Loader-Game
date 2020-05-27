@@ -5,12 +5,10 @@
 #include <QVariant>
 #include <QModelIndex>
 
-class GridModel;
-
 class StepCommand : public QUndoCommand
 {
 public:
-    StepCommand(GridModel *model, QUndoCommand *parent = nullptr);
+    StepCommand(QAbstractItemModel *model, QUndoCommand *parent = nullptr);
     ~StepCommand();
 
     void addIndex(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
@@ -25,7 +23,7 @@ private:
         QVariant oldValue;
         QVariant newValue;
     };
-    GridModel *_pModel;
+    QAbstractItemModel *_pModel;
     QVector<Data> _dataVec;
 };
 
