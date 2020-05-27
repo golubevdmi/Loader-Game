@@ -98,8 +98,6 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     if (!index.isValid())
         return false;
 
-    //beginResetModel();
-
     switch (role)
     {
     case Qt::DisplayRole:
@@ -111,8 +109,6 @@ bool GridModel::setData(const QModelIndex &index, const QVariant &value, int rol
     default:
         return false;
     }
-
-    //endResetModel();
 
     return true;
 }
@@ -150,6 +146,7 @@ void GridModel::createGrid()
     reset();
 }
 
+// Read next grid
 void GridModel::next()
 {
     Q_ASSERT(m_pGridGenerator);
@@ -161,6 +158,7 @@ void GridModel::next()
     }
 }
 
+// Read previous grid
 void GridModel::previous()
 {
     Q_ASSERT(m_pGridGenerator);
@@ -240,6 +238,7 @@ bool GridModel::moveLoader(int rowOffset, int columnOffset)
     return false;
 }
 
+// Game logic of displacement of objects
 bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
 {
     if (!indexBegin.isValid() || !indexEnd.isValid())
@@ -252,23 +251,19 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
         return false;
     case FieldValue::Cargo:
     {
+        // Cargo destination cell
         if (indexBegin.data().toInt() == FieldValue::Cargo)
             return false;
-        // Cargo destination cell
         int rowOffset = indexEnd.row() - indexBegin.row();
         int colOffset = indexEnd.column() - indexBegin.column();
         QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
         if (move(indexEnd, indexCargoDst))
         {
-            if (getValue(indexCargoDst).toInt() == FieldValue::Cargo)
-            {
-                emit delivered();
-                qDebug() << "delivered";
-            }
+            emit delivered();
+            qDebug() << "delivered";
         }
         else
         {
-
             return false;
         }
         break;
@@ -277,7 +272,7 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
 
     // Fill begin pos
     addIndexForCommand(indexEnd, indexEnd.data(), indexBegin.data());
-    setData(indexEnd, indexBegin.data());
+    //setData(indexEnd, indexBegin.data()); // uncommented, if not add to QUndoStack
 
     // Fill old pos
     QVariant valueBegin = indexBegin.data();
@@ -285,16 +280,17 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
     {
     case FieldValue::CargoDestination:
         addIndexForCommand(indexBegin, indexBegin.data(), QVariant(FieldValue::CargoDestination));
-        setData(indexBegin, QVariant(FieldValue::CargoDestination));
+        //setData(indexBegin, QVariant(FieldValue::CargoDestination)); // uncommented, if not add to QUndoStack
         break;
     default:
         addIndexForCommand(indexBegin, indexBegin.data(), QVariant(FieldValue::Empty));
-        setData(indexBegin, QVariant(FieldValue::Empty));
+        //setData(indexBegin, QVariant(FieldValue::Empty)); // uncommented, if not add to QUndoStack
         break;
     }
     return true;
 }
 
+// If the move player is successful
 void GridModel::movedComplete()
 {
     if (checkWin())
@@ -302,13 +298,14 @@ void GridModel::movedComplete()
         qDebug() << "game win";
         emit game_win();
     }
-    emit cargos_left(cargosLeft());
     saveStep();
+    emit cargos_left(cargosLeft());
     m_nSteps = ++m_currStep;
     ++m_nMoves;
     move_changed();
 }
 
+// Add move to undoCommand
 void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue)
 {
     if (!m_pUndoCmd)
@@ -320,6 +317,7 @@ void GridModel::addIndexForCommand(const QModelIndex &index, const QVariant &old
         pCustomCmd->addIndex(index, oldValue, newValue);
 }
 
+// Add UndoCommand to stack
 void GridModel::saveStep()
 {
     if (m_pStack && m_pUndoCmd)
@@ -333,9 +331,6 @@ bool GridModel::undo()
 {
     if (m_pStack && m_pStack->index() > 0)
     {
-        qDebug() << "stack index: " + QString::number(m_pStack->index())
-                 << ", nSteps: " + QString::number(m_nSteps)
-                 << " - undo";
         m_pStack->undo();
         --m_currStep;
         cmdComplete();
@@ -349,9 +344,6 @@ bool GridModel::redo()
 {
     if (m_pStack && m_pStack->index() < m_nSteps)
     {
-        qDebug() << "stack index: " + QString::number(m_pStack->index())
-                 << ", nSteps: " + QString::number(m_nSteps)
-                 << " - redo";
         m_pStack->redo();
         ++m_currStep;
         cmdComplete();
@@ -361,8 +353,11 @@ bool GridModel::redo()
     return false;
 }
 
+// If undo/redo is successful
 void GridModel::cmdComplete()
 {
+    qDebug() << "stack index: " + QString::number(m_pStack->index())
+             << ", nSteps: " + QString::number(m_nSteps);
     ++m_nMoves;
     move_changed();
 }
@@ -441,6 +436,7 @@ bool GridModel::checkWin()
     return !nCargos;
 }
 
+// Set value to current grid
 void GridModel::setValue(const QModelIndex &index, QVariant value)
 {
     if (index.isValid() && !value.isNull())
@@ -460,6 +456,7 @@ QModelIndex GridModel::getLoaderPlayerIndex()
     return QModelIndex();
 }
 
+// Get value from current grid
 QVariant GridModel::getValue(const QModelIndex &index) const
 {
     if (index.isValid())
@@ -467,6 +464,7 @@ QVariant GridModel::getValue(const QModelIndex &index) const
     return QVariant();
 }
 
+// Get value from begin grid
 QVariant GridModel::getBeginValue(const QModelIndex &index) const
 {
     if (index.isValid())
