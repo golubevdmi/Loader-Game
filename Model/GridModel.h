@@ -58,6 +58,7 @@ signals:
     void moved_left();
     void moved_right();
     void grid_changed();
+    void delivered();
     void cargos_left(int nCargos);
     void move_changed();
     void game_win();

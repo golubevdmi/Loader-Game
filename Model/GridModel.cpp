@@ -257,8 +257,17 @@ bool GridModel::move(const QModelIndex &indexBegin, const QModelIndex &indexEnd)
         int rowOffset = indexEnd.row() - indexBegin.row();
         int colOffset = indexEnd.column() - indexBegin.column();
         QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
-        if (!move(indexEnd, indexCargoDst))
+        if (move(indexEnd, indexCargoDst))
         {
+            if (getValue(indexCargoDst).toInt() == FieldValue::Cargo)
+            {
+                emit delivered();
+                qDebug() << "delivered";
+            }
+        }
+        else
+        {
+
             return false;
         }
         break;
