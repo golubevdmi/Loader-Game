@@ -23,7 +23,7 @@ ApplicationWindow
     TableView
     {
         id: tableView
-        anchors.fill: parent
+        anchors.fill: root.contentItem
         clip: true
         model: SokobanModel { id: sokobanModel }
         delegate: ModelDelegate
@@ -31,7 +31,6 @@ ApplicationWindow
             id: loaderGrid
             implicitWidth: root.contentItem.width / sokobanModel.columnCount()
             implicitHeight: root.contentItem.height / sokobanModel.rowCount()
-            playerState: "down"
 
             Connections
             {
@@ -48,8 +47,13 @@ ApplicationWindow
                 onMoved_right: playerState = "right"
             }
         }
-        onWidthChanged:  tableView.forceLayout();
-        onHeightChanged: tableView.forceLayout();
+        Connections
+        {
+            target: root
+            onVisibilityChanged: tableView.forceLayout();
+            onWidthChanged:  tableView.forceLayout();
+            onHeightChanged: tableView.forceLayout();
+        }
     }
 
     Item
