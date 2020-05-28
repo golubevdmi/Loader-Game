@@ -6,11 +6,9 @@ Component
     AnimatedSprite
     {
         id: sprite
-        anchors.centerIn: parent
         scale: 0.8
         frameWidth: 50
         frameHeight: 50
-        width: Math.min(parent.implicitWidth, parent.implicitHeight)
         height: width
         running: true
         frameCount: 4

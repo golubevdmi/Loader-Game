@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 
 Rectangle
 {
-    property string playerState: "left"
+    property string playerState: "down"
     signal reload
 
     id: root
@@ -42,8 +42,9 @@ Rectangle
         id: loaderFloor
         property string sourceImage: "qrc:/sprites/sprites/field_floor.png"
         sourceComponent: spriteFloor
+        //source: "SpriteBackground.qml"
         anchors.fill: root
-        onActiveChanged: sourceComponent = spriteFloor
+        //onActiveChanged: sourceComponent = spriteFloor
     }
     Loader
     {
@@ -87,6 +88,7 @@ Rectangle
         property string currentPlayerState: playerState
         sourceComponent: model.LoaderPlayer ? spritePlayer : undefined
         anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
         onActiveChanged: sourceComponent = model.LoaderPlayer ? spritePlayer : undefined
     }
 }
