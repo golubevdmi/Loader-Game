@@ -15,9 +15,15 @@ Item
     {
         anchors.fill: parent
         rows: 2
+        columnSpacing: 0
+        rowSpacing: 0
+
         GameplayToolBar
         {
+            Layout.fillWidth: true
             Layout.row: 0
+            modelObj: sokobanModel
+            colorArea: "#09102B"
             colorLvl: "#48d1cc"
             colorLabel: "#09102B"
             colorButton: "#09102B"
