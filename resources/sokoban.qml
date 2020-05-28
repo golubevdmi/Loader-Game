@@ -1,71 +1,83 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.12
-import QtMultimedia 5.0
-import SokobanModel 1.0
 
 ApplicationWindow
 {
     id: root
     visible: true
+    //visibility: "FullScreen"
     width: 1280
     //height: 960
     height: 600
     minimumWidth: 640
     minimumHeight: 480
-    color: "#09102B"
     title: qsTr("Sakoban")
 
-    menuBar: WindowMenu {}
-    header: WindowHeader { colorLvl: "#48d1cc"; colorLabel: root.color; colorButton: root.color; }
-
-    TableView
+    Component { id: mainMenu; WindowMainMenu { } }
+    Component
     {
-        id: tableView
-        anchors.fill: root.contentItem
-        clip: true
-        model: SokobanModel { id: sokobanModel }
-        delegate: ModelDelegate
+        id: gameplay
+        WindowGameplay
         {
-            id: loaderGrid
-            implicitWidth: root.contentItem.width / sokobanModel.columnCount()
-            implicitHeight: root.contentItem.height / sokobanModel.rowCount()
-
             Connections
             {
-                target: sokobanModel
-                onData_changed_custom:
-                {
-                    if (row === model.row && col === model.column)
-                        loaderGrid.reload();
-                }
-
-                onMoved_up:    playerState = "up"
-                onMoved_down:  playerState = "down"
-                onMoved_left:  playerState = "left"
-                onMoved_right: playerState = "right"
+                target: root
+                onVisibilityChanged: loaderGameplay.item.updateState();
+                onWidthChanged:      loaderGameplay.item.updateState();
+                onHeightChanged:     loaderGameplay.item.updateState();
             }
         }
-        Connections
+    }
+
+    Connections
+    {
+        id: conncectMainMenu
+        target: loaderMainMenu.item
+        onClickedNewGame:
         {
-            target: root
-            onVisibilityChanged: tableView.forceLayout();
-            onWidthChanged:  tableView.forceLayout();
-            onHeightChanged: tableView.forceLayout();
+            print("ng");
+            loaderMainMenu.active = false;
+            loaderGameplay.active = true;
+        }
+        onClickedExit:
+        {
+            print("exit");
+            Qt.quit();
         }
     }
 
-    Item
+    Loader
     {
-        id: keysNavigation
-        anchors.fill: parent
+        id: loaderMainMenu
+        active: false
+        sourceComponent: mainMenu
         focus: true
-        Keys.onUpPressed:    sokobanModel.moveUp();
-        Keys.onDownPressed:  sokobanModel.moveDown();
-        Keys.onRightPressed: sokobanModel.moveRight();
-        Keys.onLeftPressed:  sokobanModel.moveLeft();
-
-        onFocusChanged: keysNavigation.focus = true
+        anchors.fill: parent
     }
+    Loader
+    {
+        id: loaderGameplay
+        active: false
+        sourceComponent: gameplay
+        anchors.fill: parent
+    }
+
+    Shortcut
+    {
+        sequence: "Escape"
+        onActivated:
+        {
+            if (loaderGameplay.active)
+            {
+                loaderGameplay.active = false;
+                loaderMainMenu.active = true;
+            }
+            else
+            {
+                Qt.quit();
+            }
+        }
+    }
+
+    Component.onCompleted: { loaderGameplay.active = true; }
 }

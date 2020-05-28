@@ -3,9 +3,12 @@ import QtQuick.Layouts 1.3
 
 RowLayout
 {
+    property color colorArea: "white"
     property color colorLvl: "white"
     property color colorLabel: "white"
     property color colorButton: "white"
+
+    height: 40
 
     ManageButton
     {
@@ -35,7 +38,6 @@ RowLayout
     Item
     {
         Layout.fillWidth: true
-        Layout.fillHeight: true
     }
 
     InfoLabel

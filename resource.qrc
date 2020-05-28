@@ -5,11 +5,12 @@
         <file>resources/ManageButton.qml</file>
         <file>resources/ModelDelegate.qml</file>
         <file>resources/sokoban.qml</file>
-        <file>resources/WindowHeader.qml</file>
-        <file>resources/WindowMenu.qml</file>
         <file>resources/SpriteForeground.qml</file>
         <file>resources/SpriteBackground.qml</file>
         <file>resources/DynamicForeground.qml</file>
+        <file>resources/WindowMainMenu.qml</file>
+        <file>resources/WindowGameplay.qml</file>
+        <file>resources/GameplayToolBar.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
