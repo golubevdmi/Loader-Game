@@ -1,16 +1,16 @@
 <RCC>
     <qresource prefix="/forms">
-        <file>resources/PlayerAnimation.qml</file>
-        <file>resources/InfoLabel.qml</file>
-        <file>resources/ManageButton.qml</file>
-        <file>resources/ModelDelegate.qml</file>
         <file>resources/sokoban.qml</file>
-        <file>resources/SpriteForeground.qml</file>
-        <file>resources/SpriteBackground.qml</file>
-        <file>resources/DynamicForeground.qml</file>
         <file>resources/WindowMainMenu.qml</file>
         <file>resources/WindowGameplay.qml</file>
-        <file>resources/GameplayToolBar.qml</file>
+        <file>resources/gameplay/DynamicForeground.qml</file>
+        <file>resources/gameplay/GameplayToolBar.qml</file>
+        <file>resources/gameplay/InfoLabel.qml</file>
+        <file>resources/gameplay/ManageButton.qml</file>
+        <file>resources/gameplay/ModelDelegate.qml</file>
+        <file>resources/gameplay/PlayerAnimation.qml</file>
+        <file>resources/gameplay/SpriteBackground.qml</file>
+        <file>resources/gameplay/SpriteForeground.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>

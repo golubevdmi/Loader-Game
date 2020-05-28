@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.12
 import QtMultimedia 5.0
 import SokobanModel 1.0
+import "gameplay" as Gameplay
 
 Item
 {
@@ -18,7 +19,7 @@ Item
         columnSpacing: 0
         rowSpacing: 0
 
-        GameplayToolBar
+        Gameplay.GameplayToolBar
         {
             Layout.fillWidth: true
             Layout.row: 0
@@ -37,7 +38,7 @@ Item
             Layout.fillHeight: true
             clip: true
             model: SokobanModel { id: sokobanModel }
-            delegate: ModelDelegate
+            delegate: Gameplay.ModelDelegate
             {
                 id: loaderGrid
                 implicitWidth: tableView.width / sokobanModel.columnCount()

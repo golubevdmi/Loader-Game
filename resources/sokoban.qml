@@ -35,13 +35,13 @@ ApplicationWindow
         target: loaderMainMenu.item
         onClickedNewGame:
         {
-            print("ng");
+            print("Main menu -> New game");
             loaderMainMenu.active = false;
             loaderGameplay.active = true;
         }
         onClickedExit:
         {
-            print("exit");
+            print("Main menu -> Exit");
             Qt.quit();
         }
     }
