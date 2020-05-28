@@ -259,8 +259,11 @@ bool SokobanModel::move(const QModelIndex &indexBegin, const QModelIndex &indexE
         QModelIndex indexCargoDst = this->index(indexEnd.row() + rowOffset, indexEnd.column() + colOffset, QModelIndex());
         if (move(indexEnd, indexCargoDst))
         {
-            emit delivered();
-            qDebug() << "delivered";
+            if (getBeginValue(indexCargoDst).toInt() == FieldValue::CargoDestination)
+            {
+                emit delivered();
+                qDebug() << "delivered";
+            }
         }
         else
         {
