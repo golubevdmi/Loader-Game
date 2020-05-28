@@ -59,6 +59,7 @@ Rectangle
         property string sourceImage: "qrc:/sprites/sprites/field_cargo.png"
         sourceComponent: model.Cargo && !model.CargoDestination ? spriteCargo : undefined
         anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
         onActiveChanged: sourceComponent = model.Cargo && !model.CargoDestination ? spriteCargo : undefined
     }
     Loader
@@ -67,6 +68,7 @@ Rectangle
         property string sourceImage: "qrc:/sprites/sprites/field_cargodst2.gif"
         sourceComponent: model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
         anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
         onActiveChanged: sourceComponent = model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
     }
     Loader
@@ -75,6 +77,7 @@ Rectangle
         property string sourceImage: "qrc:/sprites/sprites/field_delivered.png"
         sourceComponent: model.Cargo && model.CargoDestination ? spriteDelivered : undefined
         anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
         onActiveChanged: sourceComponent = model.Cargo && model.CargoDestination ? spriteDelivered : undefined
     }
     Loader

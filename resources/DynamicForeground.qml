@@ -5,9 +5,8 @@ Component
 {
     AnimatedImage
     {
-        fillMode: Image.PreserveAspectCrop
+        fillMode: Image.PreserveAspectFit
         scale: 0.8
-        width: Math.min(parent.implicitWidth, parent.implicitHeight)
         height: width
         speed: 0.5
         source: sourceImage

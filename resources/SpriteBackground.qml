@@ -5,7 +5,6 @@ Component
 {
     Image
     {
-        anchors.fill: parent
         source: sourceImage
         sourceSize: Qt.size(width, height)
     }
