@@ -8,88 +8,83 @@ Rectangle
 
     id: root
 
-    SpriteBackground { id: spriteFloor }
-    SpriteBackground { id: spriteBarrier }
-
-    SpriteForeground { id: spriteCargo }
-    SpriteForeground { id: spriteDelivered }
-
+    SpriteBackground  { id: spriteFloor }
+    SpriteBackground  { id: spriteBarrier }
+    SpriteForeground  { id: spriteCargo }
+    SpriteForeground  { id: spriteDelivered }
     DynamicForeground { id: spriteCargoDst }
+    PlayerAnimation   { id: spritePlayer }
 
-    PlayerAnimation  { id: spritePlayer }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_floor.png"
 
+        id: loaderFloor
+        active: true
+        sourceComponent: spriteFloor
+        anchors.fill: root
+    }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_wall.png"
+
+        id: loaderBarrier
+        active: false
+        sourceComponent: spriteBarrier
+        anchors.fill: root
+    }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_cargo.png"
+
+        id: loaderCargo
+        active: false
+        sourceComponent: spriteCargo
+        anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
+    }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_cargodst2.gif"
+
+        id: loaderCargoDst
+        active: false
+        sourceComponent: spriteCargoDst
+        anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
+    }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_delivered.png"
+
+        id: loaderDelivered
+        active: false
+        sourceComponent: spriteDelivered
+        anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
+    }
+    Loader
+    {
+        property string sourceImage: "qrc:/sprites/sprites/field_player_poses.png"
+        property string currentPlayerState: playerState
+
+        id: loaderPlayer
+        active: false
+        sourceComponent: spritePlayer
+        anchors.fill: root
+        width: Math.min(root.implicitWidth, root.implicitHeight)
+    }
 
     onReload:
     {
-        //reloadSprite(loaderFloor);
-        //reloadSprite(loaderBarrier);
-        reloadSprite(loaderCargo);
-        //reloadSprite(loaderCargoDst);
-        reloadSprite(loaderDelivered);
-        reloadSprite(loaderPlayer);
-    }
-    function reloadSprite(loader)
-    {
-        if (loader)
-        {
-            loader.active = false;
-            loader.active = true;
-        }
+        //loaderFloor.active = true;
+        loaderBarrier.active = model.Barrier;
+        loaderCargo.active = model.Cargo && !model.CargoDestination;
+        loaderCargoDst.active = model.CargoDestination && !model.Cargo;
+        loaderDelivered.active = model.Cargo && model.CargoDestination;
+        loaderPlayer.active = model.LoaderPlayer;
     }
 
-    Loader
-    {
-        id: loaderFloor
-        property string sourceImage: "qrc:/sprites/sprites/field_floor.png"
-        sourceComponent: spriteFloor
-        //source: "SpriteBackground.qml"
-        anchors.fill: root
-        //onActiveChanged: sourceComponent = spriteFloor
-    }
-    Loader
-    {
-        id: loaderBarrier
-        property string sourceImage: "qrc:/sprites/sprites/field_wall.png"
-        sourceComponent: model.Barrier ? spriteBarrier : undefined
-        anchors.fill: root
-        onActiveChanged: sourceComponent = model.Barrier ? spriteBarrier : undefined
-    }
-    Loader
-    {
-        id: loaderCargo
-        property string sourceImage: "qrc:/sprites/sprites/field_cargo.png"
-        sourceComponent: model.Cargo && !model.CargoDestination ? spriteCargo : undefined
-        anchors.fill: root
-        width: Math.min(root.implicitWidth, root.implicitHeight)
-        onActiveChanged: sourceComponent = model.Cargo && !model.CargoDestination ? spriteCargo : undefined
-    }
-    Loader
-    {
-        id: loaderCargoDst
-        property string sourceImage: "qrc:/sprites/sprites/field_cargodst2.gif"
-        sourceComponent: model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
-        anchors.fill: root
-        width: Math.min(root.implicitWidth, root.implicitHeight)
-        onActiveChanged: sourceComponent = model.CargoDestination && !model.Cargo ? spriteCargoDst : undefined
-    }
-    Loader
-    {
-        id: loaderDelivered
-        property string sourceImage: "qrc:/sprites/sprites/field_delivered.png"
-        sourceComponent: model.Cargo && model.CargoDestination ? spriteDelivered : undefined
-        anchors.fill: root
-        width: Math.min(root.implicitWidth, root.implicitHeight)
-        onActiveChanged: sourceComponent = model.Cargo && model.CargoDestination ? spriteDelivered : undefined
-    }
-    Loader
-    {
-        id: loaderPlayer
-        property string sourceImage: "qrc:/sprites/sprites/field_player_poses.png"
-        property string currentPlayerState: playerState
-        sourceComponent: model.LoaderPlayer ? spritePlayer : undefined
-        anchors.fill: root
-        width: Math.min(root.implicitWidth, root.implicitHeight)
-        onActiveChanged: sourceComponent = model.LoaderPlayer ? spritePlayer : undefined
-    }
+    Component.onCompleted: reload()
 }
 
