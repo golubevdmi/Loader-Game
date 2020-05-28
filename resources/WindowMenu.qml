@@ -35,14 +35,14 @@ MenuBar
             text: qsTr("&Undo")
             icon.source: "qrc:/icons/icons/undo.png"
             shortcut: StandardKey.Undo
-            onTriggered: gridModel.undo()
+            onTriggered: sokobanModel.undo()
         }
         Action
         {
             text: qsTr("&Redo")
             icon.source: "qrc:/icons/icons/redo.png"
             shortcut: StandardKey.Redo
-            onTriggered: gridModel.redo()
+            onTriggered: sokobanModel.redo()
         }
     }
     Menu
