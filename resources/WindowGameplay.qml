@@ -5,6 +5,7 @@ import QtQuick.Controls 2.12
 import QtMultimedia 5.0
 import SokobanModel 1.0
 import "gameplay" as Gameplay
+import "items" as SokobanItem
 
 Item
 {
@@ -12,28 +13,20 @@ Item
 
     id: root
 
-    GridLayout
+    ColumnLayout
     {
         anchors.fill: parent
-        rows: 2
-        columnSpacing: 0
-        rowSpacing: 0
+        spacing: 0
 
-        Gameplay.GameplayToolBar
+        Gameplay.ToolBar
         {
             Layout.fillWidth: true
-            Layout.row: 0
             modelObj: sokobanModel
-            colorArea: "#09102B"
-            colorLvl: "#48d1cc"
-            colorLabel: "#09102B"
-            colorButton: "#09102B"
         }
 
         TableView
         {
             id: tableView
-            Layout.row: 1
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true

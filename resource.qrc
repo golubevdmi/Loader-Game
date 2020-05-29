@@ -4,15 +4,19 @@
         <file>resources/WindowMainMenu.qml</file>
         <file>resources/WindowGameplay.qml</file>
         <file>resources/gameplay/DynamicForeground.qml</file>
-        <file>resources/gameplay/GameplayToolBar.qml</file>
-        <file>resources/gameplay/InfoLabel.qml</file>
-        <file>resources/gameplay/ManageButton.qml</file>
         <file>resources/gameplay/ModelDelegate.qml</file>
         <file>resources/gameplay/PlayerAnimation.qml</file>
         <file>resources/gameplay/SpriteBackground.qml</file>
         <file>resources/gameplay/SpriteForeground.qml</file>
-        <file>resources/mainmenu/MenuButton.qml</file>
         <file>resources/mainmenu/MenuBackground.qml</file>
+        <file>resources/items/Rectangle.qml</file>
+        <file>resources/items/Text.qml</file>
+        <file>resources/items/Button.qml</file>
+        <file>resources/mainmenu/MenuButton.qml</file>
+        <file>resources/gameplay/Info.qml</file>
+        <file>resources/items/Spacer.qml</file>
+        <file>resources/gameplay/Button.qml</file>
+        <file>resources/gameplay/ToolBar.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>

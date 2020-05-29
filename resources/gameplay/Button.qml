@@ -4,7 +4,8 @@ import "../items" as SokobanItems
 
 SokobanItems.Button
 {
-    fontSize: 25
-    implicitWidth: 300
+    fontSize: 15
+    implicitWidth: 130
     implicitHeight: 40
+    bnColor: "#6495ed"
 }
