@@ -61,7 +61,15 @@ Item
         }
     }
 
-    onUpdateState: tableView.forceLayout();
+    //onUpdateState: tableView.forceLayout();
+
+    Connections
+    {
+        target: sokobanModel
+        onGame_win: loaderLvlComplete.active = true
+        onData_changed_custom: loaderLvlComplete.active = false
+        onGrid_changed: loaderLvlComplete.active = false
+    }
 
     Shortcut
     {
@@ -92,5 +100,13 @@ Item
     {
         sequence: StandardKey.Redo
         onActivated: sokobanModel.redo();
+    }
+
+    Loader
+    {
+        id: loaderLvlComplete
+        active: false
+        sourceComponent: Gameplay.LvlComplete { }
+        anchors.centerIn: root
     }
 }

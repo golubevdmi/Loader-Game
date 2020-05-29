@@ -17,6 +17,7 @@
         <file>resources/items/Spacer.qml</file>
         <file>resources/gameplay/Button.qml</file>
         <file>resources/gameplay/ToolBar.qml</file>
+        <file>resources/gameplay/LvlComplete.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
