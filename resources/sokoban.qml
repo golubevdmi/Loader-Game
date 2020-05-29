@@ -43,7 +43,7 @@ ApplicationWindow
         {
             if (root.visibility === Window.Windowed)
                 root.visibility = Window.FullScreen
-            else if (root.visibility === Window.FullScreen)
+            else if (root.visibility === Window.FullScreen || root.visibility === Window.Maximized)
                 root.visibility = Window.Windowed
         }
         onClickedExit:

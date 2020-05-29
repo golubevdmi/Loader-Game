@@ -17,28 +17,24 @@ Item
 
     Rectangle
     {
+        property int margin: 40
+        property int size: (Math.min(root.width, root.height) - margin * 4) / 2
+
         id: bgItem
-        anchors.fill: parent
+        width: 300 + margin * 2
+        height: 40 * 3 + margin * 2 + layout.rowSpacing * 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
         color: "transparent"
 
         GridLayout
         {
             id: layout
-            anchors.fill: parent
-            anchors.leftMargin: 40
-            anchors.bottomMargin: 40
+            anchors.centerIn: parent
+            anchors.margins: bgItem.margin
             rowSpacing: 10
             rows: 4
             columns: 1
-
-            Item
-            {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.column: 0
-                Layout.row: 0
-                Rectangle { anchors.fill: parent; color: "transparent" }
-            }
 
             Mainmenu.MenuButton
             {
@@ -46,16 +42,22 @@ Item
                 text: "New game"
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.column: 0
-                Layout.row: 1
+                Layout.row: 0
                 onClicked: clickedNewGame()
             }
             Mainmenu.MenuButton
             {
                 id: bnVisibility
-                text: appVisibility == Window.FullScreen ? "Windowed" : "FullScreen"
+                text:
+                {
+                    if (appVisibility === Window.FullScreen || appVisibility === Window.Maximized)
+                        return "Windowed";
+                    else
+                        return "FullScreen";
+                }
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.column: 0
-                Layout.row: 2
+                Layout.row: 1
                 onClicked: clickedChangeVisibility()
             }
             Mainmenu.MenuButton
@@ -64,8 +66,16 @@ Item
                 text: "Exit"
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.column: 0
-                Layout.row: 3
+                Layout.row: 2
                 onClicked: clickedExit()
+            }
+            Item
+            {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.column: 0
+                Layout.row: 3
+                Rectangle { anchors.fill: parent; color: "transparent" }
             }
         }
     }

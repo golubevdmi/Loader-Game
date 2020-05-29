@@ -4,17 +4,23 @@ import QtMultimedia 5.0
 
 Button
 {
-    property color bgColor: "#09102B"
-    property color txtColor: "white"
-    property int bnWidth: 200
+    property color bgColor: "transparent"
+    property color txtColor: "black"
+    property int bnWidth: 300
     property int bnHeight: 40
     property alias audioFile: sound.source
 
     id: root
+
     contentItem: Text
     {
+        id: text
         text: root.text
-        font: root.font
+        font.family: "Helvetica"
+        font.pixelSize: 25
+        font.bold: true
+        style: Text.Outline
+        styleColor: "white"
         opacity: enabled ? 1.0 : 0.3
         color: root.down ? "gray" : txtColor
         horizontalAlignment: Text.AlignHCenter
