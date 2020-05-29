@@ -1,11 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Window 2.12
 
 ApplicationWindow
 {
     id: root
     visible: true
-    //visibility: "FullScreen"
     width: 1280
     //height: 960
     height: 600
@@ -39,6 +39,13 @@ ApplicationWindow
             loaderMainMenu.active = false;
             loaderGameplay.active = true;
         }
+        onClickedChangeVisibility:
+        {
+            if (root.visibility === Window.Windowed)
+                root.visibility = Window.FullScreen
+            else if (root.visibility === Window.FullScreen)
+                root.visibility = Window.Windowed
+        }
         onClickedExit:
         {
             print("Main menu -> Exit");
@@ -48,6 +55,8 @@ ApplicationWindow
 
     Loader
     {
+        property var appVisibility: root.visibility
+
         id: loaderMainMenu
         active: false
         sourceComponent: mainMenu
@@ -79,5 +88,5 @@ ApplicationWindow
         }
     }
 
-    Component.onCompleted: { loaderGameplay.active = true; }
+    Component.onCompleted: { loaderMainMenu.active = true; }
 }
