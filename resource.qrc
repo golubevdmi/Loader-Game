@@ -42,4 +42,7 @@
         <file>sounds/sound_game_win.wav</file>
         <file>sounds/sound_step.wav</file>
     </qresource>
+    <qresource prefix="/other">
+        <file>other/menuBackground.png</file>
+    </qresource>
 </RCC>
