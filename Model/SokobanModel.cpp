@@ -218,6 +218,7 @@ bool SokobanModel::moveLoader(int rowOffset, int columnOffset)
 {
     if (checkWin())
     {
+        qDebug() << "move false: lvl complete";
         emit game_win();
         return false;
     }
@@ -296,16 +297,16 @@ bool SokobanModel::move(const QModelIndex &indexBegin, const QModelIndex &indexE
 // If the move player is successful
 void SokobanModel::movedComplete()
 {
+    saveStep();
     if (checkWin())
     {
-        qDebug() << "game win";
+        qDebug() << "lvl complete";
         emit game_win();
     }
-    saveStep();
     emit cargos_left(cargosLeft());
     m_nSteps = ++m_currStep;
     ++m_nMoves;
-    move_changed();
+    emit move_changed();
 }
 
 // Add move to undoCommand
@@ -361,8 +362,13 @@ void SokobanModel::cmdComplete()
 {
     qDebug() << "stack index: " + QString::number(m_pStack->index())
              << ", nSteps: " + QString::number(m_nSteps);
+    if (checkWin())
+    {
+        qDebug() << "lvl complete";
+        emit game_win();
+    }
     ++m_nMoves;
-    move_changed();
+    emit move_changed();
 }
 
 int SokobanModel::cargos() const
