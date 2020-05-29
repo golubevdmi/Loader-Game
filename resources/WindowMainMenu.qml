@@ -13,7 +13,7 @@ Item
 
     id: root
 
-    Mainmenu.MenuBackground { anchors.fill: parent }
+    Mainmenu.MenuBackground { id: bgTexture; anchors.fill: parent }
 
     Rectangle
     {
@@ -69,4 +69,8 @@ Item
             }
         }
     }
+
+    onClickedNewGame: bgTexture.reload()
+    onClickedChangeVisibility: bgTexture.reload()
+    onClickedExit: bgTexture.reload()
 }
