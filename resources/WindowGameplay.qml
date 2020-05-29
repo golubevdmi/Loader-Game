@@ -61,7 +61,7 @@ Item
         }
     }
 
-    //onUpdateState: tableView.forceLayout();
+    onUpdateState: tableView.forceLayout();
 
     Connections
     {
