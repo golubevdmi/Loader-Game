@@ -11,6 +11,8 @@
         <file>resources/gameplay/PlayerAnimation.qml</file>
         <file>resources/gameplay/SpriteBackground.qml</file>
         <file>resources/gameplay/SpriteForeground.qml</file>
+        <file>resources/mainmenu/MenuButton.qml</file>
+        <file>resources/mainmenu/MenuBackground.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
