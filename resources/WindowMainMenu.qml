@@ -59,8 +59,4 @@ Item
             SokobanItems.Spacer { Layout.fillHeight: true }
         }
     }
-
-    onClickedNewGame: bgTexture.reload()
-    onClickedChangeVisibility: bgTexture.reload()
-    onClickedExit: bgTexture.reload()
 }
