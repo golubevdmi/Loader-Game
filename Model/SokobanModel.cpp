@@ -416,6 +416,15 @@ int SokobanModel::level() const
     return -1;
 }
 
+int SokobanModel::nLevels() const
+{
+    if (m_pGridGenerator)
+    {
+        return m_pGridGenerator->getLvls();
+    }
+    return -1;
+}
+
 bool SokobanModel::checkWin()
 {
     int nCargos = cargosLeft();
