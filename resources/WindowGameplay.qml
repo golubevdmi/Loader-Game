@@ -9,6 +9,7 @@ import "items" as SokobanItem
 
 Item
 {
+    signal newGame
     signal updateState
 
     id: root
@@ -61,6 +62,7 @@ Item
         }
     }
 
+    onNewGame: sokobanModel.loadLevel(0);
     onUpdateState: tableView.forceLayout();
 
     Connections
