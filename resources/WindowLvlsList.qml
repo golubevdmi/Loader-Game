@@ -8,6 +8,7 @@ import "items" as SokobanItems
 
 Item
 {
+    signal clickedBack
     signal clickedListItem(int index)
 
     id: root
@@ -15,64 +16,71 @@ Item
     Mainmenu.MenuBackground { id: bgTexture; anchors.fill: parent }
     SokobanModel { id: sokobanModel }
 
-    Rectangle
+    ColumnLayout
     {
-        id: menuNavigation
-        width: 300 + 100
-        height: 40 * 7
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        color: "transparent"
+        anchors.fill: parent
+        anchors.margins: 50
 
-        ListView
+        Rectangle
         {
-            id: view
+            id: menuNavigation
+            width: 300 + 100
+            height: root.height / 2
+            Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+            color: "transparent"
 
-            anchors.margins: 10
-            anchors.fill: parent
-            spacing: 10
-            clip: true
-            model: sokobanModel.nLevels
+            ListView
+            {
+                id: view
 
-            highlight: Rectangle { color: "darkgrey" }
-            highlightFollowsCurrentItem: true
+                anchors.margins: 40
+                anchors.fill: parent
+                spacing: 10
+                clip: true
+                model: sokobanModel.nLevels
 
-            delegate: Item {
-                id: listDelegate
+                highlight: Rectangle { color: "darkgrey" }
+                highlightFollowsCurrentItem: true
 
-                property var view: ListView.view
-                property var isCurrent: ListView.isCurrentItem
+                delegate: Item {
+                    id: listDelegate
 
-                width: bn.implicitWidth
-                height: bn.implicitHeight
+                    property var view: ListView.view
+                    property var isCurrent: ListView.isCurrentItem
 
-                Mainmenu.MenuButton
-                {
-                    id: bn
-                    animationActive: isCurrent
-                    text: "Level %1".arg(model.index)
-                    onClicked:
+                    width: bn.implicitWidth
+                    height: bn.implicitHeight
+
+                    Mainmenu.MenuButton
                     {
-                        view.currentIndex = model.index;
-                        clickedListItem(model.index);
+                        id: bn
+                        animationActive: isCurrent
+                        text: "Level %1".arg(model.index)
+                        onClicked:
+                        {
+                            view.currentIndex = model.index;
+                            clickedListItem(model.index);
+                        }
                     }
                 }
-            }
-            Shortcut
-            {
-                sequence: "Up"
-                onActivated: view.currentIndex ? view.currentIndex-- : print("main menu: index invalid");
-            }
-            Shortcut
-            {
-                sequence: "Down"
-                onActivated: view.currentIndex < view.count - 1 ? view.currentIndex++ : print("main menu: index invalid");
-            }
-            Shortcut
-            {
-                sequence: "Enter"
-                onActivated: { clickedListItem(view.currentIndex);  }
+                Shortcut
+                {
+                    sequence: "Up"
+                    onActivated: view.currentIndex ? view.currentIndex-- : print("main menu: index invalid");
+                }
+                Shortcut
+                {
+                    sequence: "Down"
+                    onActivated: view.currentIndex < view.count - 1 ? view.currentIndex++ : print("main menu: index invalid");
+                }
+                Shortcut
+                {
+                    sequence: "Enter"
+                    onActivated: { clickedListItem(view.currentIndex);  }
+                }
             }
         }
+
+        Mainmenu.MenuButton { text: qsTr("back"); onClicked: clickedBack() }
     }
 }
