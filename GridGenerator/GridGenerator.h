@@ -3,6 +3,8 @@
 
 #include <QVector>
 #include <QString>
+#include <QJsonArray>
+#include <QJsonObject>
 
 #include <FieldFlags.h>
 
@@ -17,72 +19,55 @@ public:
     GridGenerator();
     virtual ~GridGenerator() {}
 
-    virtual void init();
-    virtual void generate();
+    virtual void init() = 0;
+
+    virtual bool loadLevel(int lvlNumber = 0) = 0;
+    virtual bool loadNextLvl() = 0;
+    virtual bool loadPrevLvl() = 0;
 
     size_t size_grid() const;
-    size_t size_elements() const;
 
     void setWidth(int width);
     void setHeight(int height);
-    void setLoaderPlayers(int LoaderPlayers);
-    void setCargos(int cargos);
-    void setCargosDestination(int cargosDst);
-    void setBarriers(int barriers);
 
     int getWidth() const;
     int getHeight() const;
-    int getEmpty() const;
-    int getLoaderPlayers() const;
-    int getCargos() const;
-    int getCargosDestination() const;
-    int getBarriers() const;
-
+    int getCurrentLvl() const;
+    int getLvls() const;
+    int getNumberOfElements(int role) const;
     GridType getGrid() const;
 
 protected:
     int m_width;
     int m_height;
-    int m_nLoaderPlayers;
-    int m_nCargos;
-    int m_nCargosDst;
-    int m_nBarriers;
+    int m_currLvl;
+    int m_nLvls;
     GridType m_grid;
-
-    virtual void fill(int value, int count) = 0;
 
     void setValue(int row, int column, int value);
     int getValue(int row, int column) const;
 };
 
-
-class RandomGridGenerator : public GridGenerator
-{
-protected:
-    void fill(int value, int count) override;
-};
-
-class GridMazes : public GridGenerator
+class GridFromFile : public GridGenerator
 {
 public:
-    GridMazes(QString filename);
-    ~GridMazes();
+    GridFromFile(QString filename);
+    ~GridFromFile();
 
     void init() override;
-    void generate() override;
 
-    void next();
-    void previous();
+    bool loadLevel(int lvlNumber = 0) override;
+    bool loadNextLvl() override;
+    bool loadPrevLvl() override;
 
-    int getCurrentMaze() const;
-protected:
-    void fill(int value, int count) override;
 private:
     QFile *m_pFile;
-    int m_currMaze;
-    int m_lastMaze;
 
-    bool readGrid(int mazeNumber);
+    bool readLvl(int lvlNumber);
+    void readFileArray(QJsonArray &array);
+    void readLvlSize(const QJsonObject &object, int &width, int &height);
+    void fillGrid(const QJsonArray &gridArray);
+    int getNLvlsFromFile();
 };
 
 #endif // !_GRID_H_
