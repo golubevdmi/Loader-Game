@@ -7,9 +7,13 @@ import "items" as SokobanItems
 
 Item
 {
+    signal clickedContinue
     signal clickedNewGame
+    signal clickedLevels
+    signal clickedStatistics
     signal clickedChangeVisibility
     signal clickedExit
+    signal clickedListItem(int index)
 
     id: root
 
@@ -24,39 +28,108 @@ Item
         anchors.bottom: parent.bottom
         color: "transparent"
 
-        ColumnLayout
+        ListView
         {
-            id: layout
-            anchors.centerIn: parent
+            id: view
 
-            Mainmenu.MenuButton
+            anchors.margins: 10
+            anchors.fill: parent
+            spacing: 10
+            model: ListModel
             {
-                text: "New game"
-                onClicked: clickedNewGame()
+                id: dataModel
+                ListElement { text: "Continue"; }
+                ListElement { text: "New game"; }
+                ListElement { text: "Levels"; }
+                ListElement { text: "Statistics"; }
+                ListElement { text: "Visibility"; }
+                ListElement { text: "Exit"; }
             }
-            Mainmenu.MenuButton
-            {
-                text:
+            clip: true
+
+            highlight: Rectangle { color: "darkgrey" }
+            highlightFollowsCurrentItem: true
+
+            delegate: Item {
+                id: listDelegate
+
+                property var view: ListView.view
+                property var isCurrent: ListView.isCurrentItem
+
+                width: bn.implicitWidth
+                height: bn.implicitHeight
+
+                Mainmenu.MenuButton
                 {
-                    switch(appVisibility)
+                    id: bn
+                    animationActive: isCurrent
+                    text:
                     {
-                    case Window.Maximized:
-                    case Window.FullScreen:
-                        return "Windowed";
-                    case Window.Windowed:
-                        return "FullScreen";
-                    default:
-                        return "undefined";
+                        if (model.index === 4)
+                            model.text = getBnVisibilityName(appVisibility);
+                        return "%1".arg(model.text);
+                    }
+                    onClicked:
+                    {
+                        view.currentIndex = model.index;
+                        clickedListItem(model.index);
                     }
                 }
-                onClicked: clickedChangeVisibility()
             }
-            Mainmenu.MenuButton
+            Shortcut
             {
-                text: "Exit"
-                onClicked: clickedExit()
+                sequence: "Up"
+                onActivated: view.currentIndex ? view.currentIndex-- : print("main menu: index invalid");
             }
-            SokobanItems.Spacer { Layout.fillHeight: true }
+            Shortcut
+            {
+                sequence: "Down"
+                onActivated: view.currentIndex < view.count - 1 ? view.currentIndex++ : print("main menu: index invalid");
+            }
+            Shortcut
+            {
+                sequence: "Enter"
+                onActivated: { clickedListItem(view.currentIndex);  }
+            }
+        }
+    }
+
+    onClickedListItem:
+    {
+        switch (index)
+        {
+        case 0:
+            clickedContinue();
+            break;
+        case 1:
+            clickedNewGame();
+            break;
+        case 2:
+            clickedLevels();
+            break;
+        case 3:
+            clickedStatistics();
+            break;
+        case 4:
+            clickedChangeVisibility();
+            break;
+        case 5:
+            clickedExit();
+            break;
+        }
+    }
+
+    function getBnVisibilityName(appVisibility)
+    {
+        switch(appVisibility)
+        {
+        case Window.Maximized:
+        case Window.FullScreen:
+            return "Windowed";
+        case Window.Windowed:
+            return "FullScreen";
+        default:
+            return "undefined";
         }
     }
 }
