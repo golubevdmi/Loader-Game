@@ -44,7 +44,9 @@
         <file>sounds/sound_game_win.wav</file>
         <file>sounds/sound_step.wav</file>
     </qresource>
-    <qresource prefix="/other">
-        <file>other/menuBackground.png</file>
+    <qresource prefix="/data">
+        <file>data/bgTitle.xlsx</file>
+        <file>data/mazes.json</file>
+        <file>data/menuBackground.png</file>
     </qresource>
 </RCC>

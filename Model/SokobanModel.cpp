@@ -8,7 +8,7 @@
 
 SokobanModel::SokobanModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new GridFromFile("Z:/Sokoban/mazes.json"))
+    , m_pGridGenerator(new GridFromFile(":/data/data/mazes.json"))
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
     , m_currStep(0)

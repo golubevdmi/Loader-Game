@@ -6,6 +6,6 @@ Item
     Image
     {
         anchors.fill: parent
-        source: "qrc:/other/other/menuBackground.png"
+        source: "qrc:/data/data/menuBackground.png"
     }
 }
