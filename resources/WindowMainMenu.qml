@@ -9,127 +9,109 @@ Item
 {
     signal clickedContinue
     signal clickedNewGame
-    signal clickedLevels
-    signal clickedStatistics
+    signal clickedLevel(int index)
     signal clickedChangeVisibility
     signal clickedExit
-    signal clickedListItem(int index)
 
     id: root
-
     Mainmenu.MenuBackground { id: bgTexture; anchors.fill: parent }
+
+    Item
+    {
+        id: menuStates
+        states: [
+            State { name: "navigation";
+                PropertyChanges { target: loaderNavigation; active: true; }
+                PropertyChanges { target: loaderLvls;       active: false; }
+                PropertyChanges { target: loaderStat;       active: false; }
+            },
+            State { name: "levels";
+                PropertyChanges { target: loaderNavigation; active: false; }
+                PropertyChanges { target: loaderLvls;       active: true; }
+            },
+            State { name: "statistics";
+                PropertyChanges { target: loaderNavigation; active: false; }
+                PropertyChanges { target: loaderStat;       active: true; }
+            }
+        ]
+    }
 
     Rectangle
     {
-        id: menuNavigation
-        width: 300 + 100
-        height: 40 * 7
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        id: menuRect
+        anchors.fill: parent
+        anchors.margins: 50
         color: "transparent"
 
-        ListView
+        Connections
         {
-            id: view
-
-            anchors.margins: 10
-            anchors.fill: parent
-            spacing: 10
-            model: ListModel
+            target: loaderNavigation.item
+            onClickedNewGame: clickedNewGame()
+            onClickedLevels:
             {
-                id: dataModel
-                ListElement { text: "Continue"; }
-                ListElement { text: "New game"; }
-                ListElement { text: "Levels"; }
-                ListElement { text: "Statistics"; }
-                ListElement { text: "Visibility"; }
-                ListElement { text: "Exit"; }
+                print("Main menu -> Levels");
+                menuStates.state = "levels";
             }
-            clip: true
-
-            highlight: Rectangle { color: "darkgrey" }
-            highlightFollowsCurrentItem: true
-
-            delegate: Item {
-                id: listDelegate
-
-                property var view: ListView.view
-                property var isCurrent: ListView.isCurrentItem
-
-                width: bn.implicitWidth
-                height: bn.implicitHeight
-
-                Mainmenu.MenuButton
-                {
-                    id: bn
-                    animationActive: isCurrent
-                    text:
-                    {
-                        if (model.index === 4)
-                            model.text = getBnVisibilityName(appVisibility);
-                        return "%1".arg(model.text);
-                    }
-                    onClicked:
-                    {
-                        view.currentIndex = model.index;
-                        clickedListItem(model.index);
-                    }
-                }
-            }
-            Shortcut
+            onClickedStatistics:
             {
-                sequence: "Up"
-                onActivated: view.currentIndex ? view.currentIndex-- : print("main menu: index invalid");
+                print("Main menu -> Statistics");
+                menuStates.state = "statistics";
             }
-            Shortcut
+
+            onClickedChangeVisibility: clickedChangeVisibility()
+            onClickedExit: clickedExit()
+        }
+
+        Connections
+        {
+            target: loaderLvls.item
+            onClickedListItem:
             {
-                sequence: "Down"
-                onActivated: view.currentIndex < view.count - 1 ? view.currentIndex++ : print("main menu: index invalid");
+                print("Levels -> select level " + index);
+                clickedLevel(index);
+                menuStates.state = "navigation";
             }
-            Shortcut
-            {
-                sequence: "Enter"
-                onActivated: { clickedListItem(view.currentIndex);  }
-            }
+        }
+
+        Loader
+        {
+            id: loaderNavigation
+            active: false
+            sourceComponent: Component { Mainmenu.Navigation {} }
+            anchors.horizontalCenter: menuRect.horizontalCenter
+            anchors.bottom: menuRect.bottom
+        }
+        Loader
+        {
+            id: loaderLvls
+            active: false
+            sourceComponent: Component { Mainmenu.MenuLvlsList {} }
+            anchors.horizontalCenter: menuRect.horizontalCenter
+            anchors.bottom: menuRect.bottom
+        }
+        Loader
+        {
+            id: loaderStat
+            active: false
+            sourceComponent: Component { Mainmenu.MenuStats {} }
+            anchors.fill: menuRect
         }
     }
 
-    onClickedListItem:
+    Shortcut { sequence: "Escape"; onActivated: updateState(menuStates) }
+    Shortcut { sequence: "Backspace"; onActivated: updateState(menuStates) }
+
+    function updateState(menuStates)
     {
-        switch (index)
+        switch (menuStates.state)
         {
-        case 0:
-            clickedContinue();
-            break;
-        case 1:
-            clickedNewGame();
-            break;
-        case 2:
-            clickedLevels();
-            break;
-        case 3:
-            clickedStatistics();
-            break;
-        case 4:
-            clickedChangeVisibility();
-            break;
-        case 5:
+        case "navigation":
             clickedExit();
             break;
+        default:
+            menuStates.state = "navigation";
         }
     }
 
-    function getBnVisibilityName(appVisibility)
-    {
-        switch(appVisibility)
-        {
-        case Window.Maximized:
-        case Window.FullScreen:
-            return "Windowed";
-        case Window.Windowed:
-            return "FullScreen";
-        default:
-            return "undefined";
-        }
-    }
+    Component.onCompleted: menuStates.state = "navigation"
 }

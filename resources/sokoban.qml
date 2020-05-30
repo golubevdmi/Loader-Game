@@ -7,7 +7,6 @@ ApplicationWindow
     id: root
     visible: true
     width: 1280
-    //height: 960
     height: 600
     minimumWidth: 640
     minimumHeight: 480
@@ -23,18 +22,6 @@ ApplicationWindow
             },
             State { name: "gameplay";
                 PropertyChanges { target: loaderGameplay; active: true; }
-                PropertyChanges { target: loaderMainMenu; active: false; }
-            },
-            State { name: "levels";
-                PropertyChanges { target: loaderLvls;     active: true; }
-                PropertyChanges { target: loaderMainMenu; active: false; }
-            },
-            State { name: "stat";
-                PropertyChanges { target: loaderStat;     active: true; }
-                PropertyChanges { target: loaderMainMenu; active: false; }
-            },
-            State { name: "undefined";
-                PropertyChanges { target: loaderGameplay; active: false; }
                 PropertyChanges { target: loaderMainMenu; active: false; }
             }
         ]
@@ -65,15 +52,11 @@ ApplicationWindow
             loaderGameplay.startLvl = 0;
             gameStates.state = "gameplay";
         }
-        onClickedLevels:
+        onClickedLevel:
         {
             print("Main menu -> Levels");
-            gameStates.state = "levels";
-        }
-        onClickedStatistics:
-        {
-            print("Main menu -> Statistics");
-            gameStates.state = "stat";
+            loaderGameplay.startLvl = index;
+            gameStates.state = "gameplay";
         }
 
         onClickedChangeVisibility:
@@ -86,36 +69,14 @@ ApplicationWindow
         onClickedExit:
         {
             print("Main menu -> Exit");
-            gameStates.state = "undefined";
             Qt.quit();
         }
     }
 
     Connections
     {
-        target: loaderLvls.item
-        onClickedListItem:
-        {
-            print("Levels -> select level " + index);
-            gameStates.state = "mainMenu";
-            loaderGameplay.startLvl = index;
-            gameStates.state = "gameplay";
-        }
-        onClickedBack:
-        {
-            print("Levels -> back ");
-            gameStates.state = "mainMenu";
-        }
-    }
-
-    Connections
-    {
-        target: loaderStat.item
-        onClickedBack:
-        {
-            print("Statistics -> back ");
-            gameStates.state = "mainMenu";
-        }
+        target: loaderGameplay.item
+        onExit: gameStates.state = "mainMenu"
     }
 
     Loader
@@ -136,36 +97,6 @@ ApplicationWindow
         active: false
         sourceComponent: gameplay
         anchors.fill: parent
-    }
-    Loader
-    {
-        id: loaderLvls
-        active: false
-        sourceComponent: Component { WindowLvlsList {} }
-        anchors.fill: parent
-    }
-    Loader
-    {
-        id: loaderStat
-        active: false
-        sourceComponent: Component { WindowStats {} }
-        anchors.fill: parent
-    }
-
-    Shortcut { sequence: "Escape"; onActivated: updateState(gameStates) }
-    Shortcut { sequence: "Backspace"; onActivated: updateState(gameStates) }
-
-    function updateState(gameStates)
-    {
-        switch (gameStates.state)
-        {
-        case "mainMenu":
-            gameStates.state = "undefined";
-            Qt.quit();
-            break;
-        default:
-            gameStates.state = "mainMenu";
-        }
     }
 
     Component.onCompleted: { gameStates.state = "mainMenu"; }

@@ -11,6 +11,7 @@ Item
 {
     signal newGame
     signal updateState
+    signal exit
 
     id: root
 
@@ -114,4 +115,8 @@ Item
         sourceComponent: Gameplay.LvlComplete { }
         anchors.centerIn: root
     }
+
+
+    Shortcut { sequence: "Escape"; onActivated: exit() }
+    Shortcut { sequence: "Backspace"; onActivated: exit() }
 }

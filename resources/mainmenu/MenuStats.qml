@@ -2,22 +2,17 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import StatStorage 1.0
-import "items" as SokobanItems
-import "mainmenu" as Mainmenu
+import "../items" as SokobanItems
+import "./" as Mainmenu
 
 Item
 {
-    signal clickedBack
-
     id: root
-
-    Mainmenu.MenuBackground { id: bgTexture; anchors.fill: parent }
-
     ColumnLayout
     {
         anchors.fill: parent
-        anchors.margins: 50
 
+        // Table header
         RowLayout
         {
             Repeater
@@ -25,7 +20,7 @@ Item
                 model: 4
                 SokobanItems.Rectangle
                 {
-                    implicitWidth: view.width / 4 - view.anchors.margins / 3
+                    implicitWidth: view.width / 4
                     implicitHeight: 40
                     color: "darkgray"
                     SokobanItems.Text
@@ -52,31 +47,29 @@ Item
             }
         }
 
-        Rectangle
+        // Table cells
+        SokobanItems.Rectangle
         {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            color: "transparent"
             TableView
             {
                 id: view
-                anchors.margins: 10
                 anchors.fill: parent
+                anchors.margins: 10
+                rowSpacing: 10
                 model: StatStorage {}
-
-                ScrollBar {}
 
                 delegate: SokobanItems.Rectangle
                 {
-                    implicitWidth: view.width / 4 - view.anchors.margins / 3
+                    implicitWidth: view.width / 4
                     implicitHeight: 40
                     color: "black"
-                    SokobanItems.Text { text: display; anchors.centerIn: parent; font.pointSize: 15; }
+                    SokobanItems.Text { text: display; anchors.centerIn: parent; font.pointSize: 15 }
                 }
             }
             onWidthChanged: view.forceLayout();
             onHeightChanged: view.forceLayout();
         }
-        Mainmenu.MenuButton { text: qsTr("back"); onClicked: clickedBack() }
     }
 }
