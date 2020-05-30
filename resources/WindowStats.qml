@@ -7,6 +7,8 @@ import "mainmenu" as Mainmenu
 
 Item
 {
+    signal clickedBack
+
     id: root
 
     Mainmenu.MenuBackground { id: bgTexture; anchors.fill: parent }
@@ -75,6 +77,6 @@ Item
             onWidthChanged: view.forceLayout();
             onHeightChanged: view.forceLayout();
         }
-        Mainmenu.MenuButton { text: qsTr("Back"); }
+        Mainmenu.MenuButton { text: qsTr("back"); onClicked: clickedBack() }
     }
 }
