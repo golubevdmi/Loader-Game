@@ -8,15 +8,15 @@
 
 SokobanModel::SokobanModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_pGridGenerator(new GridMazes("Z:/Sokoban/mazes.json"))
-    //, m_pGridGenerator(new RandomGridGenerator)
+    , m_pGridGenerator(new GridFromFile("Z:/Sokoban/mazes.json"))
     , m_pStack(new QUndoStack(this))
     , m_pUndoCmd(nullptr)
     , m_currStep(0)
     , m_nSteps(0)
     , m_nMoves(0)
 {
-    createGrid();
+    if (m_pGridGenerator)
+        m_pGridGenerator->init();
 }
 
 SokobanModel::~SokobanModel()
@@ -43,8 +43,7 @@ void SokobanModel::reset()
     m_currStep = 0;
     m_nSteps = 0;
     m_nMoves = 0;
-    move_changed();
-
+    emit move_changed();
     emit grid_changed();
     emit cargos_left(cargosLeft());
 }
@@ -134,40 +133,40 @@ QHash<int, QByteArray> SokobanModel::roleNames() const
     return roles;
 }
 
-void SokobanModel::createGrid()
+bool SokobanModel::loadLevel(int lvlNumber)
 {
-    Q_ASSERT(m_pGridGenerator);
-
-    m_pGridGenerator->init();
-    m_pGridGenerator->generate();
-
-    // Update grid
-    m_beginGrid = m_pGridGenerator->getGrid();
-    reset();
+    if (m_pGridGenerator)
+    {
+        if (m_pGridGenerator->loadLevel(lvlNumber))
+        {
+            m_beginGrid = m_pGridGenerator->getGrid();
+            reset();
+            return true;
+        }
+    }
+    return false;
 }
 
 // Read next grid
-void SokobanModel::next()
+bool SokobanModel::loadNextLvl()
 {
-    Q_ASSERT(m_pGridGenerator);
-    auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
-    if (pMaze)
+    if (m_pGridGenerator)
     {
-        pMaze->next();
-        createGrid();
+        int currLvl = m_pGridGenerator->getCurrentLvl();
+        return loadLevel(++currLvl);
     }
+    return false;
 }
 
 // Read previous grid
-void SokobanModel::previous()
+bool SokobanModel::loadPrevLvl()
 {
-    Q_ASSERT(m_pGridGenerator);
-    auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
-    if (pMaze)
+    if (m_pGridGenerator)
     {
-        pMaze->previous();
-        createGrid();
+        int currLvl = m_pGridGenerator->getCurrentLvl();
+        return loadLevel(--currLvl);
     }
+    return false;
 }
 
 bool SokobanModel::moveUp()
@@ -375,25 +374,7 @@ int SokobanModel::cargos() const
 {
     if (m_pGridGenerator)
     {
-        return m_pGridGenerator->getCargos();
-    }
-    return -1;
-}
-
-int SokobanModel::cargosDst() const
-{
-    if (m_pGridGenerator)
-    {
-        return m_pGridGenerator->getCargosDestination();
-    }
-    return -1;
-}
-
-int SokobanModel::barriers() const
-{
-    if (m_pGridGenerator)
-    {
-        return m_pGridGenerator->getBarriers();
+        return m_pGridGenerator->getNumberOfElements(FieldValue::Cargo);
     }
     return -1;
 }
@@ -430,11 +411,7 @@ int SokobanModel::level() const
 {
     if (m_pGridGenerator)
     {
-        auto pMaze = qSharedPointerDynamicCast<GridMazes>(m_pGridGenerator);
-        if (pMaze)
-        {
-            return pMaze->getCurrentMaze();
-        }
+        return m_pGridGenerator->getCurrentLvl();
     }
     return -1;
 }

@@ -14,8 +14,6 @@ class SokobanModel : public QAbstractTableModel
 {
     Q_OBJECT
     Q_PROPERTY(int cargos READ cargos NOTIFY grid_changed)
-    Q_PROPERTY(int cargosDst READ cargosDst NOTIFY grid_changed)
-    Q_PROPERTY(int barriers READ barriers NOTIFY grid_changed)
     Q_PROPERTY(int cargosLeft READ cargosLeft NOTIFY cargos_left)
     Q_PROPERTY(int step READ step NOTIFY move_changed)
     Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
@@ -34,8 +32,9 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    Q_INVOKABLE void next();
-    Q_INVOKABLE void previous();
+    Q_INVOKABLE bool loadLevel(int lvlNumber = 0);
+    Q_INVOKABLE bool loadNextLvl();
+    Q_INVOKABLE bool loadPrevLvl();
 
     Q_INVOKABLE bool moveUp();
     Q_INVOKABLE bool moveDown();
@@ -46,8 +45,6 @@ public:
     Q_INVOKABLE bool redo();
 
     Q_INVOKABLE int cargos() const;
-    Q_INVOKABLE int cargosDst() const;
-    Q_INVOKABLE int barriers() const;
     Q_INVOKABLE int cargosLeft() const;
     Q_INVOKABLE int step() const;
     Q_INVOKABLE int nMoves() const;
@@ -79,7 +76,6 @@ private:
     void movedComplete();
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
     void saveStep();
-    void createGrid();
     bool checkWin();
     void cmdComplete();
 
