@@ -38,6 +38,9 @@ Item
                 implicitWidth: tableView.width / sokobanModel.columnCount()
                 implicitHeight: tableView.height / sokobanModel.rowCount()
 
+                TableView.onPooled: rotationAnimation.pause()
+                TableView.onReused: rotationAnimation.resume()
+
                 Connections
                 {
                     target: root
