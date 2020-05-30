@@ -78,8 +78,9 @@ private:
     void movedComplete();
     void addIndexForCommand(const QModelIndex &index, const QVariant &oldValue, const QVariant &newValue);
     void saveStep();
-    bool checkWin();
+    bool checkWin() const;
     void cmdComplete();
+    void saveStat(int level) const;
 
     void setValue(const QModelIndex &index, QVariant value);
 

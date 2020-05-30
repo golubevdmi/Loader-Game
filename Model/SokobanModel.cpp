@@ -1,9 +1,10 @@
-#include <Model/SokobanModel.h>
-
-#include <Model/StepCommand.h>
+#include "Model/SokobanModel.h"
+#include "Model/StepCommand.h"
+#include "StatStorage/StatStorage.h"
 
 #include <QUndoStack>
 #include <QUndoCommand>
+#include <QDateTime>
 #include <QDebug>
 
 SokobanModel::SokobanModel(QObject *parent)
@@ -137,8 +138,11 @@ bool SokobanModel::loadLevel(int lvlNumber)
 {
     if (m_pGridGenerator)
     {
+        int currLevel = m_pGridGenerator->getCurrentLvl();
         if (m_pGridGenerator->loadLevel(lvlNumber))
         {
+            if (checkWin())
+                saveStat(currLevel);
             m_beginGrid = m_pGridGenerator->getGrid();
             reset();
             return true;
@@ -370,6 +374,16 @@ void SokobanModel::cmdComplete()
     emit move_changed();
 }
 
+void SokobanModel::saveStat(int level) const
+{
+    Statistics stat;
+    stat.time = QDateTime::currentDateTime().toString("MMMM d yyyy, h:m ap");
+    stat.level = level;
+    stat.steps = m_nSteps;
+    stat.nMoves = m_nMoves;
+    saveStatistics(stat);
+}
+
 int SokobanModel::cargos() const
 {
     if (m_pGridGenerator)
@@ -381,6 +395,8 @@ int SokobanModel::cargos() const
 
 int SokobanModel::cargosLeft() const
 {
+    if (!m_currentGrid.size())
+        return -1;
     int nCargos = 0;
     auto it = m_beginGrid.begin();
     while (it != m_beginGrid.end())
@@ -425,7 +441,7 @@ int SokobanModel::nLevels() const
     return -1;
 }
 
-bool SokobanModel::checkWin()
+bool SokobanModel::checkWin() const
 {
     int nCargos = cargosLeft();
     return !nCargos;

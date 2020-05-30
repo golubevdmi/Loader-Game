@@ -16,6 +16,7 @@ qt5_add_resources(QRC_WRAPPERS
 # MOC
 qt5_wrap_cpp(MOC_WRAPPERS
     Model/SokobanModel.h
+    StatStorage/StatStorage.h
     )
 
 set(GRID_FILES
@@ -31,9 +32,15 @@ set(MVC_FILES
     Model/StepCommand.h
     )
 
+set(STAT_FILES
+    StatStorage/StatStorage.cpp
+    StatStorage/StatStorage.h
+    )
+
 add_executable(${project_name}
     sokobanmain.cpp
     FieldFlags.h
+    ${STAT_FILES}
     ${GRID_FILES}
     ${MVC_FILES}
     ${MOC_WRAPPERS}
