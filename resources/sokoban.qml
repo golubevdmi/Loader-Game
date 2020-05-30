@@ -25,6 +25,10 @@ ApplicationWindow
                 PropertyChanges { target: loaderGameplay; active: true; }
                 PropertyChanges { target: loaderMainMenu; active: false; }
             },
+            State { name: "levels";
+                PropertyChanges { target: loaderLvls;     active: true; }
+                PropertyChanges { target: loaderMainMenu; active: false; }
+            },
             State { name: "undefined";
                 PropertyChanges { target: loaderGameplay; active: false; }
                 PropertyChanges { target: loaderMainMenu; active: false; }
@@ -54,7 +58,13 @@ ApplicationWindow
         onClickedNewGame:
         {
             print("Main menu -> New game");
+            loaderGameplay.startLvl = 0;
             gameStates.state = "gameplay";
+        }
+        onClickedLevels:
+        {
+            print("Main menu -> Levels");
+            gameStates.state = "levels";
         }
         onClickedChangeVisibility:
         {
@@ -71,6 +81,18 @@ ApplicationWindow
         }
     }
 
+    Connections
+    {
+        target: loaderLvls.item
+        onClickedListItem:
+        {
+            print("Levels -> select level " + index);
+            gameStates.state = "mainMenu";
+            loaderGameplay.startLvl = index;
+            gameStates.state = "gameplay";
+        }
+    }
+
     Loader
     {
         property var appVisibility: root.visibility
@@ -83,9 +105,18 @@ ApplicationWindow
     }
     Loader
     {
+        property int startLvl: 0
+
         id: loaderGameplay
         active: false
         sourceComponent: gameplay
+        anchors.fill: parent
+    }
+    Loader
+    {
+        id: loaderLvls
+        active: false
+        sourceComponent: Component { WindowLvlsList {} }
         anchors.fill: parent
     }
 
@@ -100,9 +131,8 @@ ApplicationWindow
                 gameStates.state = "undefined";
                 Qt.quit();
                 break;
-            case "gameplay":
+            default:
                 gameStates.state = "mainMenu";
-                break;
             }
         }
     }

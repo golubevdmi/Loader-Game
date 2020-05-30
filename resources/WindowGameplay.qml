@@ -62,7 +62,7 @@ Item
         }
     }
 
-    onNewGame: sokobanModel.loadLevel(0);
+    onNewGame: sokobanModel.loadLevel(startLvl);
     onUpdateState: tableView.forceLayout();
 
     Connections
