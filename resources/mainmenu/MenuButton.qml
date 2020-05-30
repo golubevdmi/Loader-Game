@@ -7,6 +7,7 @@ Button
 {
     property bool animationActive: false
     property int fontSize: 17
+    property color downColor: "gray"
 
     id: root
     implicitWidth: 300
