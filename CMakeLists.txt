@@ -22,7 +22,6 @@ set(GRID_FILES
     GridGenerator/GridGenerator.cpp
     GridGenerator/GridGenerator.h
     GridGenerator/RandomGridGenerator.cpp
-    GridGenerator/TestGridGenerator.cpp
     GridGenerator/GridMazes.cpp
     )
 
