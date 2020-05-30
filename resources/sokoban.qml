@@ -44,6 +44,7 @@ ApplicationWindow
                 onWidthChanged:      loaderGameplay.item.updateState();
                 onHeightChanged:     loaderGameplay.item.updateState();
             }
+            Component.onCompleted: newGame();
         }
     }
 
