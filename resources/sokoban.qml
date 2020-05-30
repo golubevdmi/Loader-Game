@@ -13,7 +13,25 @@ ApplicationWindow
     minimumHeight: 480
     title: qsTr("Sakoban")
 
-    Component { id: mainMenu; WindowMainMenu { } }
+    Item
+    {
+        id: gameStates
+        states: [
+            State { name: "mainMenu";
+                PropertyChanges { target: loaderGameplay; active: false; }
+                PropertyChanges { target: loaderMainMenu; active: true; }
+            },
+            State { name: "gameplay";
+                PropertyChanges { target: loaderGameplay; active: true; }
+                PropertyChanges { target: loaderMainMenu; active: false; }
+            },
+            State { name: "undefined";
+                PropertyChanges { target: loaderGameplay; active: false; }
+                PropertyChanges { target: loaderMainMenu; active: false; }
+            }
+        ]
+    }
+
     Component
     {
         id: gameplay
@@ -31,13 +49,11 @@ ApplicationWindow
 
     Connections
     {
-        id: conncectMainMenu
         target: loaderMainMenu.item
         onClickedNewGame:
         {
             print("Main menu -> New game");
-            loaderMainMenu.active = false;
-            loaderGameplay.active = true;
+            gameStates.state = "gameplay";
         }
         onClickedChangeVisibility:
         {
@@ -49,6 +65,7 @@ ApplicationWindow
         onClickedExit:
         {
             print("Main menu -> Exit");
+            gameStates.state = "undefined";
             Qt.quit();
         }
     }
@@ -59,7 +76,7 @@ ApplicationWindow
 
         id: loaderMainMenu
         active: false
-        sourceComponent: mainMenu
+        sourceComponent: Component { WindowMainMenu { } }
         focus: true
         anchors.fill: parent
     }
@@ -76,17 +93,18 @@ ApplicationWindow
         sequence: "Escape"
         onActivated:
         {
-            if (loaderGameplay.active)
+            switch (gameStates.state)
             {
-                loaderGameplay.active = false;
-                loaderMainMenu.active = true;
-            }
-            else
-            {
+            case "mainMenu":
+                gameStates.state = "undefined";
                 Qt.quit();
+                break;
+            case "gameplay":
+                gameStates.state = "mainMenu";
+                break;
             }
         }
     }
 
-    Component.onCompleted: { loaderMainMenu.active = true; }
+    Component.onCompleted: { gameStates.state = "mainMenu"; }
 }
