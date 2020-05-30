@@ -8,6 +8,7 @@ Button
     property bool animationActive: false
     property int fontSize: 17
     property color downColor: "gray"
+    property color bgColor: "transparent"
 
     id: root
     implicitWidth: 300
@@ -53,5 +54,5 @@ Button
         }
     }
 
-    background: SokobanItems.Rectangle {}
+    background: SokobanItems.Rectangle { color: bgColor }
 }

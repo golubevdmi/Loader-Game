@@ -1,7 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.12
 import "mainmenu" as Mainmenu
 import "items" as SokobanItems
 
@@ -24,14 +21,17 @@ Item
                 PropertyChanges { target: loaderNavigation; active: true; }
                 PropertyChanges { target: loaderLvls;       active: false; }
                 PropertyChanges { target: loaderStat;       active: false; }
+                PropertyChanges { target: loaderBackBn;     active: false; }
             },
             State { name: "levels";
                 PropertyChanges { target: loaderNavigation; active: false; }
                 PropertyChanges { target: loaderLvls;       active: true; }
+                PropertyChanges { target: loaderBackBn;     active: true; }
             },
             State { name: "statistics";
                 PropertyChanges { target: loaderNavigation; active: false; }
                 PropertyChanges { target: loaderStat;       active: true; }
+                PropertyChanges { target: loaderBackBn;     active: true; }
             }
         ]
     }
@@ -96,6 +96,19 @@ Item
             sourceComponent: Component { Mainmenu.MenuStats {} }
             anchors.fill: menuRect
         }
+    }
+
+    Loader
+    {
+        id: loaderBackBn
+        active: false
+        sourceComponent: Component {
+            Mainmenu.MenuButton { text: "back"; bgColor: "black"; onClicked: menuStates.state = "navigation" }
+        }
+        anchors.leftMargin: 50
+        anchors.bottomMargin: 15
+        anchors.left: root.left
+        anchors.bottom: root.bottom
     }
 
     Shortcut { sequence: "Escape"; onActivated: updateState(menuStates) }
