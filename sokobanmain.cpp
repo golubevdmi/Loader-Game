@@ -3,6 +3,7 @@
 #include <QQmlApplicationEngine>
 
 #include <Model/SokobanModel.h>
+#include <StatStorage/StatStorage.h>
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +11,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     qmlRegisterType<SokobanModel>("SokobanModel", 1, 0, "SokobanModel");
+    qmlRegisterType<StatStorage>("StatStorage", 1, 0, "StatStorage");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/forms/resources/sokoban.qml"));
