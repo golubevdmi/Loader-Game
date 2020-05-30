@@ -29,6 +29,10 @@ ApplicationWindow
                 PropertyChanges { target: loaderLvls;     active: true; }
                 PropertyChanges { target: loaderMainMenu; active: false; }
             },
+            State { name: "stat";
+                PropertyChanges { target: loaderStat;     active: true; }
+                PropertyChanges { target: loaderMainMenu; active: false; }
+            },
             State { name: "undefined";
                 PropertyChanges { target: loaderGameplay; active: false; }
                 PropertyChanges { target: loaderMainMenu; active: false; }
@@ -66,6 +70,12 @@ ApplicationWindow
             print("Main menu -> Levels");
             gameStates.state = "levels";
         }
+        onClickedStatistics:
+        {
+            print("Main menu -> Statistics");
+            gameStates.state = "stat";
+        }
+
         onClickedChangeVisibility:
         {
             if (root.visibility === Window.Windowed)
@@ -118,6 +128,13 @@ ApplicationWindow
         active: false
         sourceComponent: Component { WindowLvlsList {} }
         anchors.fill: parent
+    }
+    Loader
+    {
+        id: loaderStat
+        active: false
+        sourceComponent: Component { WindowStats {} }
+        anchors.centerIn: parent
     }
 
     Shortcut

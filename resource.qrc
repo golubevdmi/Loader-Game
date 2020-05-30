@@ -19,6 +19,7 @@
         <file>resources/gameplay/ToolBar.qml</file>
         <file>resources/gameplay/LvlComplete.qml</file>
         <file>resources/WindowLvlsList.qml</file>
+        <file>resources/WindowStats.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/about.png</file>
