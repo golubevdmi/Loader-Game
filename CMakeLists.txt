@@ -21,8 +21,7 @@ qt5_wrap_cpp(MOC_WRAPPERS
 set(GRID_FILES
     GridGenerator/GridGenerator.cpp
     GridGenerator/GridGenerator.h
-    GridGenerator/RandomGridGenerator.cpp
-    GridGenerator/GridMazes.cpp
+    GridGenerator/GridFromFile.cpp
     )
 
 set(MVC_FILES
