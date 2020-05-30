@@ -103,6 +103,16 @@ ApplicationWindow
         }
     }
 
+    Connections
+    {
+        target: loaderStat.item
+        onClickedBack:
+        {
+            print("Statistics -> back ");
+            gameStates.state = "mainMenu";
+        }
+    }
+
     Loader
     {
         property var appVisibility: root.visibility
@@ -134,23 +144,22 @@ ApplicationWindow
         id: loaderStat
         active: false
         sourceComponent: Component { WindowStats {} }
-        anchors.centerIn: parent
+        anchors.fill: parent
     }
 
-    Shortcut
+    Shortcut { sequence: "Escape"; onActivated: updateState(gameStates) }
+    Shortcut { sequence: "Backspace"; onActivated: updateState(gameStates) }
+
+    function updateState(gameStates)
     {
-        sequence: "Escape"
-        onActivated:
+        switch (gameStates.state)
         {
-            switch (gameStates.state)
-            {
-            case "mainMenu":
-                gameStates.state = "undefined";
-                Qt.quit();
-                break;
-            default:
-                gameStates.state = "mainMenu";
-            }
+        case "mainMenu":
+            gameStates.state = "undefined";
+            Qt.quit();
+            break;
+        default:
+            gameStates.state = "mainMenu";
         }
     }
 
