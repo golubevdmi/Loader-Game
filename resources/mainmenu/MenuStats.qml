@@ -52,20 +52,25 @@ Item
         {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            TableView
+            ScrollView
             {
-                id: view
                 anchors.fill: parent
-                anchors.margins: 10
-                rowSpacing: 10
-                model: StatStorage {}
-
-                delegate: SokobanItems.Rectangle
+                ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+                TableView
                 {
-                    implicitWidth: view.width / 4
-                    implicitHeight: 40
-                    color: "black"
-                    SokobanItems.Text { text: display; anchors.centerIn: parent; font.pointSize: 15 }
+                    id: view
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    rowSpacing: 10
+                    model: StatStorage {}
+
+                    delegate: SokobanItems.Rectangle
+                    {
+                        implicitWidth: view.width / 4
+                        implicitHeight: 40
+                        color: "black"
+                        SokobanItems.Text { text: display; anchors.centerIn: parent; font.pointSize: 15 }
+                    }
                 }
             }
             onWidthChanged: view.forceLayout();
