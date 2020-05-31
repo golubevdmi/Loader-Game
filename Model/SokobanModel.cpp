@@ -485,6 +485,14 @@ void SokobanModel::loadLastGameState()
         m_nSteps = jsObj["steps"].toInt();
         m_currStep = jsObj["currStep"].toInt();
         m_nMoves = jsObj["moves"].toInt();
+        emit move_changed();
+
+        if (checkWin())
+        {
+            emit game_win();
+        }
+        emit cargos_left(cargosLeft());
+
         qDebug() << "Last game state loaded";
     }
 }
