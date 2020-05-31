@@ -53,7 +53,6 @@ public:
     Q_INVOKABLE int nLevels() const;
 
 signals:
-    void data_changed_custom(int row, int col, QVariant data);
     void moved_up();
     void moved_down();
     void moved_left();

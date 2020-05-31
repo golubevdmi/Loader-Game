@@ -113,7 +113,6 @@ bool SokobanModel::setData(const QModelIndex &index, const QVariant &value, int 
     case Qt::DisplayRole:
     case Qt::EditRole:
         setValue(index, value);
-        emit data_changed_custom(index.row(), index.column(), index.data());
         emit dataChanged(index, index, {role});
         break;
     default:
