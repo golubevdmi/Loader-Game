@@ -1,14 +1,16 @@
+#include "Model/SokobanModel.h"
+#include "StatStorage/StatStorage.h"
+
 #include <QApplication>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-
-#include <Model/SokobanModel.h>
-#include <StatStorage/StatStorage.h>
+#include <QCursor>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
 
     qmlRegisterType<SokobanModel>("SokobanModel", 1, 0, "SokobanModel");
     qmlRegisterType<StatStorage>("StatStorage", 1, 0, "StatStorage");
