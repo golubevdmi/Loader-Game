@@ -339,7 +339,7 @@ void SokobanModel::saveStep()
 
 bool SokobanModel::undo()
 {
-    if (m_pStack && m_pStack->index() > 0)
+    if (m_pStack && m_pStack->canUndo())
     {
         m_pStack->undo();
         --m_currStep;
@@ -352,7 +352,7 @@ bool SokobanModel::undo()
 
 bool SokobanModel::redo()
 {
-    if (m_pStack && m_pStack->index() < m_nSteps)
+    if (m_pStack && m_pStack->canRedo())
     {
         m_pStack->redo();
         ++m_currStep;
