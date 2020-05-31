@@ -18,7 +18,7 @@ class SokobanModel : public QAbstractTableModel
     Q_PROPERTY(int step READ step NOTIFY move_changed)
     Q_PROPERTY(int nMoves READ nMoves NOTIFY move_changed)
     Q_PROPERTY(int level READ level NOTIFY grid_changed)
-    Q_PROPERTY(int nLevels READ nLevels)
+    Q_PROPERTY(int nLevels READ nLevels NOTIFY levels_updated)
 public:
     SokobanModel(QObject *parent = nullptr);
     ~SokobanModel();
@@ -58,6 +58,7 @@ signals:
     void moved_down();
     void moved_left();
     void moved_right();
+    void levels_updated();
     void grid_changed();
     void delivered();
     void cargos_left(int nCargos);

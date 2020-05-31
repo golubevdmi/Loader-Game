@@ -17,7 +17,10 @@ SokobanModel::SokobanModel(QObject *parent)
     , m_nMoves(0)
 {
     if (m_pGridGenerator)
+    {
         m_pGridGenerator->init();
+        emit levels_updated();
+    }
 }
 
 SokobanModel::~SokobanModel()
