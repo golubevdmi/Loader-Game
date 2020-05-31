@@ -46,6 +46,11 @@ ApplicationWindow
     Connections
     {
         target: loaderMainMenu.item
+        onClickedContinue:
+        {
+            print("Main menu -> Continue");
+            gameStates.state = "gameplay";
+        }
         onClickedNewGame:
         {
             print("Main menu -> New game");

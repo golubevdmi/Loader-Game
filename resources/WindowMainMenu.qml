@@ -46,6 +46,7 @@ Item
         Connections
         {
             target: loaderNavigation.item
+            onClickedContinue: clickedContinue()
             onClickedNewGame: clickedNewGame()
             onClickedLevels:
             {
