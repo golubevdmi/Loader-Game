@@ -58,12 +58,14 @@ signals:
     void moved_down();
     void moved_left();
     void moved_right();
+    void move_changed();
     void levels_updated();
     void grid_changed();
     void delivered();
     void cargos_left(int nCargos);
-    void move_changed();
     void game_win();
+    void continue_game();
+    void quit_game();
 private:
     QSharedPointer<GridGenerator> m_pGridGenerator;
     GridType m_beginGrid;
@@ -88,6 +90,10 @@ private:
     QModelIndex getLoaderPlayerIndex();
     QVariant getValue(const QModelIndex &index) const;
     QVariant getBeginValue(const QModelIndex &index) const;
+
+private slots:
+    void saveLastGameState() const;
+    void loadLastGameState();
 };
 
 #endif // !_GRIDMODEL_H_

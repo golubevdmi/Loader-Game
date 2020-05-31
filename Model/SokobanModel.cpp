@@ -4,6 +4,11 @@
 
 #include <QUndoStack>
 #include <QUndoCommand>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QIODevice>
+#include <QFile>
 #include <QDateTime>
 #include <QDebug>
 
@@ -21,6 +26,8 @@ SokobanModel::SokobanModel(QObject *parent)
         m_pGridGenerator->init();
         emit levels_updated();
     }
+    connect(this, &SokobanModel::quit_game, this, &SokobanModel::saveLastGameState);
+    connect(this, &SokobanModel::continue_game, this, &SokobanModel::loadLastGameState);
 }
 
 SokobanModel::~SokobanModel()
@@ -385,6 +392,102 @@ void SokobanModel::saveStat(int level) const
     stat.steps = m_nSteps;
     stat.nMoves = m_nMoves;
     saveStatistics(stat);
+}
+
+// Save all undoStack commands to file
+void SokobanModel::saveLastGameState() const
+{
+    // Write all commands to array
+    QJsonArray cmdsArray;
+    if (m_pStack && !m_pStack->isClean())
+    {
+        for (int i = 0; i < m_pStack->count(); ++i)
+        {
+            auto cmd = dynamic_cast<const StepCommand*>(m_pStack->command(i));
+            if (cmd)
+            {
+                QJsonArray array = cmd->array();
+                if (!array.empty())
+                    cmdsArray.append(array);
+            }
+            else
+            {
+                while (!cmdsArray.empty())
+                    cmdsArray.pop_back();
+                break;
+            }
+        }
+    }
+
+    // Save commands and level information
+    QFile file("lastGameState.txt");
+    file.open(QIODevice::WriteOnly);
+    if (file.isOpen())
+    {
+        QJsonObject obj;
+        obj["level"] = m_pGridGenerator ? m_pGridGenerator->getCurrentLvl() : -1;
+        obj["steps"] = m_nSteps;
+        obj["currStep"] = m_currStep;
+        obj["moves"] = m_nMoves;
+        obj["cmdIndex"] = m_pStack ? m_pStack->index() : 0;
+        obj["commands"] = cmdsArray;
+        file.write(QJsonDocument(obj).toJson());
+        file.close();
+    }
+
+    qDebug() << "Last game state saved";
+}
+
+void SokobanModel::loadLastGameState()
+{
+    Q_ASSERT(m_pStack);
+
+    // Open file
+    QFile file("lastGameState.txt");
+    file.open(QIODevice::ReadOnly);
+    if (!file.isOpen())
+        return;
+
+    // Grab doc
+    QByteArray byteArray = file.readAll();
+    QJsonDocument jsDoc(QJsonDocument::fromJson(byteArray));
+    QJsonObject jsObj = jsDoc.object();
+    file.close();
+
+    // Trying to load a new level
+    int level = jsObj["level"].toInt();
+    if (loadLevel(level))
+    {
+        QJsonArray cmdsArray = jsObj["commands"].toArray();
+        if (cmdsArray.empty())
+            return;
+
+        // Add commands to stack
+        foreach(const QJsonValue &cmdData, cmdsArray)
+        {
+            auto pCmd = new StepCommand(this);
+            if (pCmd->addArray(cmdData.toArray()))
+            {
+                m_pStack->push(pCmd);
+            }
+            else    // if cmd not read - load lvl begin
+            {
+                m_pStack->clear();
+                return;
+            }
+        }
+
+        // Set last stack index
+        int index = jsObj["cmdIndex"].toInt();
+        if (index < m_pStack->count())
+            m_pStack->setIndex(index);
+
+        // Set additional game information
+        m_nSteps = jsObj["steps"].toInt();
+        m_currStep = jsObj["currStep"].toInt();
+        m_nMoves = jsObj["moves"].toInt();
+        qDebug() << "Last game state loaded";
+    }
 }
 
 int SokobanModel::cargos() const
