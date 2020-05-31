@@ -50,6 +50,7 @@ ApplicationWindow
         {
             print("Main menu -> Continue");
             gameStates.state = "gameplay";
+            loaderGameplay.item.continueGame();
         }
         onClickedNewGame:
         {

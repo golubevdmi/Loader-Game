@@ -9,6 +9,7 @@ import "items" as SokobanItem
 
 Item
 {
+    signal continueGame
     signal newGame
     signal updateState
     signal exit
@@ -66,8 +67,10 @@ Item
         }
     }
 
+    onContinueGame: sokobanModel.continue_game();
     onNewGame: sokobanModel.loadLevel(startLvl);
     onUpdateState: tableView.forceLayout();
+    onExit: sokobanModel.quit_game();
 
     Connections
     {
