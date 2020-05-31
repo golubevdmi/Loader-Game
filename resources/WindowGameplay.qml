@@ -29,34 +29,27 @@ Item
 
         TableView
         {
-            id: tableView
+            id: view
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
             model: SokobanModel { id: sokobanModel }
             delegate: Gameplay.ModelDelegate
             {
-                id: loaderGrid
-                implicitWidth: tableView.width / sokobanModel.columnCount()
-                implicitHeight: tableView.height / sokobanModel.rowCount()
-
-                TableView.onPooled: rotationAnimation.pause()
-                TableView.onReused: rotationAnimation.resume()
+                id: modelDelegate
+                implicitWidth: view.width / view.columns
+                implicitHeight: view.height / view.rows
 
                 Connections
                 {
                     target: root
-                    onUpdateState: loaderGrid.reload()
+                    onUpdateState: modelDelegate.reload()
                 }
 
                 Connections
                 {
                     target: sokobanModel
-                    onData_changed_custom:
-                    {
-                        if (row === model.row && col === model.column)
-                            loaderGrid.reload();
-                    }
+                    onDataChanged: modelDelegate.reload()
 
                     onMoved_up:    playerState = "up"
                     onMoved_down:  playerState = "down"
@@ -69,14 +62,14 @@ Item
 
     onContinueGame: sokobanModel.continue_game();
     onNewGame: sokobanModel.loadLevel(startLvl);
-    onUpdateState: tableView.forceLayout();
+    onUpdateState: view.forceLayout();
     onExit: sokobanModel.quit_game();
 
     Connections
     {
         target: sokobanModel
         onGame_win: loaderLvlComplete.active = true
-        onData_changed_custom: loaderLvlComplete.active = false
+        onDataChanged: loaderLvlComplete.active = false
         onGrid_changed: loaderLvlComplete.active = false
     }
 
