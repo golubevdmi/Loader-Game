@@ -398,7 +398,7 @@ void SokobanModel::saveLastGameState() const
 {
     // Write all commands to array
     QJsonArray cmdsArray;
-    if (m_pStack && !m_pStack->isClean())
+    if (m_pStack)
     {
         for (int i = 0; i < m_pStack->count(); ++i)
         {
@@ -458,8 +458,6 @@ void SokobanModel::loadLastGameState()
     if (loadLevel(level))
     {
         QJsonArray cmdsArray = jsObj["commands"].toArray();
-        if (cmdsArray.empty())
-            return;
 
         // Add commands to stack
         foreach(const QJsonValue &cmdData, cmdsArray)
