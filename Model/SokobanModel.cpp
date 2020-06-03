@@ -2,6 +2,7 @@
 #include "Model/StepCommand.h"
 #include "StatStorage/StatStorage.h"
 
+#include <QCoreApplication>
 #include <QUndoStack>
 #include <QUndoCommand>
 #include <QJsonDocument>
@@ -9,8 +10,14 @@
 #include <QJsonObject>
 #include <QIODevice>
 #include <QFile>
+#include <QDir>
+#include <QStandardPaths>
 #include <QDateTime>
 #include <QDebug>
+
+
+QString getFileLastGameStatePath();
+
 
 SokobanModel::SokobanModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -419,7 +426,7 @@ void SokobanModel::saveLastGameState() const
     }
 
     // Save commands and level information
-    QFile file("lastGameState.txt");
+    QFile file(getFileLastGameStatePath());
     file.open(QIODevice::WriteOnly);
     if (file.isOpen())
     {
@@ -442,7 +449,7 @@ void SokobanModel::loadLastGameState()
     Q_ASSERT(m_pStack);
 
     // Open file
-    QFile file("lastGameState.txt");
+    QFile file(getFileLastGameStatePath());
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
         return;
@@ -592,4 +599,19 @@ QVariant SokobanModel::getBeginValue(const QModelIndex &index) const
     if (index.isValid())
         return QVariant(m_beginGrid[index.row() * columnCount() + index.column()]);
     return QVariant();
+}
+
+
+
+QString getFileLastGameStatePath()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QDir dir(path);
+
+    QString appName = QCoreApplication::applicationName();
+    if (!dir.exists(appName))
+        dir.mkdir(appName);
+
+    dir.cd(appName);
+    return dir.absoluteFilePath("LastGameState.txt");
 }
