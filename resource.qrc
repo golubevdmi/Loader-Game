@@ -45,6 +45,8 @@
         <file>sounds/sound_delivered.wav</file>
         <file>sounds/sound_game_win.wav</file>
         <file>sounds/sound_step.wav</file>
+        <file>sounds/sound_bn_menu.mp3</file>
+        <file>sounds/sound_bn_menu_clicked.mp3</file>
     </qresource>
     <qresource prefix="/data">
         <file>data/bgTitle.xlsx</file>
