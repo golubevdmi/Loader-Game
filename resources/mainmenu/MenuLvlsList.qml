@@ -46,6 +46,11 @@ Item
                     view.currentIndex = model.index;
                     clickedListItem(model.index);
                 }
+                Connections
+                {
+                    target: view
+                    onCurrentIndexChanged: { if (index === view.currentIndex) bn.playSound(); }
+                }
             }
         }
         Shortcut

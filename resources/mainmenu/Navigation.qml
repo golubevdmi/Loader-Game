@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtMultimedia 5.12
 import "./" as Mainmenu
 
 Item
@@ -37,33 +38,32 @@ Item
         highlight: Rectangle { color: "darkgrey" }
         highlightFollowsCurrentItem: true
 
-        delegate: Item {
-            id: listDelegate
-
+        delegate: Mainmenu.MenuButton
+        {
             property var view: ListView.view
             property var isCurrent: ListView.isCurrentItem
 
-            width: root.implicitWidth
-            height: bn.implicitHeight
-
-            Mainmenu.MenuButton
+            id: bn
+            implicitWidth: root.implicitWidth
+            animationActive: isCurrent
+            text:
             {
-                id: bn
-                implicitWidth: root.width
-                animationActive: isCurrent
-                text:
-                {
-                    if (model.index === 4)
-                        model.text = getBnVisibilityName(appVisibility);
-                    return "%1".arg(model.text);
-                }
-                onClicked:
-                {
-                    view.currentIndex = model.index;
-                    clickedListItem(model.index);
-                }
+                if (model.index === 4)
+                    model.text = getBnVisibilityName(appVisibility);
+                return "%1".arg(model.text);
+            }
+            onClicked:
+            {
+                view.currentIndex = model.index;
+                clickedListItem(model.index);
+            }
+            Connections
+            {
+                target: view
+                onCurrentIndexChanged: { if (index === view.currentIndex) bn.playSound(); }
             }
         }
+
         Shortcut
         {
             sequence: "Up"
@@ -77,7 +77,7 @@ Item
         Shortcut
         {
             sequence: "Enter"
-            onActivated: { clickedListItem(view.currentIndex);  }
+            onActivated: view.currentItem.clicked()
         }
     }
 
