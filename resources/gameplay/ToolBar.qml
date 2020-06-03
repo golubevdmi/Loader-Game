@@ -24,19 +24,16 @@ ToolBar
             anchors.rightMargin: 20
             Gameplay.Button
             {
-                audioFile: "qrc:/sounds/sounds/sound_bn1.wav"
                 text: qsTr("Previous")
                 onClicked: modelObj.loadPrevLvl()
             }
             Gameplay.Button
             {
-                audioFile: "qrc:/sounds/sounds/sound_bn2.wav"
                 text: qsTr("Next")
                 onClicked: modelObj.loadNextLvl()
             }
             Gameplay.Button
             {
-                audioFile: "qrc:/sounds/sounds/sound_bn3.wav"
                 text: qsTr("Reset")
                 onClicked: modelObj.reset()
             }
