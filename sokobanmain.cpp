@@ -8,6 +8,8 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setApplicationName("Sokoban");
+
     QGuiApplication app(argc, argv);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     //QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
