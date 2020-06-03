@@ -49,7 +49,12 @@ Item
                 Connections
                 {
                     target: sokobanModel
-                    onDataChanged: modelDelegate.reload()
+                    onDataChanged:
+                    {
+                        if ( (model.row === topLeft.row && model.column === topLeft.column)
+                                || (model.row === bottomRight.row && model.column === bottomRight.column) )
+                            modelDelegate.reload();
+                    }
 
                     onMoved_up:    playerState = "up"
                     onMoved_down:  playerState = "down"
