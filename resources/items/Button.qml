@@ -7,9 +7,10 @@ Button
 {
     property color downColor: "gray"
     property color bnColor: "transparent"
-    property alias audioFile: sound.source
+    property var audioFileOnClicked: "qrc:/sounds/sounds/sound_bn_menu_clicked.mp3"
     property bool animationActive: false
     property int fontSize: 17
+    signal clickedPlaySound
 
     id: root
     implicitWidth: 30
@@ -57,10 +58,6 @@ Button
 
     background: SokobanItems.Rectangle { id: bnBackground; color: bnColor }
 
-    Audio { id: sound }
-
-    onFocusChanged:
-    {
-        //sound.play();
-    }
+    Audio { id: soundClicked; source: audioFileOnClicked }
+    onClicked: soundClicked.play()
 }
