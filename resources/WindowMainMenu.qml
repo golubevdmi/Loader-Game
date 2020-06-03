@@ -104,7 +104,7 @@ Item
         id: loaderBackBn
         active: false
         sourceComponent: Component {
-            Mainmenu.MenuButton { text: "back"; bgColor: "black"; onClicked: menuStates.state = "navigation" }
+            Mainmenu.MenuButton { text: "back"; bnColor: "black"; onClicked: menuStates.state = "navigation" }
         }
         anchors.leftMargin: 50
         anchors.bottomMargin: 15
