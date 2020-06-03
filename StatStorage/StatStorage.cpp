@@ -1,12 +1,15 @@
 #include "StatStorage.h"
 
+#include <QCoreApplication>
 #include <QIODevice>
 #include <QFile>
+#include <QDir>
+#include <QStandardPaths>
 #include <QDataStream>
 #include <QDebug>
 
 
-static const QString statisticsFilename = "statistics.txt";
+QString getFileStatisticsPath();
 
 
 QDataStream& operator <<(QDataStream &out, const Statistics &stat)
@@ -110,7 +113,7 @@ bool StatStorage::setData(const QModelIndex &index, const QVariant &value, int r
 
 void StatStorage::read()
 {
-    QFile file(statisticsFilename);
+    QFile file(getFileStatisticsPath());
     file.open(QIODevice::ReadOnly);
     if (file.isOpen())
     {
@@ -126,7 +129,7 @@ void StatStorage::read()
 
 int StatStorage::getNumberOfLines() const
 {
-    QFile file(statisticsFilename);
+    QFile file(getFileStatisticsPath());
     file.open(QIODevice::ReadOnly);
     if (file.isOpen())
     {
@@ -148,7 +151,7 @@ int StatStorage::getNumberOfLines() const
 
 void saveStatistics(Statistics stat)
 {
-    QFile file(statisticsFilename);
+    QFile file(getFileStatisticsPath());
     file.open(QIODevice::Append);
     if (file.isOpen())
     {
@@ -161,4 +164,17 @@ void saveStatistics(Statistics stat)
     {
         qDebug() << "Not append to stat file";
     }
+}
+
+QString getFileStatisticsPath()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QDir dir(path);
+
+    QString appName = QCoreApplication::applicationName();
+    if (!dir.exists(appName))
+        dir.mkdir(appName);
+
+    dir.cd(appName);
+    return dir.absoluteFilePath("statistics.txt");
 }
