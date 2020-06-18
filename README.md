@@ -21,7 +21,7 @@ Some floor squares contain boxes and some floor squares are marked as storage lo
 ## Description program files
 
 1. ["GridGenerator"](./GridGenerator). Levels manager classes (use in gameplay c++ model).
-2. ["Model"](./Model). Gameplay c++ model + Custom UndoCommand class.
+2. ["Model"](./Model). Gameplay c++ model, custom UndoCommand class.
 3. ["StatStorage"](./StatStorage). Read (from qml module) / Write (from gameplay c++ model) game statistics.
 4. ["resources"](./resources). UI implementation (qml files).
 
